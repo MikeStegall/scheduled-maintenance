@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import CompanyName from './Layout/CompanyName'
 import NumberOfComputers from './Layout/NumberOfComputers'
+import NameofComputers from './Layout/NameofComputers'
 import './index.css'
 
 const showStateExplorer = document.location.search.indexOf('stateexplorer') !== -1
@@ -22,16 +23,26 @@ let initialState = {
   companyName: '',
   numberOfComputers: 0,
   computersNumbered: false,
-  nameofComputers: []
+  nameofComputers: {
+    name: '',
+    checkForVirusUpdates: 0,
+    freeDiskSpace: 0
+  }
 }
 
 window.appState = initialState
 
 function InformationSubmit () {
-  if (window.appState.iscompanyNamed) {
+  if (window.appState.iscompanyNamed && !window.appState.computersNumbered) {
     return (
       <div>
         {NumberOfComputers()}
+      </div>
+    )
+  } else if (window.appState.iscompanyNamed && window.appState.computersNumbered) {
+    return (
+      <div className='App'>
+        {NameofComputers()}
       </div>
     )
   }

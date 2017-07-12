@@ -1,5 +1,5 @@
 import React from 'react'
-import {onChange} from '../Events/Events'
+import {onChange, insertNumberofComputers} from '../Events/Events'
 
 function NumberOfComputers () {
   return (
@@ -9,7 +9,7 @@ function NumberOfComputers () {
         <label>Number of Computers:</label> <br />
         <input className='input-name' type='numbers' placeholder='Number of Computers' name='numberOfComputes' onChange={onChange} />
         <br />
-        <input type='submit' className='submit-btn' />
+        <input type='submit' className='submit-btn' onClick={insertNumberofComputers} />
       </div>
     </div>
   )

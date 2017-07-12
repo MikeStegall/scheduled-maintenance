@@ -1,3 +1,5 @@
+// let appState = window.appState
+// import React from 'react'
 function onChange (evt) {
   if (evt.target.name === 'companyName') {
     window.appState.companyName = evt.target.value
