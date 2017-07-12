@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #ddd;
+}
+.App {
+  text-align: center;
+}
+
+.company-name-form {
+  margin-top: 50%;
+}
+.submit-btn {
+border: 2px solid black;
+margin-top: 1vh;
+}
