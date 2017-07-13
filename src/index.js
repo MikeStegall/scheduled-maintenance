@@ -19,15 +19,28 @@ function StateExplorer (state) {
 }
 
 let initialState = {
-  iscompanyNamed: false,
+  iscompanyNamed: true,
   companyName: '',
   numberOfComputers: 0,
-  computersNumbered: false,
-  nameofComputers: {
-    name: '',
-    checkForVirusUpdates: 0,
-    freeDiskSpace: 0
-  }
+  computersNumbered: true,
+  computerData: [
+    {
+      'computerName': '',
+      'checkForVirusUpdates': 0,
+      'freeDiskSpace': 0,
+      'sizeOfTempFiles': 0,
+      'fragmentation': 0,
+      'pcCleaned': '',
+      'numberOfWindowsUpdates': 0,
+      'virusesFound': '',
+      'hardDriveHealth': '',
+      'eventLogs': '',
+      'systemFileCheck': '',
+      'serverBackups': '',
+      'averageScore': 0
+    }
+  ],
+  'companyAverage': 0
 }
 
 window.appState = initialState

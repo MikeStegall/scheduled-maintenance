@@ -15,3 +15,9 @@ body {
 border: 2px solid black;
 margin-top: 1vh;
 }
+.check input {
+  width: 250px;
+}
+.computer-name {
+  width: 250px;
+}

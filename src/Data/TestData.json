@@ -1,0 +1,21 @@
+{
+  "companyName": "",
+  "computerData": [
+    {
+      "computerName": "",
+      "checkForVirusUpdates": 0,
+      "freeDiskSpace": 0,
+      "sizeOfTempFiles": 0,
+      "fragmentation": 0,
+      "pcCleaned": "yes",
+      "numberOfWindowsUpdates": 0,
+      "virusesFound": "yes",
+      "hardDriveHealth": "ntf",
+      "eventLogs": "ntf",
+      "systemFileCheck": "ntf",
+      "serverBackups": "ntf",
+      "computerAverage": 0
+    }
+  ],
+  "companyAverage": 0
+}
