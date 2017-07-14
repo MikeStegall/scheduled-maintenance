@@ -1,17 +1,23 @@
 import React from 'react'
-import {onChange, insertCompanyName} from '../Events/Events'
 
-function CompanyName (appState) {
+function submitCompanyName () {
+  window.appState.step = 2
+}
+
+function changeCompanyName (evt) {
+  const newName = evt.target.value
+  window.appState.companyName = newName
+}
+
+function CompanyNameInputPage (name) {
+  // console.log(window.appState.step)
   return (
-    <div className='company-name-form'>
-      <label>Insert Company Name:</label> <br />
-      <input className='input-name' type='text' name='companyName' placeholder='Company Name' onChange={onChange} />
-      <br />
-      <input type='submit' className='submit-btn' value='Enter' onClick={insertCompanyName} />
-      <br />
-      <a href=''>Previous Company Jobs</a>
+    <div className='input-group'>
+      <label>Insert Company Name:</label>
+      <input className='input-name' type='text' name='companyName' placeholder='Company Name' onChange={changeCompanyName} value={name} />
+      <input type='submit' className='btn btn-block' value='Enter' onClick={submitCompanyName} />
     </div>
   )
 }
 
-export default CompanyName
+export default CompanyNameInputPage

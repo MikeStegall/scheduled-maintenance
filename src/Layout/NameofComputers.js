@@ -1,16 +1,16 @@
 import React from 'react'
-import {onChange} from '../Events/Events'
+import {onChange, submitScore} from '../Events/Events'
 
-function SubmintBtn () {
+function SubmintBtn (props) {
   let computerNumber = 0
-  if (computerNumber < window.appState.numberOfComputers) {
+  if (computerNumber < props.numberOfComputers) {
     return <input type='submit' className='submit-btn' value='Next Computer' />
   } else {
-    return <input type='submit' className='submit-btn' value='Submit for Score' />
+    return <input type='submit' className='submit-btn' value='Submit for Score' onClick={submitScore} />
   }
 }
 
-function NameofComputers () {
+function ComputersInputPage () {
   return (
     <div className='computer-diagnostics'>
       <div className='computer names'>
@@ -61,10 +61,10 @@ function NameofComputers () {
         <lable>Check Server Backups:</lable>
         <input className='server-backups-input' type='text' name='server-backups' onChange={onChange} placeholder='Enter NPF, NFT or NA' />
       </div>
-      {SubmintBtn()}
+      {SubmintBtn(window.appState)}
       <p>NPF = No problems found, NFT = Needs further Troubleshooting, NA = not applicable.</p>
     </div>
   )
 }
 
-export default NameofComputers
+export default ComputersInputPage

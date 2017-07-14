@@ -1,10 +1,10 @@
 // let appState = window.appState
 // import React from 'react'
+// let computerData = window.appState.computerData[0]
 function onChange (evt) {
-  let computerData = window.appState.computerData[0]
   if (evt.target.name === 'companyName') window.appState.companyName = evt.target.value
   if (evt.target.name === 'numberOfComputes') window.appState.numberOfComputers = evt.target.value
-  if (evt.target.name === 'nameofcomputer') computerData.computerName = evt.target.value
+  if (evt.target.name === 'nameofcomputer') window.appState.computerData[0].computerName = evt.target.value
   if (evt.target.name === 'virus') window.appState.computerData[0].checkForVirusUpdates = evt.target.value
   if (evt.target.name === 'disk-space') window.appState.computerData[0].freeDiskSpace = evt.target.value
   if (evt.target.name === 'temp-files') window.appState.computerData[0].sizeOfTempFiles = evt.target.value
@@ -18,15 +18,25 @@ function onChange (evt) {
   if (evt.target.name === 'server-backups') window.appState.computerData[0].serverBackups = evt.target.value
 }
 
-function insertCompanyName () {
-  window.appState.iscompanyNamed = true
+function calculateVirusScore () {
+  if (window.appState.computerData[0].checkForVirusUpdates === '') {
+
+  }
 }
-function insertNumberofComputers () {
-  window.appState.computersNumbered = true
+
+function submitScore () {
+  calculateVirusScore()
 }
+// function insertCompanyName () {
+//   window.appState.iscompanyNamed = true
+// }
+// function insertNumberofComputers () {
+//   window.appState.computersNumbered = true
+// }
 
 export {
   onChange,
-  insertCompanyName,
-  insertNumberofComputers
+  // insertCompanyName,
+  // insertNumberofComputers,
+  submitScore
 }
