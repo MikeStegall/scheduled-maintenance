@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import CompanyNameInputPage from './Layout/CompanyName'
 import NumberOfComputersPage from './Layout/NumberOfComputers'
-import ComputersInputPage from './Layout/NameofComputers'
-// import './index.css'
+import ComputersInputPage from './Layout/ComputerInputForm'
+import './index.css'
 import './ratchet-v2.0.2/css/ratchet.css'
 
 const showStateExplorer = document.location.search.indexOf('stateexplorer') !== -1
@@ -38,33 +38,24 @@ function createEmptyComputer () {
 }
 
 let initialState = {
-  companyName: '',
+  companyName: 'Remedy Roofing',
   numberOfComputers: 0,
   computers: [createEmptyComputer(), createEmptyComputer()],
   computersInputPageIdx: 0,
   companyAverage: 0,
-  step: 1
+  step: 1,
+  computerInputStep: 1
 }
 
 window.appState = initialState
 
 function InformationSubmit (state) {
   if (state.step === 1) {
-    return (
-      <div>
-        {CompanyNameInputPage(state.companyName)}
-      </div>
-    )
+    return CompanyNameInputPage(state.companyName)
   } else if (state.step === 2) {
-    return (
-      <div>
-        {NumberOfComputersPage(state.numberOfComputers)}
-      </div>
-    )
+    return NumberOfComputersPage(state.numberOfComputers)
   } else if (state.step === 3) {
-    return (
-      <div>{ComputersInputPage(state.computers)}</div>
-    )
+    return ComputersInputPage(state, state.computers)
   }
 
   // if (state.isCompanyNamed && !state.computersNumbered) {

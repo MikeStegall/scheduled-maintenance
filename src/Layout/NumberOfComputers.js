@@ -4,20 +4,23 @@ function submitNumberOfComputers () {
   window.appState.step = 3
 }
 
-function changeComputerName (evt) {
+function changeNumberOfComputers (evt) {
   const newName = evt.target.value
-  window.appState.companyName = newName
+  window.appState.numberOfComputers = newName
+}
+
+function NameOfCompany () {
+  return <h3 className='company-name'>{window.appState.companyName}</h3>
 }
 
 function NumberOfComputersPage (number) {
   return (
-    <div className='number-of-computers'>
-      <h1>{window.appState.companyName}</h1>
-      <div className='company-name-form'>
-        <label>Number of Computers:</label> <br />
-        <input className='input-name' type='numbers' placeholder='Number of Computers' name='numberOfComputes' onChange={changeComputerName} value={number} />
-        <br />
-        <input type='submit' className='submit-btn' onClick={submitNumberOfComputers} />
+    <div className='input-group'>
+      {NameOfCompany()}
+      <div className='input-row'>
+        <label>Number of Computers:</label>
+        <input className='number-of-computers' type='numbers' placeholder='Number of Computers' name='numberOfComputes' onChange={changeNumberOfComputers} value={number} />
+        <button className='btn btn-primary btn-block' onClick={submitNumberOfComputers}>Enter</button>
       </div>
     </div>
   )

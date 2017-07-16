@@ -1,23 +1,19 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background-color: #ddd;
-}
-.App {
-  text-align: center;
+#pcCleanToggle {
+  margin-left: 39%;
 }
 
-.company-name-form {
-  margin-top: 31%;
+.company-name {
+  text-align: center;
 }
-.submit-btn {
-border: 2px solid black;
-margin-top: 1vh;
+.check-title {
+  margin-top: 5px;
+text-align: center;
 }
-.check input {
-  width: 250px;
+.radio {
+  float: right;
+  transform: scale(2);
 }
-.computer-name {
-  width: 250px;
+.clean-pc {
+  border:1px solid #ddd;
+  padding-bottom: 5px
 }
