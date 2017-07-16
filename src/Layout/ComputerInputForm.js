@@ -168,7 +168,7 @@ function TempFileCheck (computer) {
 }
 
 // ---------------------------------------------------------
-// Computer Input Change Page
+// Disk fragmentation
 // ---------------------------------------------------------
 
 function DiskFragmentationCheck (computer) {
@@ -200,7 +200,7 @@ function DiskFragmentationCheck (computer) {
 }
 
 // ---------------------------------------------------------
-// Computer Input Change Page
+// Clean the PC
 // ---------------------------------------------------------
 
 function PcCleaned (computer) {
@@ -215,7 +215,7 @@ function PcCleaned (computer) {
 }
 
 // ---------------------------------------------------------
-// Computer Input Change Page
+// Make sure windows is updated
 // ---------------------------------------------------------
 
 function CheckForUpdatess (comptuer) {
@@ -277,7 +277,7 @@ function HardDriveCheck (computer) {
 }
 
 // ---------------------------------------------------------
-// Computer Input Change Page
+// Check Event Logs
 // ---------------------------------------------------------
 
 function CheckEventLogs (Computer) {
@@ -317,7 +317,7 @@ function CheckingSystemFiles (computer) {
 }
 
 // ---------------------------------------------------------
-// Computer Input Change Page
+// Check on Server Backups
 // ---------------------------------------------------------
 
 function CheckServerBackUps (computer) {
@@ -357,7 +357,7 @@ function SubmitComputerButton (state) {
 }
 
 // ---------------------------------------------------------
-// Computer Input Change Page
+// Add another Comptuer
 // ---------------------------------------------------------
 function addOneComputer () {
   window.appState.numberOfComputes += 1
@@ -449,16 +449,6 @@ function ComputersInputPage (state, computer) {
       {ComputerInputPage(state, computer)}
     </div>
   )
-    // <div className='computer-diagnostics'>
-    //   <div className='system-file-check check'>
-    //     <lable>Check System File Corruptions:</lable>
-    //     <input className='system-file-input' type='text' name='system-file' onChange={onChange} placeholder='Enter NPF or NFT' />
-    //   </div>
-    //   <div className='server-backups check'>
-    //     <lable>Check Server Backups:</lable>
-    //     <input className='server-backups-input' type='text' name='server-backups' onChange={onChange} placeholder='Enter NPF, NFT or NA' />
-    //   </div>
-    // </div>
 }
 
 export default ComputersInputPage

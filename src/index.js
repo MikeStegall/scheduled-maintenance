@@ -57,17 +57,6 @@ function InformationSubmit (state) {
   } else if (state.step === 3) {
     return ComputersInputPage(state, state.computers)
   }
-
-  // if (state.isCompanyNamed && !state.computersNumbered) {
-  //   return NumberOfComputers(state.numberOfComputers)
-  // } else if (state.isCompanyNamed && state.computersNumbered) {
-  //   return NameofComputers()
-  // }
-  // return (
-  //   <div className='App'>
-  //     {CompanyName(state)}
-  //   </div>
-  // )
 }
 
 function App (state) {
