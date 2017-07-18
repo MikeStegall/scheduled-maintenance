@@ -1,6 +1,7 @@
 import React from 'react'
+import createEmptyComputer from '../index.js'
 
-let computernumber = 0
+let computernumber = 1
 // ---------------------------------------------------------
 // Company Name
 // ---------------------------------------------------------
@@ -17,8 +18,8 @@ function pageDown () {
   }
 }
 
-function LeftButton () {
-  if (window.appState.computerInputStep === 1) {
+function LeftButton (state) {
+  if (state.computerInputStep === 1) {
     return
   } else {
     return (
@@ -30,8 +31,8 @@ function LeftButton () {
   }
 }
 
-function RightButton () {
-  if (window.appState.computerInputStep === 5) {
+function RightButton (state) {
+  if (state.computerInputStep === 5) {
     return
   } else {
     return (
@@ -46,8 +47,8 @@ function RightButton () {
 function CompanyName (state) {
   return (
     <header className='bar bar-nav'>
-      {LeftButton()}
-      {RightButton()}
+      {LeftButton(state)}
+      {RightButton(state)}
       <h1 className='title'>{state.companyName}</h1>
     </header>
   )
@@ -346,13 +347,15 @@ function CheckServerBackUps (computer) {
 // Submit Computer for score
 // ---------------------------------------------------------
 
+function increaseComputerNumber () {
+  computernumber += 1
+}
+
 function SubmitComputerButton (state) {
-  // let computernumber = 0
-  if (computernumber < state.numberOfComputes) {
-    computernumber += 1
-    return <button className='btn btn-primary btn-block'>Next Computer</button>
+  if (computernumber < state.numberOfComputers) {
+    return <button className='btn btn-primary btn-block' onClick={increaseComputerNumber}>Next Computer</button>
   } else {
-    return <button className='btn btn-primary btn-block'>Submit for score</button>
+    return <button className='btn btn-positive btn-block'>Submit for score</button>
   }
 }
 
@@ -360,8 +363,9 @@ function SubmitComputerButton (state) {
 // Add another Comptuer
 // ---------------------------------------------------------
 function addOneComputer () {
-  window.appState.numberOfComputes += 1
+  window.appState.numberOfComputers += 1
   window.appState.computerInputStep = 1
+  window.appState.computers.push(createEmptyComputer())
 }
 
 function AddComputer (state) {

@@ -38,15 +38,14 @@ function createEmptyComputer () {
 }
 
 let initialState = {
-  companyName: 'Remedy Roofing',
+  companyName: '',
   numberOfComputers: 0,
-  computers: [createEmptyComputer(), createEmptyComputer()],
+  computers: [],
   computersInputPageIdx: 0,
   companyAverage: 0,
   step: 1,
   computerInputStep: 1
 }
-
 window.appState = initialState
 
 function InformationSubmit (state) {
@@ -81,3 +80,5 @@ function renderNow () {
 }
 
 window.requestAnimationFrame(renderNow)
+
+export default createEmptyComputer

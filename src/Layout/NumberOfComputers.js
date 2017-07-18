@@ -1,12 +1,20 @@
 import React from 'react'
+import createEmptyComputer from '../index.js'
 
 function submitNumberOfComputers () {
   window.appState.step = 3
+  addCreateEmptyeComputer()
+}
+
+function addCreateEmptyeComputer () {
+  for (let cpu = 0; cpu < window.appState.numberOfComputers; cpu++) {
+    window.appState.computers.push(createEmptyComputer())
+  }
 }
 
 function changeNumberOfComputers (evt) {
-  const newName = evt.target.value
-  window.appState.numberOfComputers = newName
+  const totalcomptuers = evt.target.value
+  window.appState.numberOfComputers = parseInt(totalcomptuers, 10)
 }
 
 function NameOfCompany () {
