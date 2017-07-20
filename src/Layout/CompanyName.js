@@ -1,7 +1,12 @@
 import React from 'react'
 
 function submitCompanyName () {
-  window.appState.step = 2
+  if (window.appState.companyName === '') {
+    // TODO write a better return
+    return
+  } else {
+    window.appState.step = 2
+  }
 }
 
 function changeCompanyName (evt) {
@@ -11,8 +16,8 @@ function changeCompanyName (evt) {
 
 function CompanyNameInputPage (name) {
   return (
-    <div className='input-group'>
-      <div className='input-row'>
+    <div className='input-group company-name-input-group'>
+      <div className='input-row company-name-input'>
         <input className='input-name' type='text' name='companyName' placeholder='Company Name' onChange={changeCompanyName} value={name} />
       </div>
       <button className='btn btn-primary btn-block' onClick={submitCompanyName}>Enter</button>

@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import CompanyNameInputPage from './Layout/CompanyName'
 import NumberOfComputersPage from './Layout/NumberOfComputers'
 import ComputersInputPage from './Layout/ComputerInputForm'
-import './index.css'
 import './ratchet-v2.0.2/css/ratchet.css'
+import './index.css'
 
 const showStateExplorer = document.location.search.indexOf('stateexplorer') !== -1
 
@@ -22,25 +22,33 @@ function StateExplorer (state) {
 function createEmptyComputer () {
   return {
     computerName: '',
-    checkForVirusUpdates: '',
-    freeDiskSpace: 0,
-    sizeOfTempFiles: 0,
-    fragmentation: 0,
-    pcCleaned: '',
-    numberOfWindowsUpdates: 0,
-    virusesFound: '',
-    hardDriveHealth: '',
-    eventLogs: '',
-    systemFileCheck: '',
-    serverBackups: '',
-    averageScore: 0
+    checkForVirusUpdates: null,
+    freeDiskSpace: null,
+    sizeOfTempFiles: null,
+    fragmentation: null,
+    pcCleaned: null,
+    clickedPcCleaned: null,
+    numberOfWindowsUpdates: null,
+    virusesFound: null,
+    clickedVirusFound: false,
+    hardDriveHealth: null,
+    clickedHarddriveHealth: false,
+    eventLogs: null,
+    clickedEventLogs: false,
+    systemFileCheck: null,
+    clickSystemFileCheck: false,
+    isServer: false,
+    serverBackups: null,
+    serverBackupsChecked: false,
+    averageScore: null
   }
 }
 
 let initialState = {
   companyName: '',
   numberOfComputers: 0,
-  computers: [],
+  computers: [createEmptyComputer()],
+  activeComputerIdx: 0,
   computersInputPageIdx: 0,
   companyAverage: 0,
   step: 1,
@@ -54,7 +62,7 @@ function InformationSubmit (state) {
   } else if (state.step === 2) {
     return NumberOfComputersPage(state.numberOfComputers)
   } else if (state.step === 3) {
-    return ComputersInputPage(state, state.computers)
+    return ComputersInputPage(state.activeComputerIdx, state, state.computers)
   }
 }
 

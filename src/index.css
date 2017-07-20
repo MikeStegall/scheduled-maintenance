@@ -1,7 +1,6 @@
 #pcCleanToggle {
   margin-left: 39%;
 }
-
 .company-name {
   text-align: center;
 }
@@ -16,4 +15,31 @@ text-align: center;
 .clean-pc {
   border:1px solid #ddd;
   padding-bottom: 5px
+}
+
+/*Overiding Ratchet*/
+
+.company-name {
+  margin-top: 38%;
+}
+.company-name-input-group {
+  margin-top: 38%;
+}
+.company-name-input input {
+  height: 3rem;
+  text-align: center;
+  width: 100%;
+}
+.computer-number-input label {
+  text-align: center;
+  width: 100%
+}
+.radio-btn {
+  float: right;
+  transform: scale(1.5);
+
+}
+
+.step-count {
+  margin-left: 43%;
 }
