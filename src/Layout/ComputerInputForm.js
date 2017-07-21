@@ -57,17 +57,16 @@ function CompanyName (state) {
 // Change Commputer Name
 // ---------------------------------------------------------
 
-// TODO write this to actually work
-
-function changeComputerName (evt) {
+function changeComputerName (idx, evt) {
   const newName = evt.target.value
-  window.appState.computers.computerName = newName
+  window.appState.computers[idx].computerName = newName
 }
 
-function ComputerName (state) {
+function ComputerName (idx) {
+  let onChangeComputerName = changeComputerName.bind(null, idx)
   return (
     <div className='input-group'>
-      <input type='text' name='nameofcomputer' placeholder='Computer Name' className='input-row' onChange={changeComputerName} />
+      <input type='text' name='nameofcomputer' placeholder='Computer Name' className='input-row' onChange={onChangeComputerName} />
     </div>
   )
 }
@@ -90,25 +89,30 @@ function noneFound (idx) {
   window.appState.computers[idx].checkForVirusUpdates = 0
 }
 
-function VirusSoftwareCheck (idx) {
+function VirusSoftwareCheck (idx, computer) {
   let clickFullyUpdated = fullUpdate.bind(null, idx)
   let clickNeedsUpdates = needsUpdates.bind(null, idx)
   let clickNoneFound = noneFound.bind(null, idx)
+
+  let isFullyUpdatedChecked = (computer[idx].checkForVirusUpdates === 100)
+  let isNeedsUpdatedChecked = (computer[idx].checkForVirusUpdates === 50)
+  let isNoneFoundChecked = (computer[idx].checkForVirusUpdates === 0)
+
   return (
     <div className='input-group virus-software check'>
       <h4 className='check-title'>Virus Sofware</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
             Fully Updated:
-          <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickFullyUpdated} value='VirusFullUpdate' />
+          <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickFullyUpdated} checked={isFullyUpdatedChecked} />
         </li>
         <li className='table-view-cell'>
             Needs Updates:
-          <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickNeedsUpdates} value='VirusNeedsUpdate' />
+          <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickNeedsUpdates} checked={isNeedsUpdatedChecked} />
         </li>
         <li className='table-view-cell'>
             None Found:
-              <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickNoneFound} value='NoneFound' />
+              <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickNoneFound} checked={isNoneFoundChecked} />
         </li>
       </ul>
     </div>
@@ -121,37 +125,42 @@ function VirusSoftwareCheck (idx) {
 
 // Greater than 25% = 100, between 25% and 5% = 50, lower than 5% = 0
 
-function greaterThan25 (idx) {
+function greaterThan25 (idx, computer) {
   window.appState.computers[idx].freeDiskSpace = 100
 }
 
-function between25And5 (idx) {
+function between25And5 (idx, computer) {
   window.appState.computers[idx].freeDiskSpace = 50
 }
 
-function lessThan5 (idx) {
+function lessThan5 (idx, computer) {
   window.appState.computers[idx].freeDiskSpace = 0
 }
 
 function DiskSpaceCheck (idx, computer) {
-  let clickgreaterThan25 = greaterThan25.bind(null, idx)
-  let clickbetween25And5 = between25And5.bind(null, idx)
-  let clicklessThan5 = lessThan5.bind(null, idx)
+  let clickgreaterThan25 = greaterThan25.bind(null, idx, computer)
+  let clickbetween25And5 = between25And5.bind(null, idx, computer)
+  let clicklessThan5 = lessThan5.bind(null, idx, computer)
+
+  let isgreaterThan25 = (computer[idx].freeDiskSpace === 100)
+  let isbetween25And5 = (computer[idx].freeDiskSpace === 50)
+  let islessThan5 = (computer[idx].freeDiskSpace === 0)
+
   return (
     <div className='disk-space check'>
       <h4 className='check-title'>Percentage of Free Disk Space</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
             Free space greater than 25%
-          <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clickgreaterThan25} value='greaterThan25' />
+          <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clickgreaterThan25} checked={isgreaterThan25} />
         </li>
         <li className='table-view-cell'>
             between 25% and 5%
-            <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clickbetween25And5} value='between25And5' />
+            <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clickbetween25And5} checked={isbetween25And5} />
         </li>
         <li className='table-view-cell'>
             Less than 5%
-            <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clicklessThan5} value='lessThan5' />
+            <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clicklessThan5} checked={islessThan5} />
         </li>
       </ul>
     </div>
@@ -164,37 +173,42 @@ function DiskSpaceCheck (idx, computer) {
 
 // Less than 1GB = 100 between 1gb and 3gb = 50 greater than 3gb = 0
 
-function lessThan1GB (idx) {
+function lessThan1GB (idx, computer) {
   window.appState.computers[idx].sizeOfTempFiles = 100
 }
 
-function between1GBAnd3GB (idx) {
+function between1GBAnd3GB (idx, computer) {
   window.appState.computers[idx].sizeOfTempFiles = 50
 }
 
-function greaterThan5GB (idx) {
+function greaterThan5GB (idx, computer) {
   window.appState.computers[idx].sizeOfTempFiles = 0
 }
 
 function TempFileCheck (idx, computer) {
-  let clicklessThan1GB = lessThan1GB.bind(null, idx)
-  let clickbetween1GBAnd3GB = between1GBAnd3GB.bind(null, idx)
-  let clickgreaterThan5GB = greaterThan5GB.bind(null, idx)
+  let clicklessThan1GB = lessThan1GB.bind(null, idx, computer)
+  let clickbetween1GBAnd3GB = between1GBAnd3GB.bind(null, idx, computer)
+  let clickgreaterThan5GB = greaterThan5GB.bind(null, idx, computer)
+
+  let islessThan1GB = (computer[idx].sizeOfTempFiles === 100)
+  let isbetween1GBAnd3GB = (computer[idx].sizeOfTempFiles === 50)
+  let isgreaterThan5GB = (computer[idx].sizeOfTempFiles === 0)
+
   return (
     <div className='temp-files check'>
       <h4 className='check-title'>Check and clean up temp files:</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
             Less than 1Gb
-          <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clicklessThan1GB} value='lessThan1GB' />
+          <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clicklessThan1GB} checked={islessThan1GB} />
         </li>
         <li className='table-view-cell'>
             Needs Updates
-            <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickbetween1GBAnd3GB} value='between1GBAnd3GB' />
+            <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickbetween1GBAnd3GB} checked={isbetween1GBAnd3GB} />
         </li>
         <li className='table-view-cell'>
             None Found
-            <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickgreaterThan5GB} value='greaterThan5GB' />
+            <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickgreaterThan5GB} checked={isgreaterThan5GB} />
         </li>
       </ul>
     </div>
@@ -207,37 +221,42 @@ function TempFileCheck (idx, computer) {
 
 // less than 2% fragmented = 100 between 2% and 5% fragmented = 50 greater than 5% = 0
 
-function lessThanTwoPercent (idx) {
+function lessThanTwoPercent (idx, computer) {
   window.appState.computers[idx].fragmentation = 100
 }
 
-function betweenTwoAndFivePercent (idx) {
+function betweenTwoAndFivePercent (idx, computer) {
   window.appState.computers[idx].fragmentation = 50
 }
 
-function greaterThanFivePercent (idx) {
+function greaterThanFivePercent (idx, computer) {
   window.appState.computers[idx].fragmentation = 0
 }
 
 function DiskFragmentationCheck (idx, computer) {
-  let clicklessThanTwoPercent = lessThanTwoPercent.bind(null, idx)
-  let clickbetweenTwoAndFivePercent = betweenTwoAndFivePercent.bind(null, idx)
-  let clickgreaterThanFivePercent = greaterThanFivePercent.bind(null, idx)
+  let clicklessThanTwoPercent = lessThanTwoPercent.bind(null, idx, computer)
+  let clickbetweenTwoAndFivePercent = betweenTwoAndFivePercent.bind(null, idx, computer)
+  let clickgreaterThanFivePercent = greaterThanFivePercent.bind(null, idx, computer)
+
+  let islessThanTwoPercent = (computer[idx].fragmentation === 100)
+  let isbetweenTwoAndFivePercent = (computer[idx].fragmentation === 50)
+  let isgreaterThanFivePercent = (computer[idx].fragmentation === 0)
+
   return (
     <div className='defrag check'>
       <h4 className='check-title'>Defrag disk and check for fragmentation:</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
             0% Fragmented
-          <input className='radio-btn' type='radio' name='Fragmented' value='lessThanTwoPercent' onClick={clicklessThanTwoPercent} />
+          <input className='radio-btn' type='radio' name='Fragmented' checked={islessThanTwoPercent} onClick={clicklessThanTwoPercent} />
         </li>
         <li className='table-view-cell'>
             Needs Updates
-            <input className='radio-btn' type='radio' name='Fragmented' value='betweenTwoAndFivePercent' onClick={clickbetweenTwoAndFivePercent} />
+            <input className='radio-btn' type='radio' name='Fragmented' checked={isbetweenTwoAndFivePercent} onClick={clickbetweenTwoAndFivePercent} />
         </li>
         <li className='table-view-cell'>
             None Found
-            <input className='radio-btn' type='radio' name='Fragmented' value='greaterThanFivePercent' onClick={clickgreaterThanFivePercent} />
+            <input className='radio-btn' type='radio' name='Fragmented' checked={isgreaterThanFivePercent} onClick={clickgreaterThanFivePercent} />
         </li>
       </ul>
     </div>
@@ -248,7 +267,12 @@ function DiskFragmentationCheck (idx, computer) {
 // Clean the PC
 // ---------------------------------------------------------
 
-function clickPcCleaned (idx) {
+function changePcCleanNotes (idx, evt) {
+  const newName = evt.target.value
+  window.appState.computers[idx].pcCleanedNotes = newName
+}
+
+function clickPcCleanedFn (idx, computer) {
   if (window.appState.computers[idx].clickedPcCleaned) {
     window.appState.computers[idx].clickedPcCleaned = false
     window.appState.computers[idx].pcCleaned = 0
@@ -258,28 +282,36 @@ function clickPcCleaned (idx) {
   }
 }
 
-function TogglePcCleaned (idx) {
-  let clickTogglePcCleaned = clickPcCleaned.bind(null, idx)
+function PcCleanedNotes (idx) {
+  let onChangePcCleanedNotes = changePcCleanNotes.bind(null, idx)
   if (window.appState.computers[idx].clickedPcCleaned) {
     return (
-      <div id='pcCleanToggle' className='toggle active' onClick={clickTogglePcCleaned}>
-        <div className='toggle-handle' />
-      </div>
-    )
-  } else {
-    return (
-      <div id='pcCleanToggle' className='toggle' onClick={clickTogglePcCleaned}>
-        <div className='toggle-handle' />
-      </div>
+      <textarea rows='4' onChange={onChangePcCleanedNotes} />
     )
   }
+}
+
+function TogglePcCleaned (idx, computer) {
+  let clickTogglePcCleaned = clickPcCleanedFn.bind(null, idx, computer)
+  let className = 'toggle'
+  if (!window.appState.computers[idx].clickedPcCleaned) {
+    className = 'toggle'
+  } else {
+    className = 'toggle active' // To make the toggle say yes
+  }
+  return (
+    <div id='pcCleanToggle' className={className} onClick={clickTogglePcCleaned}>
+      <div className='toggle-handle' />
+    </div>
+  )
 }
 
 function PcCleaned (idx, computer) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Inspect and clean inside of Pc</h4>
-      {TogglePcCleaned(idx)}
+      {TogglePcCleaned(idx, computer)}
+      {PcCleanedNotes(idx)}
     </div>
   )
 }
@@ -290,37 +322,42 @@ function PcCleaned (idx, computer) {
 
 // 0 updates = 100, between 1 and 5 updates = 50, 5 or greater = 0
 
-function needsZeroUpdates (idx) {
+function needsZeroUpdates (idx, computer) {
   window.appState.computers[idx].numberOfWindowsUpdates = 100
 }
 
-function needsBetweenOneAndFiveUpdates (idx) {
+function needsBetweenOneAndFiveUpdates (idx, computer) {
   window.appState.computers[idx].numberOfWindowsUpdates = 50
 }
 
-function needsMoreThanFive (idx) {
+function needsMoreThanFive (idx, computer) {
   window.appState.computers[idx].numberOfWindowsUpdates = 0
 }
 
-function CheckForUpdatess (idx, comptuer) {
-  let clickNeedsZeroUpdates = needsZeroUpdates.bind(null, idx)
-  let clickNeedsBetweenOneAndFiveUpdates = needsBetweenOneAndFiveUpdates.bind(null, idx)
-  let clickNeedsMoreThanFive = needsMoreThanFive.bind(null, idx)
+function CheckForUpdatess (idx, computer) {
+  let clickNeedsZeroUpdates = needsZeroUpdates.bind(null, idx, computer)
+  let clickNeedsBetweenOneAndFiveUpdates = needsBetweenOneAndFiveUpdates.bind(null, idx, computer)
+  let clickNeedsMoreThanFive = needsMoreThanFive.bind(null, idx, computer)
+
+  let isneedsZeroUpdates = (computer[idx].numberOfWindowsUpdates === 100)
+  let isneedsBetweenOneAndFiveUpdates = (computer[idx].numberOfWindowsUpdates === 50)
+  let isneedsMoreThanFive = (computer[idx].numberOfWindowsUpdates === 0)
+
   return (
     <div className='updates check'>
       <h4 className='check-title'>Check and run updates for computer:</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
             Fully Updated
-          <input className='radio-btn' type='radio' name='WindowsUpdates' value='needsZeroUpdates' onClick={clickNeedsZeroUpdates} />
+          <input className='radio-btn' type='radio' name='WindowsUpdates' checked={isneedsZeroUpdates} onClick={clickNeedsZeroUpdates} />
         </li>
         <li className='table-view-cell'>
             Needs Updates
-            <input className='radio-btn' type='radio' name='WindowsUpdates' value='needsBetweenOneAndFiveUpdates' onClick={clickNeedsBetweenOneAndFiveUpdates} />
+            <input className='radio-btn' type='radio' name='WindowsUpdates' checked={isneedsBetweenOneAndFiveUpdates} onClick={clickNeedsBetweenOneAndFiveUpdates} />
         </li>
         <li className='table-view-cell'>
             None Found
-            <input className='radio-btn' type='radio' name='WindowsUpdates' value='needsMoreThanFive' onClick={clickNeedsMoreThanFive} />
+            <input className='radio-btn' type='radio' name='WindowsUpdates' checked={isneedsMoreThanFive} onClick={clickNeedsMoreThanFive} />
         </li>
       </ul>
     </div>
@@ -331,7 +368,21 @@ function CheckForUpdatess (idx, comptuer) {
 // Checking if Viruses were found
 // ---------------------------------------------------------
 
-function clickViruesFound (idx) {
+function changeVirusesFoundNotes (idx, evt) {
+  const newName = evt.target.value
+  window.appState.computers[idx].virusesFoundNotes = newName
+}
+
+function VirusesFoundNotes (idx) {
+  let onChangeVirusesFoundNotes = changeVirusesFoundNotes.bind(null, idx)
+  if (window.appState.computers[idx].clickedVirusFound) {
+    return (
+      <textarea rows='4' onChange={onChangeVirusesFoundNotes} />
+    )
+  }
+}
+
+function clickViruesFound (idx, computer) {
   if (!window.appState.computers[idx].clickedVirusFound) {
     window.appState.computers[idx].clickedVirusFound = true
     window.appState.computers[idx].virusesFound = 0
@@ -341,28 +392,27 @@ function clickViruesFound (idx) {
   }
 }
 
-function ToggleVirusesFound (idx) {
-  let clickToggleViruesFound = clickViruesFound.bind(null, idx)
-  if (window.appState.computers[idx].clickedVirusFound === false) {
-    return (
-      <div id='pcCleanToggle' className='toggle' onClick={clickToggleViruesFound}>
-        <div className='toggle-handle' />
-      </div>
-    )
+function ToggleVirusesFound (idx, computer) {
+  let clickToggleViruesFound = clickViruesFound.bind(null, idx, computer)
+  let className = 'toggle'
+  if (!window.appState.computers[idx].clickedVirusFound) {
+    className = 'toggle'
   } else {
-    return (
-      <div id='pcCleanToggle' className='toggle active' onClick={clickToggleViruesFound}>
-        <div className='toggle-handle' />
-      </div>
-    )
+    className = 'toggle active'
   }
+  return (
+    <div id='pcCleanToggle' className={className} onClick={clickToggleViruesFound}>
+      <div className='toggle-handle' />
+    </div>
+  )
 }
 
-function VirusesFound (idx) {
+function VirusesFound (idx, computer) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Malware/Viruses Found</h4>
-      {ToggleVirusesFound(idx)}
+      {ToggleVirusesFound(idx, computer)}
+      {VirusesFoundNotes(idx)}
     </div>
   )
 }
@@ -371,7 +421,23 @@ function VirusesFound (idx) {
 // Checking the Hard drive
 // ---------------------------------------------------------
 
-function clickHardDriveHealth (idx) {
+// TODO Write a function to show text box if yes
+
+function changeHardDriveHealthNotes (idx, evt) {
+  const newName = evt.target.value
+  window.appState.computers[idx].hardDriveHealthNotes = newName
+}
+
+function HardDriveHealthNotes (idx) {
+  let onChangeHardDriveHealthNotes = changeHardDriveHealthNotes.bind(null, idx)
+  if (window.appState.computers[idx].clickedHarddriveHealth) {
+    return (
+      <textarea rows='4' onChange={onChangeHardDriveHealthNotes} />
+    )
+  }
+}
+
+function clickHardDriveHealth (idx, computer) {
   if (window.appState.computers[idx].clickedHarddriveHealth) {
     window.appState.computers[idx].clickedHarddriveHealth = false
     window.appState.computers[idx].hardDriveHealth = 0
@@ -381,28 +447,27 @@ function clickHardDriveHealth (idx) {
   }
 }
 
-function ToggleHardDriveHealth (idx) {
-  let clickToggleHardDriveHealth = clickHardDriveHealth.bind(null, idx)
-  if (window.appState.computers[idx].clickedHarddriveHealth) {
-    return (
-      <div id='pcCleanToggle' className='toggle active' onClick={clickToggleHardDriveHealth}>
-        <div className='toggle-handle' />
-      </div>
-    )
+function ToggleHardDriveHealth (idx, computer) {
+  let clickToggleHardDriveHealth = clickHardDriveHealth.bind(null, idx, computer)
+  let className = 'toggle'
+  if (!window.appState.computers[idx].clickedHarddriveHealth) {
+    className = 'toggle'
   } else {
-    return (
-      <div id='pcCleanToggle' className='toggle' onClick={clickToggleHardDriveHealth}>
-        <div className='toggle-handle' />
-      </div>
-    )
+    className = 'toggle active'
   }
+  return (
+    <div id='pcCleanToggle' className={className} onClick={clickToggleHardDriveHealth}>
+      <div className='toggle-handle' />
+    </div>
+  )
 }
 
-function HardDriveCheck (idx) {
+function HardDriveCheck (idx, computer) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Is Hard Drive Good?</h4>
-      {ToggleHardDriveHealth(idx)}
+      {ToggleHardDriveHealth(idx, computer)}
+      {HardDriveHealthNotes(idx)}
     </div>
   )
 }
@@ -410,6 +475,8 @@ function HardDriveCheck (idx) {
 // ---------------------------------------------------------
 // Check Event Logs
 // ---------------------------------------------------------
+
+// TODO Write a function to show text box if yes
 
 function clickEventLogs (idx) {
   if (window.appState.computers[idx].clickedEventLogs) {
@@ -423,19 +490,17 @@ function clickEventLogs (idx) {
 
 function ToggleEventLogs (idx) {
   let clickToggleEventLogs = clickEventLogs.bind(null, idx)
+  let className = 'toggle'
   if (window.appState.computers[idx].clickedEventLogs) {
-    return (
-      <div id='pcCleanToggle' className='toggle active' onClick={clickToggleEventLogs}>
-        <div className='toggle-handle' />
-      </div>
-    )
+    className = 'toggle active'
   } else {
-    return (
-      <div id='pcCleanToggle' className='toggle' onClick={clickToggleEventLogs}>
-        <div className='toggle-handle' />
-      </div>
-    )
+    className = 'toggle'
   }
+  return (
+    <div id='pcCleanToggle' className={className} onClick={clickToggleEventLogs}>
+      <div className='toggle-handle' />
+    </div>
+  )
 }
 
 function CheckEventLogs (idx) {
@@ -455,6 +520,8 @@ function CheckEventLogs (idx) {
 // ---------------------------------------------------------
 // System File Check
 // ---------------------------------------------------------
+
+// TODO Write a function to show text box if yes
 
 function clickSystemFilesChecks (idx) {
   if (window.appState.computers[idx].clickSystemFileCheck) {
@@ -693,7 +760,7 @@ function ComputersInputPage (idx, state, computer) {
   return (
     <div className='computer-input'>
       {CompanyName(state)}
-      {ComputerName(computer)}
+      {ComputerName(idx, computer)}
       {ComputerInputSteps(idx, state, computer)}
       <span className='badge step-count'>Page {state.computerInputStep}</span>
     </div>

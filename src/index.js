@@ -27,11 +27,14 @@ function createEmptyComputer () {
     sizeOfTempFiles: null,
     fragmentation: null,
     pcCleaned: null,
-    clickedPcCleaned: null,
+    pcCleanedNotes: '',
+    clickedPcCleaned: false,
     numberOfWindowsUpdates: null,
     virusesFound: null,
+    virusesFoundNotes: '',
     clickedVirusFound: false,
     hardDriveHealth: null,
+    hardDriveHealthNotes: '',
     clickedHarddriveHealth: false,
     eventLogs: null,
     clickedEventLogs: false,
@@ -51,8 +54,8 @@ let initialState = {
   activeComputerIdx: 0,
   computersInputPageIdx: 0,
   companyAverage: 0,
-  step: 1,
-  computerInputStep: 1
+  step: 3,
+  computerInputStep: 3
 }
 window.appState = initialState
 
