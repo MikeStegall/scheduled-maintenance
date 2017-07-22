@@ -60,8 +60,8 @@ let initialState = {
   activeComputerIdx: 0,
   computersInputPageIdx: 0,
   companyAverage: 0,
-  step: 1,
-  computerInputStep: 1
+  step: 3,
+  computerInputStep: 2
 }
 window.appState = initialState
 
