@@ -31,7 +31,7 @@ function LeftButton (state) {
 }
 
 function RightButton (state) {
-  if (state.computerInputStep === 5) {
+  if (state.computerInputStep === 6) {
     return
   } else {
     return (
@@ -284,7 +284,7 @@ function clickPcCleanedFn (idx, computer) {
 
 function PcCleanedNotes (idx) {
   let onChangePcCleanedNotes = changePcCleanNotes.bind(null, idx)
-  if (window.appState.computers[idx].clickedPcCleaned) {
+  if (!window.appState.computers[idx].clickedPcCleaned) {
     return (
       <textarea rows='4' onChange={onChangePcCleanedNotes} />
     )
@@ -421,8 +421,6 @@ function VirusesFound (idx, computer) {
 // Checking the Hard drive
 // ---------------------------------------------------------
 
-// TODO Write a function to show text box if yes
-
 function changeHardDriveHealthNotes (idx, evt) {
   const newName = evt.target.value
   window.appState.computers[idx].hardDriveHealthNotes = newName
@@ -430,7 +428,7 @@ function changeHardDriveHealthNotes (idx, evt) {
 
 function HardDriveHealthNotes (idx) {
   let onChangeHardDriveHealthNotes = changeHardDriveHealthNotes.bind(null, idx)
-  if (window.appState.computers[idx].clickedHarddriveHealth) {
+  if (!window.appState.computers[idx].clickedHarddriveHealth) {
     return (
       <textarea rows='4' onChange={onChangeHardDriveHealthNotes} />
     )
@@ -476,7 +474,19 @@ function HardDriveCheck (idx, computer) {
 // Check Event Logs
 // ---------------------------------------------------------
 
-// TODO Write a function to show text box if yes
+function changeEventLogsNotes (idx, evt) {
+  const newName = evt.target.value
+  window.appState.computers[idx].eventLogsNotes = newName
+}
+
+function EventLogNotes (idx) {
+  let onChangeEventLogsNotes = changeEventLogsNotes.bind(null, idx)
+  if (window.appState.computers[idx].clickedEventLogs) {
+    return (
+      <textarea rows='4' onChange={onChangeEventLogsNotes} />
+    )
+  }
+}
 
 function clickEventLogs (idx) {
   if (window.appState.computers[idx].clickedEventLogs) {
@@ -512,6 +522,7 @@ function CheckEventLogs (idx) {
             Were Problems Found
           {ToggleEventLogs(idx)}
         </li>
+        {EventLogNotes(idx)}
       </ul>
     </div>
   )
@@ -521,7 +532,19 @@ function CheckEventLogs (idx) {
 // System File Check
 // ---------------------------------------------------------
 
-// TODO Write a function to show text box if yes
+function changeSystemFileCheckNotes (idx, evt) {
+  const newName = evt.target.value
+  window.appState.computers[idx].systemFileCheckNotes = newName
+}
+
+function SystemFilesCheckNotes (idx) {
+  let onChangeystemFilesCheckNotes = changeSystemFileCheckNotes.bind(null, idx)
+  if (window.appState.computers[idx].clickSystemFileCheck) {
+    return (
+      <textarea rows='4' onChange={onChangeystemFilesCheckNotes} />
+    )
+  }
+}
 
 function clickSystemFilesChecks (idx) {
   if (window.appState.computers[idx].clickSystemFileCheck) {
@@ -535,19 +558,17 @@ function clickSystemFilesChecks (idx) {
 
 function ToggleSystemFilesChecks (idx) {
   let clickToggleSystemFilesChecks = clickSystemFilesChecks.bind(null, idx)
-  if (window.appState.computers[idx].clickSystemFileCheck) {
-    return (
-      <div id='pcCleanToggle' className='toggle active' onClick={clickToggleSystemFilesChecks}>
-        <div className='toggle-handle' />
-      </div>
-    )
+  let className = 'toggle'
+  if (!window.appState.computers[idx].clickSystemFileCheck) {
+    className = 'toggle'
   } else {
-    return (
-      <div id='pcCleanToggle' className='toggle' onClick={clickToggleSystemFilesChecks}>
-        <div className='toggle-handle' />
-      </div>
-    )
+    className = 'toggle active'
   }
+  return (
+    <div id='pcCleanToggle' className={className} onClick={clickToggleSystemFilesChecks}>
+      <div className='toggle-handle' />
+    </div>
+  )
 }
 
 function CheckingSystemFiles (idx) {
@@ -559,6 +580,7 @@ function CheckingSystemFiles (idx) {
             Were Problems Found
           {ToggleSystemFilesChecks(idx)}
         </li>
+        {SystemFilesCheckNotes(idx)}
       </ul>
     </div>
   )
@@ -578,56 +600,111 @@ function isServer (idx) {
 
 function ServerBackups (idx) {
   let clickIsServer = isServer.bind(null, idx)
+  let className = 'toggle'
   if (!window.appState.computers[idx].isServer) {
-    return (
-      <div className='toggle' onClick={clickIsServer}>
-        <div className='toggle-handle' />
-      </div>
-    )
+    className = 'toggle'
   } else {
-    return (
-      <div className='toggle active' onClick={clickIsServer}>
-        <div className='toggle-handle' />
-      </div>
-    )
+    className = 'toggle active'
   }
+  return (
+    <div className={className} onClick={clickIsServer}>
+      <div className='toggle-handle' />
+    </div>
+  )
 }
+
 function isServerBackedUp (idx) {
-  if (!window.appState.computers[idx].serverBackupsChecked) {
-    window.appState.computers[idx].serverBackupsChecked = true
+  if (!window.appState.computers[idx].doesServerHaveABackUp) {
+    window.appState.computers[idx].doesServerHaveABackUp = true
     window.appState.computers[idx].serverBackups = 0
   } else {
-    window.appState.computers[idx].serverBackupsChecked = false
+    window.appState.computers[idx].doesServerHaveABackUp = false
     window.appState.computers[idx].serverBackups = 100
   }
 }
 
-// serverBackupsChecked
-function ToggleServerBackup (idx) {
+// doesServerHaveABackUp
+function ToggleDoesServerHaveABackup (idx) {
   let clickIsServerBackedUp = isServerBackedUp.bind(null, idx)
-  if (!window.appState.computers[idx].serverBackupsChecked) {
-    return (
-      <div className='toggle' onClick={clickIsServerBackedUp}>
-        <div className='toggle-handle' />
-      </div>
-    )
+  let className = 'toggle'
+  if (!window.appState.computers[idx].doesServerHaveABackUp) {
+    className = 'toggle'
   } else {
+    className = 'toggle active'
+  }
+  return (
+    <div className={className} onClick={clickIsServerBackedUp}>
+      <div className='toggle-handle' />
+    </div>
+  )
+}
+
+function DoesServeHaveBackup (idx) {
+  if (window.appState.computers[idx].isServer) {
     return (
-      <div className='toggle active' onClick={clickIsServerBackedUp}>
-        <div className='toggle-handle' />
-      </div>
+      <li className='table-view-cell'>
+          Does the server have a backup?
+        {ToggleDoesServerHaveABackup(idx)}
+      </li>
     )
   }
 }
 
-function ShowIfServer (idx) {
-  if (!window.appState.computers[idx].isServer) {
-    return
+function isServerBackupWorking (idx) {
+  if (window.appState.computers[idx].isServerBackupWorking) {
+    window.appState.computers[idx].isServerBackupWorking = false
   } else {
+    window.appState.computers[idx].isServerBackupWorking = true
+  }
+}
+
+function ToggleIsBackupWorking (idx) {
+  let clickIsServerBackupWorking = isServerBackupWorking.bind(null, idx)
+  let className = 'toggle'
+  if (!window.appState.computers[idx].isServerBackupWorking) {
+    className = 'toggle'
+  } else {
+    className = 'toggle active'
+  }
+  return (
+    <div className={className} onClick={clickIsServerBackupWorking}>
+      <div className='toggle-handle' />
+    </div>
+  )
+}
+
+function changeDoesServerBackupNotes (idx, evt) {
+  const newName = evt.target.value
+  window.appState.computers[idx].serverBackupNotes = newName
+}
+
+function changeBackupWorkingNotes (idx, evt) {
+  const newName = evt.target.value
+  window.appState.computers[idx].serverBackupWorkingNotes = newName
+}
+
+function BackupWorkingNotes (idx) {
+  let onChangeBackupWorkingNotes = changeBackupWorkingNotes.bind(null, idx)
+  if (!window.appState.computers[idx].isServerBackupWorking && window.appState.computers[idx].isServer && window.appState.computers[idx].doesServerHaveABackUp) {
+    return (
+      <li>
+        <textarea rows='4' onChange={onChangeBackupWorkingNotes} placeholder='Notes for if the backups arent working' />
+      </li>
+    )
+  }
+}
+
+function IsBackupWorking (idx) {
+  let onChangeDoesServerBackupNotes = changeDoesServerBackupNotes.bind(null, idx)
+  if (!window.appState.computers[idx].doesServerHaveABackUp && window.appState.computers[idx].isServer) {
+    return (
+      <textarea rows='4' onChange={onChangeDoesServerBackupNotes} placeholder='Notes for if it doesnt have a server' />
+    )
+  } else if (window.appState.computers[idx].doesServerHaveABackUp && window.appState.computers[idx].isServer) {
     return (
       <li className='table-view-cell'>
-          Were Problems Found
-        {ToggleServerBackup(idx)}
+          Is it working?
+        {ToggleIsBackupWorking(idx)}
       </li>
     )
   }
@@ -642,7 +719,9 @@ function CheckServerBackUps (idx) {
             Is this a server?
           {ServerBackups(idx)}
         </li>
-        {ShowIfServer(idx)}
+        {DoesServeHaveBackup(idx)}
+        {IsBackupWorking(idx)}
+        {BackupWorkingNotes(idx)}
       </ul>
     </div>
   )
@@ -651,8 +730,6 @@ function CheckServerBackUps (idx) {
 // ---------------------------------------------------------
 // Submit Computer for score
 // ---------------------------------------------------------
-
-// TODO fix these functions
 
 function increaseComputerNumber () {
   window.appState.activeComputerIdx += 1
@@ -719,7 +796,6 @@ function Step4 (idx, computer) {
     <div>
       {VirusesFound(idx, computer)}
       {HardDriveCheck(idx, computer)}
-      {CheckEventLogs(idx, computer)}
     </div>
   )
 }
@@ -727,7 +803,15 @@ function Step4 (idx, computer) {
 function Step5 (idx, state, computer) {
   return (
     <div>
+      {CheckEventLogs(idx, computer)}
       {CheckingSystemFiles(idx, computer)}
+    </div>
+  )
+}
+
+function Step6 (idx, state, computer) {
+  return (
+    <div>
       {CheckServerBackUps(idx, computer)}
       {SubmitComputerButton(idx, state)}
       {AddComputer(state)}
@@ -750,6 +834,9 @@ function ComputerInputSteps (idx, state, computer) {
   }
   if (state.computerInputStep === 5) {
     return Step5(idx, state, computer)
+  }
+  if (state.computerInputStep === 6) {
+    return Step6(idx, state, computer)
   }
 }
 

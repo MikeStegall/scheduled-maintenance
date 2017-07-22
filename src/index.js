@@ -37,11 +37,17 @@ function createEmptyComputer () {
     hardDriveHealthNotes: '',
     clickedHarddriveHealth: false,
     eventLogs: null,
+    eventLogsNotes: '',
     clickedEventLogs: false,
     systemFileCheck: null,
+    systemFileCheckNotes: '',
     clickSystemFileCheck: false,
     isServer: false,
     serverBackups: null,
+    doesServerHaveABackUp: false,
+    isServerBackupWorking: false,
+    serverBackupNotes: '',
+    serverBackupWorkingNotes: '',
     serverBackupsChecked: false,
     averageScore: null
   }
@@ -54,8 +60,8 @@ let initialState = {
   activeComputerIdx: 0,
   computersInputPageIdx: 0,
   companyAverage: 0,
-  step: 3,
-  computerInputStep: 3
+  step: 1,
+  computerInputStep: 1
 }
 window.appState = initialState
 
@@ -74,7 +80,9 @@ function App (state) {
   if (showStateExplorer) stateExplorerComponent = StateExplorer(state)
   return (
     <div className='App'>
-      {InformationSubmit(state)}
+      <div id='appContainer'>
+        {InformationSubmit(state)}
+      </div>
       {stateExplorerComponent}
     </div>
   )
