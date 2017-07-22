@@ -96,7 +96,6 @@ function DiskSpaceCheck (idx, computer) {
   )
 }
 
-
 function Step1 (idx, computer) {
   return (
     <div>

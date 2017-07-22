@@ -1,63 +1,14 @@
 import React from 'react'
-import createEmptyComputer from '../index.js'
+import MoriComponent from '../MoriComponent'
+import mori from 'mori'
+import {createEmptyComputer, morilog} from '../util.js'
 import Step1 from './ComputerInputStep1'
 import Step2 from './ComputerInputStep2'
+import HeaderBar from './HeaderBar'
 
-// ---------------------------------------------------------
-// Company Name
-// ---------------------------------------------------------
-
-function clickPageUp () {
-  window.appState.computerInputStep += 1
-}
-
-function clickPageDown () {
-  if (window.appState.computerInputStep === 1) {
-    window.appState.computerInputStep = 1
-  } else {
-    window.appState.computerInputStep -= 1
-  }
-}
-
-function LeftButton (state) {
-  if (state.computerInputStep === 1) {
-    return
-  } else {
-    return (
-      <button className='btn btn-link btn-nav pull-left' onClick={clickPageDown}>
-        <span className='icon icon-left-nav' />
-        Left
-      </button>
-    )
-  }
-}
-
-function RightButton (state) {
-  if (state.computerInputStep === 6) {
-    return
-  } else {
-    return (
-      <button className='btn btn-link btn-nav pull-right' onClick={clickPageUp}>
-        Right
-        <span className='icon icon-right-nav' />
-      </button>
-    )
-  }
-}
-
-function CompanyName (state) {
-  return (
-    <header className='bar bar-nav'>
-      {LeftButton(state)}
-      {RightButton(state)}
-      <h1 className='title'>{state.companyName}</h1>
-    </header>
-  )
-}
-
-// ---------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Change Commputer Name
-// ---------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 function changeComputerName (idx, evt) {
   const newName = evt.target.value
@@ -73,9 +24,9 @@ function ComputerName (idx) {
   )
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Clean the PC
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function changePcCleanNotes (idx, evt) {
   const newName = evt.target.value
@@ -126,9 +77,9 @@ function PcCleaned (idx, computer) {
   )
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Make sure windows is updated
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 // 0 updates = 100, between 1 and 5 updates = 50, 5 or greater = 0
 
@@ -174,9 +125,9 @@ function CheckForUpdatess (idx, computer) {
   )
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Checking if Viruses were found
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function changeVirusesFoundNotes (idx, evt) {
   const newName = evt.target.value
@@ -227,9 +178,9 @@ function VirusesFound (idx, computer) {
   )
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Checking the Hard drive
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function changeHardDriveHealthNotes (idx, evt) {
   const newName = evt.target.value
@@ -280,9 +231,9 @@ function HardDriveCheck (idx, computer) {
   )
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Check Event Logs
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function changeEventLogsNotes (idx, evt) {
   const newName = evt.target.value
@@ -338,9 +289,9 @@ function CheckEventLogs (idx) {
   )
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // System File Check
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function changeSystemFileCheckNotes (idx, evt) {
   const newName = evt.target.value
@@ -396,9 +347,9 @@ function CheckingSystemFiles (idx) {
   )
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Check on Server Backups
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function isServer (idx) {
   if (!window.appState.computers[idx].isServer) {
@@ -537,9 +488,9 @@ function CheckServerBackUps (idx) {
   )
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Submit Computer for score
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function increaseComputerNumber () {
   window.appState.activeComputerIdx += 1
@@ -553,9 +504,9 @@ function SubmitComputerButton (state) {
   }
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Add another Comptuer
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 // TODO fix these functions
 
@@ -570,9 +521,9 @@ function AddComputer (state) {
   return <button className='btn btn-block' onClick={addOneComputer}>Add another Computer</button>
 }
 
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Computer Input Change Page
-// ---------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function Step3 (idx, computer) {
   return (
@@ -632,18 +583,26 @@ function ComputerInputSteps (idx, state, computer) {
   }
 }
 
-// ---------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Computer Input Page
-// ---------------------------------------------------------
-function ComputersInputPage (idx, state, computer) {
-  return (
-    <div className='computer-input'>
-      {CompanyName(state)}
-      {ComputerName(idx, computer)}
-      {ComputerInputSteps(idx, state, computer)}
-      <span className='badge step-count'>Page {state.computerInputStep}</span>
-    </div>
-  )
+// -----------------------------------------------------------------------------
+
+class ComputersInputPage extends MoriComponent {
+  render () {
+    const companyName = mori.get(this.props.imdata, 'companyName')
+    const computerInputStep = mori.get(this.props.imdata, 'computerInputStep')
+    const headerBar = mori.hashMap('companyName', companyName,
+                                   'computerInputStep', computerInputStep)
+
+    return (
+      <div className='computer-input'>
+        <HeaderBar imdata={headerBar} />
+        {/* {ComputerName(idx, computer)}
+        {ComputerInputSteps(idx, state, computer)}
+        <span className='badge step-count'>Page {state.computerInputStep}</span> */}
+      </div>
+    )
+  }
 }
 
 export default ComputersInputPage
