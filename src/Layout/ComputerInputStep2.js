@@ -1,21 +1,24 @@
 import React from 'react'
-
+import mori from 'mori'
 // ---------------------------------------------------------
 // Size of Temp File Check
 // ---------------------------------------------------------
 
 // Less than 1GB = 100 between 1gb and 3gb = 50 greater than 3gb = 0
 
-function lessThan1GB (idx, computer) {
-  window.appState.computers[idx].sizeOfTempFiles = 100
+function lessThan1GB (idx) {
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'computerName'], 100)
+  // window.appState.computers[idx].sizeOfTempFiles = 100
 }
 
 function between1GBAnd3GB (idx, computer) {
-  window.appState.computers[idx].sizeOfTempFiles = 50
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'computerName'], 50)
+  // window.appState.computers[idx].sizeOfTempFiles = 50
 }
 
 function greaterThan5GB (idx, computer) {
-  window.appState.computers[idx].sizeOfTempFiles = 0
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'computerName'], 0)
+  // window.appState.computers[idx].sizeOfTempFiles = 0
 }
 
 function TempFileCheck (idx, computer) {
@@ -23,9 +26,13 @@ function TempFileCheck (idx, computer) {
   let clickbetween1GBAnd3GB = between1GBAnd3GB.bind(null, idx, computer)
   let clickgreaterThan5GB = greaterThan5GB.bind(null, idx, computer)
 
-  let islessThan1GB = (computer[idx].sizeOfTempFiles === 100)
-  let isbetween1GBAnd3GB = (computer[idx].sizeOfTempFiles === 50)
-  let isgreaterThan5GB = (computer[idx].sizeOfTempFiles === 0)
+  let islessThan1GB = (mori.equals()) // not sure if this is the righ function for this.
+  let isbetween1GBAnd3GB = (mori.equals()) // not sure if this is the righ function for this.
+  let isgreaterThan5GB = (mori.equals()) // not sure if this is the righ function for this.
+
+  // let islessThan1GB = (computer[idx].sizeOfTempFiles === 100)
+  // let isbetween1GBAnd3GB = (computer[idx].sizeOfTempFiles === 50)
+  // let isgreaterThan5GB = (computer[idx].sizeOfTempFiles === 0)
 
   return (
     <div className='temp-files check'>
@@ -71,9 +78,13 @@ function DiskFragmentationCheck (idx, computer) {
   let clickbetweenTwoAndFivePercent = betweenTwoAndFivePercent.bind(null, idx, computer)
   let clickgreaterThanFivePercent = greaterThanFivePercent.bind(null, idx, computer)
 
-  let islessThanTwoPercent = (computer[idx].fragmentation === 100)
-  let isbetweenTwoAndFivePercent = (computer[idx].fragmentation === 50)
-  let isgreaterThanFivePercent = (computer[idx].fragmentation === 0)
+  let islessThanTwoPercent = (mori.equals()) // not sure if this is the righ function for this.
+  let isbetweenTwoAndFivePercent = (mori.equals()) // not sure if this is the righ function for this.
+  let isgreaterThanFivePercent = (mori.equals()) // not sure if this is the righ function for this.
+
+  // let islessThanTwoPercent = (computer[idx].fragmentation === 100)
+  // let isbetweenTwoAndFivePercent = (computer[idx].fragmentation === 50)
+  // let isgreaterThanFivePercent = (computer[idx].fragmentation === 0)
 
   return (
     <div className='defrag check'>
@@ -96,7 +107,7 @@ function DiskFragmentationCheck (idx, computer) {
   )
 }
 
-function Step2 (idx, computer) {
+function ComputerInputStep2 (idx, computer) {
   return (
     <div>
       {TempFileCheck(idx, computer)}
@@ -105,4 +116,4 @@ function Step2 (idx, computer) {
   )
 }
 
-export default Step2
+export default ComputerInputStep2

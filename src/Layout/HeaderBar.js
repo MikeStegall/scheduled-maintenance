@@ -1,5 +1,4 @@
 import React from 'react'
-import MoriComponent from '../MoriComponent'
 import mori from 'mori'
 
 function clickPageUp () {
@@ -28,28 +27,23 @@ function RightButton () {
   )
 }
 
-class HeaderBar extends MoriComponent {
-  render () {
-    const companyName = mori.get(this.props.imdata, 'companyName')
-    const computerInputStep = mori.get(this.props.imdata, 'computerInputStep')
+function HeaderBar (companyName, computerInputStep) {
+  const showLeftBtn = (computerInputStep !== 1)
+  const showRightBtn = (computerInputStep !== 6)
 
-    const showLeftBtn = (computerInputStep !== 1)
-    const showRightBtn = (computerInputStep !== 6)
+  let leftBtnComponent = null
+  if (showLeftBtn) leftBtnComponent = LeftButton()
 
-    let leftBtnComponent = null
-    if (showLeftBtn) leftBtnComponent = LeftButton()
+  let rightBtnComponent = null
+  if (showRightBtn) rightBtnComponent = RightButton()
 
-    let rightBtnComponent = null
-    if (showRightBtn) rightBtnComponent = RightButton()
-
-    return (
-      <header className='bar bar-nav'>
-        {leftBtnComponent}
-        {rightBtnComponent}
-        <h1 className='title'>{companyName}</h1>
-      </header>
-    )
-  }
+  return (
+    <header className='bar bar-nav'>
+      {leftBtnComponent}
+      <h1 className='title'>{companyName}</h1>
+      {rightBtnComponent}
+    </header>
+  )
 }
 
 export default HeaderBar
