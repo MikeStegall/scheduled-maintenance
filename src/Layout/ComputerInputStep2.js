@@ -1,5 +1,8 @@
 import React from 'react'
 import mori from 'mori'
+// import {morilog} from '../util'
+import MoriComponent from '../MoriComponent'
+
 // ---------------------------------------------------------
 // Size of Temp File Check
 // ---------------------------------------------------------
@@ -7,28 +10,28 @@ import mori from 'mori'
 // Less than 1GB = 100 between 1gb and 3gb = 50 greater than 3gb = 0
 
 function lessThan1GB (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'computerName'], 100)
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 100)
   // window.appState.computers[idx].sizeOfTempFiles = 100
 }
 
-function between1GBAnd3GB (idx, computer) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'computerName'], 50)
+function between1GBAnd3GB (idx) {
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 50)
   // window.appState.computers[idx].sizeOfTempFiles = 50
 }
 
-function greaterThan5GB (idx, computer) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'computerName'], 0)
+function greaterThan5GB (idx) {
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 0)
   // window.appState.computers[idx].sizeOfTempFiles = 0
 }
 
-function TempFileCheck (idx, computer) {
-  let clicklessThan1GB = lessThan1GB.bind(null, idx, computer)
-  let clickbetween1GBAnd3GB = between1GBAnd3GB.bind(null, idx, computer)
-  let clickgreaterThan5GB = greaterThan5GB.bind(null, idx, computer)
+function TempFileCheck (idx, sizeOfTempFiles) {
+  let clicklessThan1GB = lessThan1GB.bind(null, idx)
+  let clickbetween1GBAnd3GB = between1GBAnd3GB.bind(null, idx)
+  let clickgreaterThan5GB = greaterThan5GB.bind(null, idx)
 
-  let islessThan1GB = (mori.equals()) // not sure if this is the righ function for this.
-  let isbetween1GBAnd3GB = (mori.equals()) // not sure if this is the righ function for this.
-  let isgreaterThan5GB = (mori.equals()) // not sure if this is the righ function for this.
+  let islessThan1GB = (mori.equals(sizeOfTempFiles, 100)) // not sure if this is the righ function for this.
+  let isbetween1GBAnd3GB = (mori.equals(sizeOfTempFiles, 50)) // not sure if this is the righ function for this.
+  let isgreaterThan5GB = (mori.equals(sizeOfTempFiles, 0)) // not sure if this is the righ function for this.
 
   // let islessThan1GB = (computer[idx].sizeOfTempFiles === 100)
   // let isbetween1GBAnd3GB = (computer[idx].sizeOfTempFiles === 50)
@@ -61,26 +64,29 @@ function TempFileCheck (idx, computer) {
 
 // less than 2% fragmented = 100 between 2% and 5% fragmented = 50 greater than 5% = 0
 
-function lessThanTwoPercent (idx, computer) {
-  window.appState.computers[idx].fragmentation = 100
+function lessThanTwoPercent (idx) {
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 100)
+  // window.appState.computers[idx].fragmentation = 100
 }
 
-function betweenTwoAndFivePercent (idx, computer) {
-  window.appState.computers[idx].fragmentation = 50
+function betweenTwoAndFivePercent (idx) {
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 50)
+  // window.appState.computers[idx].fragmentation = 50
 }
 
-function greaterThanFivePercent (idx, computer) {
-  window.appState.computers[idx].fragmentation = 0
+function greaterThanFivePercent (idx) {
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 0)
+  // window.appState.computers[idx].fragmentation = 0
 }
 
-function DiskFragmentationCheck (idx, computer) {
-  let clicklessThanTwoPercent = lessThanTwoPercent.bind(null, idx, computer)
-  let clickbetweenTwoAndFivePercent = betweenTwoAndFivePercent.bind(null, idx, computer)
-  let clickgreaterThanFivePercent = greaterThanFivePercent.bind(null, idx, computer)
+function DiskFragmentationCheck (idx, fragmentation) {
+  let clicklessThanTwoPercent = lessThanTwoPercent.bind(null, idx)
+  let clickbetweenTwoAndFivePercent = betweenTwoAndFivePercent.bind(null, idx)
+  let clickgreaterThanFivePercent = greaterThanFivePercent.bind(null, idx)
 
-  let islessThanTwoPercent = (mori.equals()) // not sure if this is the righ function for this.
-  let isbetweenTwoAndFivePercent = (mori.equals()) // not sure if this is the righ function for this.
-  let isgreaterThanFivePercent = (mori.equals()) // not sure if this is the righ function for this.
+  let islessThanTwoPercent = (mori.equals(fragmentation, 100)) // not sure if this is the righ function for this.
+  let isbetweenTwoAndFivePercent = (mori.equals(fragmentation, 50)) // not sure if this is the righ function for this.
+  let isgreaterThanFivePercent = (mori.equals(fragmentation, 0)) // not sure if this is the righ function for this.
 
   // let islessThanTwoPercent = (computer[idx].fragmentation === 100)
   // let isbetweenTwoAndFivePercent = (computer[idx].fragmentation === 50)
@@ -107,13 +113,27 @@ function DiskFragmentationCheck (idx, computer) {
   )
 }
 
-function ComputerInputStep2 (idx, computer) {
-  return (
-    <div>
-      {TempFileCheck(idx, computer)}
-      {DiskFragmentationCheck(idx, computer)}
-    </div>
-  )
+class ComputerInputStep2 extends MoriComponent {
+  render () {
+    const idx = mori.get(this.props.imdata, 'activeComputerIdx')
+    const sizeOfTempFiles = mori.getIn(this.props.imdata, ['computers', idx, 'sizeOfTempFiles'])
+    const fragmentation = mori.getIn(this.props.imdata, ['computers', idx, 'fragmentation'])
+    return (
+      <div>
+        {TempFileCheck(idx, sizeOfTempFiles)}
+        {DiskFragmentationCheck(idx, fragmentation)}
+      </div>
+    )
+  }
 }
+
+// function ComputerInputStep2 (idx, computer) {
+//   return (
+//     <div>
+//       {TempFileCheck(idx, computer)}
+//       {DiskFragmentationCheck(idx, computer)}
+//     </div>
+//   )
+// }
 
 export default ComputerInputStep2

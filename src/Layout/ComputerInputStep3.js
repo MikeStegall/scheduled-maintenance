@@ -7,33 +7,40 @@ import mori from 'mori'
 
 function changePcCleanNotes (idx, evt) {
   const newName = evt.target.value
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'comptuerName'], newName)
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'pcCleanedNotes'], newName)
   // window.appState.computers[idx].pcCleanedNotes = newName
 }
 
 function clickPcCleanedFn (idx) {
-  if (window.appState.computers[idx].clickedPcCleaned) {
-    window.appState.computers[idx].clickedPcCleaned = false
-    window.appState.computers[idx].pcCleaned = 0
-  } else {
-    window.appState.computers[idx].clickedPcCleaned = true
-    window.appState.computers[idx].pcCleaned = 100
+  if (mori.equals(['computers', idx, 'clickedPcCleaned'], true)) {
+    window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedPcCleaned'], false)
+    window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'pcCleaned'], 0)
+  } else if (mori.equals(['computers', idx, 'clickedPcCleaned'], false)) {
+    window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedPcCleaned'], true)
+    window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'pcCleaned'], 100)
   }
+  // if (window.appState.computers[idx].clickedPcCleaned) {
+  //   window.appState.computers[idx].clickedPcCleaned = false
+  //   window.appState.computers[idx].pcCleaned = 0
+  // } else {
+  //   window.appState.computers[idx].clickedPcCleaned = true
+  //   window.appState.computers[idx].pcCleaned = 100
+  // }
 }
 
 function PcCleanedNotes (idx) {
   let onChangePcCleanedNotes = changePcCleanNotes.bind(null, idx)
-  if (!window.appState.computers[idx].clickedPcCleaned) {
+  if (mori.equals(['computers', idx, 'clickedPcCleaned'], false)) {
     return (
       <textarea rows='4' onChange={onChangePcCleanedNotes} />
     )
   }
 }
 
-function TogglePcCleaned (idx, computer) {
-  let clickTogglePcCleaned = clickPcCleanedFn.bind(null, idx, computer)
+function TogglePcCleaned (idx) {
+  let clickTogglePcCleaned = clickPcCleanedFn.bind(null, idx)
   let className = 'toggle'
-  if (!window.appState.computers[idx].clickedPcCleaned) {
+  if (mori.equals(['computers', idx, 'clickedPcCleaned'], false)) {
     className = 'toggle'
   } else {
     className = 'toggle active' // To make the toggle say yes
@@ -45,11 +52,11 @@ function TogglePcCleaned (idx, computer) {
   )
 }
 
-function PcCleaned (idx, computer) {
+function PcCleaned (idx) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Inspect and clean inside of Pc</h4>
-      {TogglePcCleaned(idx, computer)}
+      {TogglePcCleaned(idx)}
       {PcCleanedNotes(idx)}
     </div>
   )
@@ -61,26 +68,33 @@ function PcCleaned (idx, computer) {
 
 // 0 updates = 100, between 1 and 5 updates = 50, 5 or greater = 0
 
-function needsZeroUpdates (idx, computer) {
-  window.appState.computers[idx].numberOfWindowsUpdates = 100
+function needsZeroUpdates (idx) {
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 100)
+  // window.appState.computers[idx].numberOfWindowsUpdates = 100
 }
 
-function needsBetweenOneAndFiveUpdates (idx, computer) {
-  window.appState.computers[idx].numberOfWindowsUpdates = 50
+function needsBetweenOneAndFiveUpdates (idx) {
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 50)
+  // window.appState.computers[idx].numberOfWindowsUpdates = 50
 }
 
-function needsMoreThanFive (idx, computer) {
-  window.appState.computers[idx].numberOfWindowsUpdates = 0
+function needsMoreThanFive (idx) {
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 0)
+  // window.appState.computers[idx].numberOfWindowsUpdates = 0
 }
 
-function CheckForUpdatess (idx, computer) {
-  let clickNeedsZeroUpdates = needsZeroUpdates.bind(null, idx, computer)
-  let clickNeedsBetweenOneAndFiveUpdates = needsBetweenOneAndFiveUpdates.bind(null, idx, computer)
-  let clickNeedsMoreThanFive = needsMoreThanFive.bind(null, idx, computer)
+function CheckForUpdatess (idx) {
+  let clickNeedsZeroUpdates = needsZeroUpdates.bind(null, idx)
+  let clickNeedsBetweenOneAndFiveUpdates = needsBetweenOneAndFiveUpdates.bind(null, idx)
+  let clickNeedsMoreThanFive = needsMoreThanFive.bind(null, idx)
 
-  let isneedsZeroUpdates = (computer[idx].numberOfWindowsUpdates === 100)
-  let isneedsBetweenOneAndFiveUpdates = (computer[idx].numberOfWindowsUpdates === 50)
-  let isneedsMoreThanFive = (computer[idx].numberOfWindowsUpdates === 0)
+  let isneedsZeroUpdates = (mori.equals(['computers', idx, 'numberOfWindowsUpdates'], 100))
+  let isneedsBetweenOneAndFiveUpdates = (mori.equals(['computers', idx, 'numberOfWindowsUpdates'], 50))
+  let isneedsMoreThanFive = (mori.equals(['computers', idx, 'numberOfWindowsUpdates'], 0))
+
+  // let isneedsZeroUpdates = (computer[idx].numberOfWindowsUpdates === 100)
+  // let isneedsBetweenOneAndFiveUpdates = (computer[idx].numberOfWindowsUpdates === 50)
+  // let isneedsMoreThanFive = (computer[idx].numberOfWindowsUpdates === 0)
 
   return (
     <div className='updates check'>

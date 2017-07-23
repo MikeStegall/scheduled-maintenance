@@ -1,5 +1,6 @@
 import React from 'react'
 import mori from 'mori'
+import MoriComponent from '../MoriComponent'
 // import {morilog} from '../util'
 // ---------------------------------------------------------
 // Virus Check
@@ -19,14 +20,15 @@ function noneFound (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 0)
 }
 
-function VirusSoftwareCheck (idx) {
+function VirusSoftwareCheck (idx, virusUpdates) {
   let clickFullyUpdated = fullUpdate.bind(null, idx)
   let clickNeedsUpdates = needsUpdates.bind(null, idx)
   let clickNoneFound = noneFound.bind(null, idx)
 
-  let isFullyUpdatedChecked = (mori.hasKey(['computers', idx, 'checkForVirusUpdates'], 100)) // not sure if this is the righ function for this.
-  let isNeedsUpdatedChecked = (mori.hasKey(['computers', idx, 'checkForVirusUpdates'], 50)) // not sure if this is the righ function for this.
-  let isNoneFoundChecked = (mori.hasKey(['computers', idx, 'checkForVirusUpdates'], 0)) // not sure if this is the righ function for this.
+  let isFullyUpdatedChecked = (mori.equals(virusUpdates, 100)) // not sure if this is the righ function for this.
+  let isNeedsUpdatedChecked = (mori.equals(virusUpdates, 50)) // not sure if this is the righ function for this.
+  let isNoneFoundChecked = (mori.equals(virusUpdates, 0)) // not sure if this is the righ function for this.
+  // morilog(isNoneFoundChecked)
   // let isFullyUpdatedChecked = (computer[idx].checkForVirusUpdates === 100)
   // let isNeedsUpdatedChecked = (computer[idx].checkForVirusUpdates === 50)
   // let isNoneFoundChecked = (computer[idx].checkForVirusUpdates === 0)
@@ -59,28 +61,28 @@ function VirusSoftwareCheck (idx) {
 // Greater than 25% = 100, between 25% and 5% = 50, lower than 5% = 0
 
 function greaterThan25 (idx) {
-  window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 100)
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 100)
   // window.appState.computers[idx].freeDiskSpace = 100
 }
 
 function between25And5 (idx) {
-  window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 50)
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 50)
   // window.appState.computers[idx].freeDiskSpace = 50
 }
 
 function lessThan5 (idx) {
-  window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 0)
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 0)
   // window.appState.computers[idx].freeDiskSpace = 0
 }
 
-function DiskSpaceCheck (idx) {
+function DiskSpaceCheck (idx, freeDiskSpace) {
   let clickgreaterThan25 = greaterThan25.bind(null, idx)
   let clickbetween25And5 = between25And5.bind(null, idx)
   let clicklessThan5 = lessThan5.bind(null, idx)
 
-  let isgreaterThan25 = (mori.equals()) // not sure if this is the righ function for this.
-  let isbetween25And5 = (mori.equals()) // not sure if this is the righ function for this.
-  let islessThan5 = (mori.equals()) // not sure if this is the righ function for this.
+  let isgreaterThan25 = (mori.equals(freeDiskSpace, 100)) // not sure if this is the righ function for this.
+  let isbetween25And5 = (mori.equals(freeDiskSpace, 50)) // not sure if this is the righ function for this.
+  let islessThan5 = (mori.equals(freeDiskSpace, 0)) // not sure if this is the righ function for this.
   // let isgreaterThan25 = (computer[idx].freeDiskSpace === 100)
   // let isbetween25And5 = (computer[idx].freeDiskSpace === 50)
   // let islessThan5 = (computer[idx].freeDiskSpace === 0)
@@ -106,13 +108,18 @@ function DiskSpaceCheck (idx) {
   )
 }
 
-function ComputerInputStep1 (idx) {
-  return (
-    <div>
-      {VirusSoftwareCheck(idx)}
-      {DiskSpaceCheck(idx)}
-    </div>
-  )
+class ComputerInputStep1 extends MoriComponent {
+  render () {
+    const idx = mori.get(this.props.imdata, 'activeComputerIdx')
+    const virusUpdates = mori.getIn(this.props.imdata, ['computers', idx, 'checkForVirusUpdates'])
+    const freeDiskSpace = mori.getIn(this.props.imdata, ['computers', idx, 'freeDiskSpace'])
+    return (
+      <div>
+        {VirusSoftwareCheck(idx, virusUpdates)}
+        {DiskSpaceCheck(idx, freeDiskSpace)}
+      </div>
+    )
+  }
 }
 
 export default ComputerInputStep1

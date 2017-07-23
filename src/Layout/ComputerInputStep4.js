@@ -1,4 +1,5 @@
 import React from 'react'
+import mori from 'mori'
 
 // -----------------------------------------------------------------------------
 // Checking if Viruses were found
@@ -6,7 +7,9 @@ import React from 'react'
 
 function changeVirusesFoundNotes (idx, evt) {
   const newName = evt.target.value
-  window.appState.computers[idx].virusesFoundNotes = newName
+  const newState = mori.assoc(window.CURRENT_STATE, 'virusesFoundNotes', newName)
+  window.NEXT_STATE = newState
+  // window.appState.computers[idx].virusesFoundNotes = newName
 }
 
 function VirusesFoundNotes (idx) {
