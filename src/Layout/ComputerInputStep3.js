@@ -1,5 +1,7 @@
 import React from 'react'
 import mori from 'mori'
+import MoriComponent from '../MoriComponent'
+// import {morilog} from '../util.js'
 
 // -----------------------------------------------------------------------------
 // Clean the PC
@@ -8,41 +10,35 @@ import mori from 'mori'
 function changePcCleanNotes (idx, evt) {
   const newName = evt.target.value
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'pcCleanedNotes'], newName)
-  // window.appState.computers[idx].pcCleanedNotes = newName
 }
 
-function clickPcCleanedFn (idx) {
-  if (mori.equals(['computers', idx, 'clickedPcCleaned'], true)) {
-    window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedPcCleaned'], false)
-    window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'pcCleaned'], 0)
-  } else if (mori.equals(['computers', idx, 'clickedPcCleaned'], false)) {
-    window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedPcCleaned'], true)
-    window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'pcCleaned'], 100)
+function clickPcCleanedFn (idx, clickedPcCleaned) {
+  if (mori.equals(clickedPcCleaned, true)) {
+    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedPcCleaned'], false,
+                                                           ['computers', idx, 'pcCleaned'], 0)
+    window.NEXT_STATE = newState
+  } else if (mori.equals(clickedPcCleaned, false)) {
+    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedPcCleaned'], true,
+                                                           ['computers', idx, 'pcCleaned'], 100)
+    window.NEXT_STATE = newState
   }
-  // if (window.appState.computers[idx].clickedPcCleaned) {
-  //   window.appState.computers[idx].clickedPcCleaned = false
-  //   window.appState.computers[idx].pcCleaned = 0
-  // } else {
-  //   window.appState.computers[idx].clickedPcCleaned = true
-  //   window.appState.computers[idx].pcCleaned = 100
-  // }
 }
 
-function PcCleanedNotes (idx) {
-  let onChangePcCleanedNotes = changePcCleanNotes.bind(null, idx)
-  if (mori.equals(['computers', idx, 'clickedPcCleaned'], false)) {
+function PcCleanedNotes (idx, clickedPcCleaned) {
+  let onChangePcCleanedNotes = changePcCleanNotes.bind(null, idx, clickedPcCleaned)
+  if (mori.equals(clickedPcCleaned, false)) {
     return (
       <textarea rows='4' onChange={onChangePcCleanedNotes} />
     )
   }
 }
 
-function TogglePcCleaned (idx) {
-  let clickTogglePcCleaned = clickPcCleanedFn.bind(null, idx)
+function TogglePcCleaned (idx, clickedPcCleaned) {
+  let clickTogglePcCleaned = clickPcCleanedFn.bind(null, idx, clickedPcCleaned)
   let className = 'toggle'
-  if (mori.equals(['computers', idx, 'clickedPcCleaned'], false)) {
+  if (mori.equals(clickedPcCleaned, false)) {
     className = 'toggle'
-  } else {
+  } else if (mori.equals(clickedPcCleaned, true)) {
     className = 'toggle active' // To make the toggle say yes
   }
   return (
@@ -52,12 +48,12 @@ function TogglePcCleaned (idx) {
   )
 }
 
-function PcCleaned (idx) {
+function PcCleaned (idx, clickedPcCleaned) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Inspect and clean inside of Pc</h4>
       {TogglePcCleaned(idx)}
-      {PcCleanedNotes(idx)}
+      {PcCleanedNotes(idx, clickedPcCleaned)}
     </div>
   )
 }
@@ -70,31 +66,24 @@ function PcCleaned (idx) {
 
 function needsZeroUpdates (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 100)
-  // window.appState.computers[idx].numberOfWindowsUpdates = 100
 }
 
 function needsBetweenOneAndFiveUpdates (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 50)
-  // window.appState.computers[idx].numberOfWindowsUpdates = 50
 }
 
 function needsMoreThanFive (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 0)
-  // window.appState.computers[idx].numberOfWindowsUpdates = 0
 }
 
-function CheckForUpdatess (idx) {
+function CheckForUpdatess (idx, numberOfWindowsUpdates) {
   let clickNeedsZeroUpdates = needsZeroUpdates.bind(null, idx)
   let clickNeedsBetweenOneAndFiveUpdates = needsBetweenOneAndFiveUpdates.bind(null, idx)
   let clickNeedsMoreThanFive = needsMoreThanFive.bind(null, idx)
 
-  let isneedsZeroUpdates = (mori.equals(['computers', idx, 'numberOfWindowsUpdates'], 100))
-  let isneedsBetweenOneAndFiveUpdates = (mori.equals(['computers', idx, 'numberOfWindowsUpdates'], 50))
-  let isneedsMoreThanFive = (mori.equals(['computers', idx, 'numberOfWindowsUpdates'], 0))
-
-  // let isneedsZeroUpdates = (computer[idx].numberOfWindowsUpdates === 100)
-  // let isneedsBetweenOneAndFiveUpdates = (computer[idx].numberOfWindowsUpdates === 50)
-  // let isneedsMoreThanFive = (computer[idx].numberOfWindowsUpdates === 0)
+  let isneedsZeroUpdates = (mori.equals(numberOfWindowsUpdates, 100))
+  let isneedsBetweenOneAndFiveUpdates = (mori.equals(numberOfWindowsUpdates, 50))
+  let isneedsMoreThanFive = (mori.equals(numberOfWindowsUpdates, 0))
 
   return (
     <div className='updates check'>
@@ -117,13 +106,22 @@ function CheckForUpdatess (idx) {
   )
 }
 
-function ComputerInputStep3 (idx, computer) {
-  return (
-    <div>
-      {PcCleaned(idx, computer)}
-      {CheckForUpdatess(idx, computer)}
-    </div>
-  )
+class ComputerInputStep3 extends MoriComponent {
+  render () {
+    const idx = mori.get(this.props.imdata, 'activeComputerIdx')
+
+    const pcCleaned = mori.getIn(this.props.imdata, ['computers', idx, 'pcCleaned'])
+    const clickedPcCleaned = mori.getIn(this.props.imdata, ['computers', idx, 'clickedPcCleaned'])
+
+    const numberOfWindowsUpdates = mori.getIn(this.props.imdata, ['computers', idx, 'numberOfWindowsUpdates'])
+
+    return (
+      <div>
+        {PcCleaned(idx, pcCleaned, clickedPcCleaned)}
+        {CheckForUpdatess(idx, numberOfWindowsUpdates)}
+      </div>
+    )
+  }
 }
 
 export default ComputerInputStep3

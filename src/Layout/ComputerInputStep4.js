@@ -1,5 +1,6 @@
 import React from 'react'
 import mori from 'mori'
+import MoriComponent from '../MoriComponent'
 
 // -----------------------------------------------------------------------------
 // Checking if Viruses were found
@@ -9,34 +10,35 @@ function changeVirusesFoundNotes (idx, evt) {
   const newName = evt.target.value
   const newState = mori.assoc(window.CURRENT_STATE, 'virusesFoundNotes', newName)
   window.NEXT_STATE = newState
-  // window.appState.computers[idx].virusesFoundNotes = newName
 }
 
-function VirusesFoundNotes (idx) {
+function VirusesFoundNotes (idx, clickedVirusFound) {
   let onChangeVirusesFoundNotes = changeVirusesFoundNotes.bind(null, idx)
-  if (window.appState.computers[idx].clickedVirusFound) {
+  if (mori.equals(clickedVirusFound, true)) {
     return (
       <textarea rows='4' onChange={onChangeVirusesFoundNotes} />
     )
   }
 }
 
-function clickViruesFound (idx, computer) {
-  if (!window.appState.computers[idx].clickedVirusFound) {
-    window.appState.computers[idx].clickedVirusFound = true
-    window.appState.computers[idx].virusesFound = 0
-  } else {
-    window.appState.computers[idx].clickedVirusFound = false
-    window.appState.computers[idx].virusesFound = 100
+function clickViruesFound (idx, clickedVirusFound) {
+  if (mori.equals(clickedVirusFound, false)) {
+    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedVirusFound'], false,
+                                                         ['computers', idx, 'virusesFound'], 0)
+    window.NEXT_STATE = newState
+  } else if (mori.euqals(clickedVirusFound, true)) {
+    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedVirusFound'], true,
+                                                         ['computers', idx, 'virusesFound'], 100)
+    window.NEXT_STATE = newState
   }
 }
 
-function ToggleVirusesFound (idx, computer) {
-  let clickToggleViruesFound = clickViruesFound.bind(null, idx, computer)
+function ToggleVirusesFound (idx, clickedVirusFound) {
+  let clickToggleViruesFound = clickViruesFound.bind(null, idx, clickedVirusFound)
   let className = 'toggle'
-  if (!window.appState.computers[idx].clickedVirusFound) {
+  if (mori.equals(clickedVirusFound, false)) {
     className = 'toggle'
-  } else {
+  } else if (mori.equals(clickedVirusFound, true)) {
     className = 'toggle active'
   }
   return (
@@ -46,11 +48,11 @@ function ToggleVirusesFound (idx, computer) {
   )
 }
 
-function VirusesFound (idx, computer) {
+function VirusesFound (idx, clickedVirusFound) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Malware/Viruses Found</h4>
-      {ToggleVirusesFound(idx, computer)}
+      {ToggleVirusesFound(idx, clickedVirusFound)}
       {VirusesFoundNotes(idx)}
     </div>
   )
@@ -62,32 +64,34 @@ function VirusesFound (idx, computer) {
 
 function changeHardDriveHealthNotes (idx, evt) {
   const newName = evt.target.value
-  window.appState.computers[idx].hardDriveHealthNotes = newName
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hardDriveHealthNotes'], newName)
 }
 
-function HardDriveHealthNotes (idx) {
+function HardDriveHealthNotes (idx, clickedHarddriveHealth) {
   let onChangeHardDriveHealthNotes = changeHardDriveHealthNotes.bind(null, idx)
-  if (!window.appState.computers[idx].clickedHarddriveHealth) {
+  if (mori.equals(clickedHarddriveHealth, false)) {
     return (
       <textarea rows='4' onChange={onChangeHardDriveHealthNotes} />
     )
   }
 }
 
-function clickHardDriveHealth (idx, computer) {
-  if (window.appState.computers[idx].clickedHarddriveHealth) {
-    window.appState.computers[idx].clickedHarddriveHealth = false
-    window.appState.computers[idx].hardDriveHealth = 0
-  } else {
-    window.appState.computers[idx].clickedHarddriveHealth = true
-    window.appState.computers[idx].hardDriveHealth = 100
+function clickHardDriveHealth (idx, clickedHarddriveHealth) {
+  if (mori.equals(clickedHarddriveHealth, true)) {
+    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedHarddriveHealth'], false,
+                                                           ['computers', idx, 'hardDriveHealth'], 0)
+    window.NEXT_STATE = newState
+  } else if (mori.equals(clickedHarddriveHealth, false)) {
+    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedHarddriveHealth'], true,
+                                                           ['computers', idx, 'hardDriveHealth'], 100)
+    window.NEXT_STATE = newState
   }
 }
 
-function ToggleHardDriveHealth (idx, computer) {
-  let clickToggleHardDriveHealth = clickHardDriveHealth.bind(null, idx, computer)
+function ToggleHardDriveHealth (idx, clickedHarddriveHealth) {
+  let clickToggleHardDriveHealth = clickHardDriveHealth.bind(null, idx)
   let className = 'toggle'
-  if (!window.appState.computers[idx].clickedHarddriveHealth) {
+  if (mori.equals(clickedHarddriveHealth, false)) {
     className = 'toggle'
   } else {
     className = 'toggle active'
@@ -99,23 +103,30 @@ function ToggleHardDriveHealth (idx, computer) {
   )
 }
 
-function HardDriveCheck (idx, computer) {
+function HardDriveCheck (idx, clickedHarddriveHealth) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Is Hard Drive Good?</h4>
-      {ToggleHardDriveHealth(idx, computer)}
-      {HardDriveHealthNotes(idx)}
+      {ToggleHardDriveHealth(idx, clickedHarddriveHealth)}
+      {HardDriveHealthNotes(idx, clickedHarddriveHealth)}
     </div>
   )
 }
+class ComputerInputStep4 extends MoriComponent {
+  render () {
+    const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
-function ComputerInputStep4 (idx, computer) {
-  return (
-    <div>
-      {VirusesFound(idx, computer)}
-      {HardDriveCheck(idx, computer)}
-    </div>
-  )
+    const clickedVirusFound = mori.getIn(this.props.imdata, ['computers', idx, 'clickedVirusFound'])
+
+    const clickedHarddriveHealth = mori.getIn(this.props.imdata, ['computers', idx, 'clickedHarddriveHealth'])
+
+    return (
+      <div>
+        {VirusesFound(idx, clickedVirusFound)}
+        {HardDriveCheck(idx, clickedHarddriveHealth)}
+      </div>
+    )
+  }
 }
 
 export default ComputerInputStep4

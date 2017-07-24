@@ -1,23 +1,26 @@
 import React from 'react'
 import {createEmptyComputer} from '../util'
-
+import mori from 'mori'
+import MoriComponent from '../MoriComponent'
 
 // -----------------------------------------------------------------------------
 // Check on Server Backups
 // -----------------------------------------------------------------------------
 
-function isServer (idx) {
-  if (!window.appState.computers[idx].isServer) {
-    window.appState.computers[idx].isServer = true
+function isServerFn (idx, isServer) {
+  if (mori.equals(isServer, false)) {
+    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], true)
+    window.NEXT_STATE = newState
   } else {
-    window.appState.computers[idx].isServer = false
+    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], false)
+    window.NEXT_STATE = newState
   }
 }
 
-function ServerBackups (idx) {
-  let clickIsServer = isServer.bind(null, idx)
+function ServerBackups (idx, isServer) {
+  let clickIsServer = isServerFn.bind(null, idx)
   let className = 'toggle'
-  if (!window.appState.computers[idx].isServer) {
+  if (mori.equals(isServer, false)) {
     className = 'toggle'
   } else {
     className = 'toggle active'
@@ -99,7 +102,7 @@ function changeBackupWorkingNotes (idx, evt) {
   window.appState.computers[idx].serverBackupWorkingNotes = newName
 }
 
-function BackupWorkingNotes (idx) {
+function BackupWorkingNotes (idx, isServerBackupWorking, isServer, doesServerHaveABackUp) {
   let onChangeBackupWorkingNotes = changeBackupWorkingNotes.bind(null, idx)
   if (!window.appState.computers[idx].isServerBackupWorking && window.appState.computers[idx].isServer && window.appState.computers[idx].doesServerHaveABackUp) {
     return (
@@ -126,14 +129,14 @@ function IsBackupWorking (idx) {
   }
 }
 
-function CheckServerBackUps (idx) {
+function CheckServerBackUps (idx, isServerBackupWorking, isServer, doesServerHaveABackUp) {
   return (
     <div className='input-group'>
       <h4 className='check-title'>Check on Server Backups</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
             Is this a server?
-          {ServerBackups(idx)}
+          {ServerBackups(idx, isServer)}
         </li>
         {DoesServeHaveBackup(idx)}
         {IsBackupWorking(idx)}
@@ -176,14 +179,20 @@ function AddComputer (state) {
   return <button className='btn btn-block' onClick={addOneComputer}>Add another Computer</button>
 }
 
-function ComputerInputStep6 (idx, state, computer) {
-  return (
-    <div>
-      {CheckServerBackUps(idx, computer)}
-      {SubmitComputerButton(idx, state)}
-      {AddComputer(state)}
-    </div>
-  )
+class ComputerInputStep6 extends MoriComponent {
+  render () {
+    const idx = mori.get(this.props.imdata, 'activeComputerIdx')
+
+    const isServer = mori.getIn(this.props.imdata, ['comptuers', idx, 'isServer'])
+
+    return (
+      <div>
+        {CheckServerBackUps(idx, isServer)}
+        {SubmitComputerButton(idx)}
+        {AddComputer()}
+      </div>
+    )
+  }
 }
 
 export default ComputerInputStep6

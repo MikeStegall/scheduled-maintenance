@@ -15,9 +15,10 @@ import ComputerInputStep6 from './ComputerInputStep6'
 
 class ComputerInputSteps extends MoriComponent {
   render () {
-    const idx = mori.get(this.props.imdata, 'activeComputerIdx')
+    // const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const computerInputStep = mori.get(this.props.imdata, 'computerInputStep')
     // const activeComputer = mori.getIn(this.props.imdata, ['computers', idx])
+
     if (computerInputStep === 1) {
       return <ComputerInputStep1 imdata={this.props.imdata} />
     }
@@ -25,39 +26,18 @@ class ComputerInputSteps extends MoriComponent {
       return <ComputerInputStep2 imdata={this.props.imdata} />
     }
     if (computerInputStep === 3) {
-      return ComputerInputStep3(idx)
+      return <ComputerInputStep3 imdata={this.props.imdata} />
     }
     if (computerInputStep === 4) {
-      return ComputerInputStep4(idx)
+      return <ComputerInputStep4 imdata={this.props.imdata} />
     }
     if (computerInputStep === 5) {
-      return ComputerInputStep5(idx)
+      return <ComputerInputStep5 imdata={this.props.imdata} />
     }
     if (computerInputStep === 6) {
-      return ComputerInputStep6(idx)
+      return <ComputerInputStep6 imdata={this.props.imdata} />
     }
   }
 }
-
-// function ComputerInputSteps (idx, computerInputStep, activeComputer, virusUpdates) {
-//   if (computerInputStep === 1) {
-//     return ComputerInputStep1(idx, virusUpdates)
-//   }
-//   if (computerInputStep === 2) {
-//     return ComputerInputStep2(idx)
-//   }
-//   if (computerInputStep === 3) {
-//     return ComputerInputStep3(idx)
-//   }
-//   if (computerInputStep === 4) {
-//     return ComputerInputStep4(idx)
-//   }
-//   if (computerInputStep === 5) {
-//     return ComputerInputStep5(idx)
-//   }
-//   if (computerInputStep === 6) {
-//     return ComputerInputStep6(idx)
-//   }
-// }
 
 export default ComputerInputSteps
