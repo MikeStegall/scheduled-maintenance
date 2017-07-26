@@ -1,7 +1,6 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
-// import {morilog} from '../util.js'
 
 // -----------------------------------------------------------------------------
 // Clean the PC
@@ -12,33 +11,33 @@ function changePcCleanNotes (idx, evt) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'pcCleanedNotes'], newName)
 }
 
-function clickPcCleanedFn (idx, clickedPcCleaned) {
-  if (mori.equals(clickedPcCleaned, true)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedPcCleaned'], false,
-                                                           ['computers', idx, 'pcCleaned'], 0)
-    window.NEXT_STATE = newState
-  } else if (mori.equals(clickedPcCleaned, false)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedPcCleaned'], true,
-                                                           ['computers', idx, 'pcCleaned'], 100)
-    window.NEXT_STATE = newState
+function clickPcCleanedFn (idx, hasPcBeenCleaned) {
+  if (hasPcBeenCleaned) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasPcBeenCleaned'], false)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'pcCleaned'], 0)
+    window.NEXT_STATE = newState2
+  } else if (!hasPcBeenCleaned) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasPcBeenCleaned'], true)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'pcCleaned'], 100)
+    window.NEXT_STATE = newState2
   }
 }
 
-function PcCleanedNotes (idx, clickedPcCleaned) {
-  let onChangePcCleanedNotes = changePcCleanNotes.bind(null, idx, clickedPcCleaned)
-  if (mori.equals(clickedPcCleaned, false)) {
+function PcCleanedNotes (idx, hasPcBeenCleaned) {
+  let onChangePcCleanedNotes = changePcCleanNotes.bind(null, idx)
+  if (mori.equals(hasPcBeenCleaned, false)) {
     return (
       <textarea rows='4' onChange={onChangePcCleanedNotes} />
     )
   }
 }
 
-function TogglePcCleaned (idx, clickedPcCleaned) {
-  let clickTogglePcCleaned = clickPcCleanedFn.bind(null, idx, clickedPcCleaned)
+function TogglePcCleaned (idx, hasPcBeenCleaned) {
+  let clickTogglePcCleaned = clickPcCleanedFn.bind(null, idx, hasPcBeenCleaned)
   let className = 'toggle'
-  if (mori.equals(clickedPcCleaned, false)) {
+  if (!hasPcBeenCleaned) {
     className = 'toggle'
-  } else if (mori.equals(clickedPcCleaned, true)) {
+  } else if (hasPcBeenCleaned) {
     className = 'toggle active' // To make the toggle say yes
   }
   return (
@@ -48,12 +47,12 @@ function TogglePcCleaned (idx, clickedPcCleaned) {
   )
 }
 
-function PcCleaned (idx, clickedPcCleaned) {
+function PcCleaned (idx, hasPcBeenCleaned) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Inspect and clean inside of Pc</h4>
-      {TogglePcCleaned(idx)}
-      {PcCleanedNotes(idx, clickedPcCleaned)}
+      {TogglePcCleaned(idx, hasPcBeenCleaned)}
+      {PcCleanedNotes(idx, hasPcBeenCleaned)}
     </div>
   )
 }
@@ -110,14 +109,13 @@ class ComputerInputStep3 extends MoriComponent {
   render () {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
-    const pcCleaned = mori.getIn(this.props.imdata, ['computers', idx, 'pcCleaned'])
-    const clickedPcCleaned = mori.getIn(this.props.imdata, ['computers', idx, 'clickedPcCleaned'])
+    const hasPcBeenCleaned = mori.getIn(this.props.imdata, ['computers', idx, 'hasPcBeenCleaned'])
 
     const numberOfWindowsUpdates = mori.getIn(this.props.imdata, ['computers', idx, 'numberOfWindowsUpdates'])
 
     return (
       <div>
-        {PcCleaned(idx, pcCleaned, clickedPcCleaned)}
+        {PcCleaned(idx, hasPcBeenCleaned)}
         {CheckForUpdatess(idx, numberOfWindowsUpdates)}
       </div>
     )

@@ -12,33 +12,33 @@ function changeVirusesFoundNotes (idx, evt) {
   window.NEXT_STATE = newState
 }
 
-function VirusesFoundNotes (idx, clickedVirusFound) {
+function VirusesFoundNotes (idx, hasVirusBeenFound) {
   let onChangeVirusesFoundNotes = changeVirusesFoundNotes.bind(null, idx)
-  if (mori.equals(clickedVirusFound, true)) {
+  if (mori.equals(hasVirusBeenFound, true)) {
     return (
       <textarea rows='4' onChange={onChangeVirusesFoundNotes} />
     )
   }
 }
 
-function clickViruesFound (idx, clickedVirusFound) {
-  if (mori.equals(clickedVirusFound, false)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedVirusFound'], false,
-                                                         ['computers', idx, 'virusesFound'], 0)
-    window.NEXT_STATE = newState
-  } else if (mori.euqals(clickedVirusFound, true)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedVirusFound'], true,
-                                                         ['computers', idx, 'virusesFound'], 100)
-    window.NEXT_STATE = newState
+function clickViruesFound (idx, hasVirusBeenFound) {
+  if (hasVirusBeenFound) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasVirusBeenFound'], false)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 0)
+    window.NEXT_STATE = newState2
+  } else if (!hasVirusBeenFound) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasVirusBeenFound'], true)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 100)
+    window.NEXT_STATE = newState2
   }
 }
 
-function ToggleVirusesFound (idx, clickedVirusFound) {
-  let clickToggleViruesFound = clickViruesFound.bind(null, idx, clickedVirusFound)
+function ToggleVirusesFound (idx, hasVirusBeenFound) {
+  let clickToggleViruesFound = clickViruesFound.bind(null, idx, hasVirusBeenFound)
   let className = 'toggle'
-  if (mori.equals(clickedVirusFound, false)) {
+  if (!hasVirusBeenFound) {
     className = 'toggle'
-  } else if (mori.equals(clickedVirusFound, true)) {
+  } else if (hasVirusBeenFound) {
     className = 'toggle active'
   }
   return (
@@ -48,11 +48,11 @@ function ToggleVirusesFound (idx, clickedVirusFound) {
   )
 }
 
-function VirusesFound (idx, clickedVirusFound) {
+function VirusesFound (idx, hasVirusBeenFound) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Malware/Viruses Found</h4>
-      {ToggleVirusesFound(idx, clickedVirusFound)}
+      {ToggleVirusesFound(idx, hasVirusBeenFound)}
       {VirusesFoundNotes(idx)}
     </div>
   )
@@ -67,33 +67,33 @@ function changeHardDriveHealthNotes (idx, evt) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hardDriveHealthNotes'], newName)
 }
 
-function HardDriveHealthNotes (idx, clickedHarddriveHealth) {
+function HardDriveHealthNotes (idx, isHardDriveGood) {
   let onChangeHardDriveHealthNotes = changeHardDriveHealthNotes.bind(null, idx)
-  if (mori.equals(clickedHarddriveHealth, false)) {
+  if (!isHardDriveGood) {
     return (
       <textarea rows='4' onChange={onChangeHardDriveHealthNotes} />
     )
   }
 }
 
-function clickHardDriveHealth (idx, clickedHarddriveHealth) {
-  if (mori.equals(clickedHarddriveHealth, true)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedHarddriveHealth'], false,
-                                                           ['computers', idx, 'hardDriveHealth'], 0)
-    window.NEXT_STATE = newState
-  } else if (mori.equals(clickedHarddriveHealth, false)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedHarddriveHealth'], true,
-                                                           ['computers', idx, 'hardDriveHealth'], 100)
-    window.NEXT_STATE = newState
+function clickHardDriveHealth (idx, isHardDriveGood) {
+  if (isHardDriveGood) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isHardDriveGood'], false)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'hardDriveHealth'], 0)
+    window.NEXT_STATE = newState2
+  } else if (!isHardDriveGood) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isHardDriveGood'], true)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'hardDriveHealth'], 100)
+    window.NEXT_STATE = newState2
   }
 }
 
-function ToggleHardDriveHealth (idx, clickedHarddriveHealth) {
-  let clickToggleHardDriveHealth = clickHardDriveHealth.bind(null, idx)
+function ToggleHardDriveHealth (idx, isHardDriveGood) {
+  let clickToggleHardDriveHealth = clickHardDriveHealth.bind(null, idx, isHardDriveGood)
   let className = 'toggle'
-  if (mori.equals(clickedHarddriveHealth, false)) {
+  if (!isHardDriveGood) {
     className = 'toggle'
-  } else {
+  } else if (isHardDriveGood) {
     className = 'toggle active'
   }
   return (
@@ -103,12 +103,12 @@ function ToggleHardDriveHealth (idx, clickedHarddriveHealth) {
   )
 }
 
-function HardDriveCheck (idx, clickedHarddriveHealth) {
+function HardDriveCheck (idx, isHardDriveGood) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Is Hard Drive Good?</h4>
-      {ToggleHardDriveHealth(idx, clickedHarddriveHealth)}
-      {HardDriveHealthNotes(idx, clickedHarddriveHealth)}
+      {ToggleHardDriveHealth(idx, isHardDriveGood)}
+      {HardDriveHealthNotes(idx, isHardDriveGood)}
     </div>
   )
 }
@@ -116,14 +116,14 @@ class ComputerInputStep4 extends MoriComponent {
   render () {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
-    const clickedVirusFound = mori.getIn(this.props.imdata, ['computers', idx, 'clickedVirusFound'])
+    const hasVirusBeenFound = mori.getIn(this.props.imdata, ['computers', idx, 'hasVirusBeenFound'])
 
-    const clickedHarddriveHealth = mori.getIn(this.props.imdata, ['computers', idx, 'clickedHarddriveHealth'])
+    const isHardDriveGood = mori.getIn(this.props.imdata, ['computers', idx, 'isHardDriveGood'])
 
     return (
       <div>
-        {VirusesFound(idx, clickedVirusFound)}
-        {HardDriveCheck(idx, clickedHarddriveHealth)}
+        {VirusesFound(idx, hasVirusBeenFound)}
+        {HardDriveCheck(idx, isHardDriveGood)}
       </div>
     )
   }

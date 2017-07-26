@@ -11,31 +11,31 @@ function changeEventLogsNotes (idx, evt) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'eventLogsNotes'], newName)
 }
 
-function EventLogNotes (idx, clickedEventLogs) {
+function EventLogNotes (idx, hasCritcalEventLogs) {
   let onChangeEventLogsNotes = changeEventLogsNotes.bind(null, idx)
-  if (mori.equals(clickedEventLogs, false)) {
+  if (!hasCritcalEventLogs) {
     return (
       <textarea rows='4' onChange={onChangeEventLogsNotes} />
     )
   }
 }
 
-function clickEventLogs (idx, clickedEventLogs) {
-  if (mori.equals(clickedEventLogs, false)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedEventLogs'], true,
-                                                        ['computers', idx, 'eventLogs'], 100)
-    window.NEXT_STATE = newState
-  } else if (mori.equals(clickedEventLogs, true)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickedEventLogs'], false,
-                                                        ['computers', idx, 'eventLogs'], 0)
-    window.NEXT_STATE = newState
+function clickEventLogs (idx, hasCritcalEventLogs) {
+  if (!hasCritcalEventLogs) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCritcalEventLogs'], true)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 100)
+    window.NEXT_STATE = newState2
+  } else if (hasCritcalEventLogs) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCritcalEventLogs'], false)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 0)
+    window.NEXT_STATE = newState2
   }
 }
 
-function ToggleEventLogs (idx, clickedEventLogs) {
-  let clickToggleEventLogs = clickEventLogs.bind(null, idx)
+function ToggleEventLogs (idx, hasCritcalEventLogs) {
+  let clickToggleEventLogs = clickEventLogs.bind(null, idx, hasCritcalEventLogs)
   let className = 'toggle'
-  if (mori.equals(clickedEventLogs, true)) {
+  if (mori.equals(hasCritcalEventLogs, true)) {
     className = 'toggle active'
   } else {
     className = 'toggle'
@@ -47,16 +47,16 @@ function ToggleEventLogs (idx, clickedEventLogs) {
   )
 }
 
-function CheckEventLogs (idx, clickedEventLogs) {
+function CheckEventLogs (idx, hasCritcalEventLogs) {
   return (
     <div className='input-group'>
       <h4 className='check-title'>Events Logs</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
             Were Problems Found
-          {ToggleEventLogs(idx, clickedEventLogs)}
+          {ToggleEventLogs(idx, hasCritcalEventLogs)}
         </li>
-        {EventLogNotes(idx)}
+        {EventLogNotes(idx, hasCritcalEventLogs)}
       </ul>
     </div>
   )
@@ -71,33 +71,33 @@ function changeSystemFileCheckNotes (idx, evt) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'systemFileCheckNotes'], newName)
 }
 
-function SystemFilesCheckNotes (idx, clickSystemFileCheck) {
+function SystemFilesCheckNotes (idx, hasCurroptedSystemFiles) {
   let onChangeystemFilesCheckNotes = changeSystemFileCheckNotes.bind(null, idx)
-  if (mori.equals(clickSystemFileCheck, false)) {
+  if (!hasCurroptedSystemFiles) {
     return (
       <textarea rows='4' onChange={onChangeystemFilesCheckNotes} />
     )
   }
 }
 
-function clickSystemFilesChecks (idx, clickSystemFileCheck) {
-  if (mori.equals(clickSystemFileCheck, true)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickSystemFileCheck'], false,
-                                                           ['computers', idx, 'systemFileCheck'], 0)
-    window.NEXT_STATE = newState
-  } else if (mori.equals(clickSystemFileCheck, false)) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'clickSystemFileCheck'], true,
-                                                           ['computers', idx, 'systemFileCheck'], 100)
-    window.NEXT_STATE = newState
+function clickSystemFilesChecks (idx, hasCurroptedSystemFiles) {
+  if (hasCurroptedSystemFiles) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCurroptedSystemFiles'], false)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 0)
+    window.NEXT_STATE = newState2
+  } else if (!hasCurroptedSystemFiles) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCurroptedSystemFiles'], true)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 100)
+    window.NEXT_STATE = newState2
   }
 }
 
-function ToggleSystemFilesChecks (idx, clickSystemFileCheck) {
-  let clickToggleSystemFilesChecks = clickSystemFilesChecks.bind(null, idx)
+function ToggleSystemFilesChecks (idx, hasCurroptedSystemFiles) {
+  let clickToggleSystemFilesChecks = clickSystemFilesChecks.bind(null, idx, hasCurroptedSystemFiles)
   let className = 'toggle'
-  if (mori.equals(clickSystemFileCheck, false)) {
+  if (!hasCurroptedSystemFiles) {
     className = 'toggle'
-  } else {
+  } else if (hasCurroptedSystemFiles) {
     className = 'toggle active'
   }
   return (
@@ -107,16 +107,16 @@ function ToggleSystemFilesChecks (idx, clickSystemFileCheck) {
   )
 }
 
-function CheckingSystemFiles (idx, clickSystemFileCheck) {
+function CheckingSystemFiles (idx, hasCurroptedSystemFiles) {
   return (
     <div className='input-group'>
       <h4 className='check-title'>System File Check</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
             Were Problems Found
-          {ToggleSystemFilesChecks(idx, clickSystemFileCheck)}
+          {ToggleSystemFilesChecks(idx, hasCurroptedSystemFiles)}
         </li>
-        {SystemFilesCheckNotes(idx)}
+        {SystemFilesCheckNotes(idx, hasCurroptedSystemFiles)}
       </ul>
     </div>
   )
@@ -125,14 +125,14 @@ class ComputerInputStep5 extends MoriComponent {
   render () {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
-    const clickedEventLogs = mori.getIn(this.props.imdata, ['computers', idx, 'clickedEventLogs'])
+    const hasCritcalEventLogs = mori.getIn(this.props.imdata, ['computers', idx, 'hasCritcalEventLogs'])
 
-    const clickSystemFileCheck = mori.getIn(this.props.imdata, ['comptuers', idx, 'clickSystemFileCheck'])
+    const hasCurroptedSystemFiles = mori.getIn(this.props.imdata, ['computers', idx, 'hasCurroptedSystemFiles'])
 
     return (
       <div>
-        {CheckEventLogs(idx, clickedEventLogs)}
-        {CheckingSystemFiles(idx, clickSystemFileCheck)}
+        {CheckEventLogs(idx, hasCritcalEventLogs)}
+        {CheckingSystemFiles(idx, hasCurroptedSystemFiles)}
       </div>
     )
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import {createEmptyComputer} from '../util'
+import {createEmptyComputer, morilog} from '../util'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
 
@@ -8,21 +8,21 @@ import MoriComponent from '../MoriComponent'
 // -----------------------------------------------------------------------------
 
 function isServerFn (idx, isServer) {
-  if (mori.equals(isServer, false)) {
+  if (!isServer) {
     const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], true)
     window.NEXT_STATE = newState
-  } else {
+  } else if (isServer) {
     const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], false)
     window.NEXT_STATE = newState
   }
 }
 
 function ServerBackups (idx, isServer) {
-  let clickIsServer = isServerFn.bind(null, idx)
+  let clickIsServer = isServerFn.bind(null, idx, isServer)
   let className = 'toggle'
-  if (mori.equals(isServer, false)) {
+  if (!isServer) {
     className = 'toggle'
-  } else {
+  } else if (isServer) {
     className = 'toggle active'
   }
   return (
@@ -32,23 +32,26 @@ function ServerBackups (idx, isServer) {
   )
 }
 
-function isServerBackedUp (idx) {
-  if (!window.appState.computers[idx].doesServerHaveABackUp) {
-    window.appState.computers[idx].doesServerHaveABackUp = true
-    window.appState.computers[idx].serverBackups = 0
-  } else {
-    window.appState.computers[idx].doesServerHaveABackUp = false
-    window.appState.computers[idx].serverBackups = 100
+function isServerBackedUp (idx, isServer, doesServerHaveABackUp) {
+  if (!doesServerHaveABackUp) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'doesServerHaveABackUp'], true)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 0)
+    window.NEXT_STATE = newState2
+  } else if (doesServerHaveABackUp) {
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'doesServerHaveABackUp'], false)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 100)
+    window.NEXT_STATE = newState2
   }
 }
 
-// doesServerHaveABackUp
-function ToggleDoesServerHaveABackup (idx) {
-  let clickIsServerBackedUp = isServerBackedUp.bind(null, idx)
+function ToggleDoesServerHaveABackup (idx, isServer, doesServerHaveABackUp) {
+  // console.log('doesServerHaveABackUp')
+  // morilog(doesServerHaveABackUp)
+  let clickIsServerBackedUp = isServerBackedUp.bind(null, idx, isServer, doesServerHaveABackUp)
   let className = 'toggle'
-  if (!window.appState.computers[idx].doesServerHaveABackUp) {
+  if (!doesServerHaveABackUp) {
     className = 'toggle'
-  } else {
+  } else if (doesServerHaveABackUp) {
     className = 'toggle active'
   }
   return (
@@ -58,31 +61,35 @@ function ToggleDoesServerHaveABackup (idx) {
   )
 }
 
-function DoesServeHaveBackup (idx) {
-  if (window.appState.computers[idx].isServer) {
+function DoesServeHaveBackup (idx, isServer, doesServerHaveABackUp) {
+  if (isServer) {
     return (
       <li className='table-view-cell'>
           Does the server have a backup?
-        {ToggleDoesServerHaveABackup(idx)}
+        {ToggleDoesServerHaveABackup(idx, isServer, doesServerHaveABackUp)}
       </li>
     )
   }
 }
 
-function isServerBackupWorking (idx) {
-  if (window.appState.computers[idx].isServerBackupWorking) {
-    window.appState.computers[idx].isServerBackupWorking = false
-  } else {
-    window.appState.computers[idx].isServerBackupWorking = true
+function isServerBackupWorkingFn (idx, isServerBackupWorking) {
+  // morilog(isServerBackupWorking)
+  if (isServerBackupWorking) {
+    let newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], false)
+    window.NEXT_STATE = newState
+  } else if (!isServerBackupWorking) {
+    let newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], true)
+    window.NEXT_STATE = newState
   }
 }
 
-function ToggleIsBackupWorking (idx) {
-  let clickIsServerBackupWorking = isServerBackupWorking.bind(null, idx)
+function ToggleIsBackupWorking (idx, isServer, doesServerHaveABackUp, isServerBackupWorking) {
+  // morilog(isServerBackupWorking)
+  let clickIsServerBackupWorking = isServerBackupWorkingFn.bind(null, idx, isServerBackupWorking)
   let className = 'toggle'
-  if (!window.appState.computers[idx].isServerBackupWorking) {
+  if (!isServerBackupWorking) {
     className = 'toggle'
-  } else {
+  } else if (isServerBackupWorking) {
     className = 'toggle active'
   }
   return (
@@ -94,17 +101,24 @@ function ToggleIsBackupWorking (idx) {
 
 function changeDoesServerBackupNotes (idx, evt) {
   const newName = evt.target.value
-  window.appState.computers[idx].serverBackupNotes = newName
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'serverBackupNotes'], newName)
 }
 
 function changeBackupWorkingNotes (idx, evt) {
   const newName = evt.target.value
-  window.appState.computers[idx].serverBackupWorkingNotes = newName
+  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'serverBackupWorkingNotes'], newName)
 }
 
-function BackupWorkingNotes (idx, isServerBackupWorking, isServer, doesServerHaveABackUp) {
+function BackupWorkingNotes (idx, isServer, doesServerHaveABackUp, isServerBackupWorking) {
   let onChangeBackupWorkingNotes = changeBackupWorkingNotes.bind(null, idx)
-  if (!window.appState.computers[idx].isServerBackupWorking && window.appState.computers[idx].isServer && window.appState.computers[idx].doesServerHaveABackUp) {
+  // console.log('isServerBackupWorking')
+  // morilog(isServerBackupWorking)
+  // console.log('isServer')
+  // morilog(isServer)
+  // console.log('doesServerHaveABackUp')
+  // morilog(doesServerHaveABackUp)
+  if (isServer && doesServerHaveABackUp && !isServerBackupWorking) {
+    morilog(isServerBackupWorking)
     return (
       <li>
         <textarea rows='4' onChange={onChangeBackupWorkingNotes} placeholder='Notes for if the backups arent working' />
@@ -113,23 +127,25 @@ function BackupWorkingNotes (idx, isServerBackupWorking, isServer, doesServerHav
   }
 }
 
-function IsBackupWorking (idx) {
+function IsBackupWorking (idx, isServer, doesServerHaveABackUp, isServerBackupWorking) {
+  // morilog(isServerBackupWorking)
+
   let onChangeDoesServerBackupNotes = changeDoesServerBackupNotes.bind(null, idx)
-  if (!window.appState.computers[idx].doesServerHaveABackUp && window.appState.computers[idx].isServer) {
+  if (!doesServerHaveABackUp && isServer) {
     return (
       <textarea rows='4' onChange={onChangeDoesServerBackupNotes} placeholder='Notes for if it doesnt have a server' />
     )
-  } else if (window.appState.computers[idx].doesServerHaveABackUp && window.appState.computers[idx].isServer) {
+  } else if (mori.equals(doesServerHaveABackUp, true) && mori.equals(isServer, true)) {
     return (
       <li className='table-view-cell'>
           Is it working?
-        {ToggleIsBackupWorking(idx)}
+        {ToggleIsBackupWorking(idx, isServer, doesServerHaveABackUp, isServerBackupWorking)}
       </li>
     )
   }
 }
 
-function CheckServerBackUps (idx, isServerBackupWorking, isServer, doesServerHaveABackUp) {
+function CheckServerBackUps (idx, isServer, doesServerHaveABackUp, isServerBackupWorking) {
   return (
     <div className='input-group'>
       <h4 className='check-title'>Check on Server Backups</h4>
@@ -138,9 +154,9 @@ function CheckServerBackUps (idx, isServerBackupWorking, isServer, doesServerHav
             Is this a server?
           {ServerBackups(idx, isServer)}
         </li>
-        {DoesServeHaveBackup(idx)}
-        {IsBackupWorking(idx)}
-        {BackupWorkingNotes(idx)}
+        {DoesServeHaveBackup(idx, isServer, doesServerHaveABackUp)}
+        {IsBackupWorking(idx, isServer, doesServerHaveABackUp, isServerBackupWorking)}
+        {BackupWorkingNotes(idx, isServer, doesServerHaveABackUp, isServerBackupWorking)}
       </ul>
     </div>
   )
@@ -151,11 +167,13 @@ function CheckServerBackUps (idx, isServerBackupWorking, isServer, doesServerHav
 // -----------------------------------------------------------------------------
 
 function increaseComputerNumber () {
-  window.appState.activeComputerIdx += 1
+  let newState1 = mori.updateIn(window.CURRENT_STATE, ['activeComputerIdx'], mori.inc)
+  let newState2 = mori.assoc(newState1, 'computerInputStep', 1)
+  window.NEXT_STATE = newState2
 }
 
-function SubmitComputerButton (state) {
-  if (state.activeComputerIdx < state.numberOfComputers) {
+function SubmitComputerButton (idx, numComputers) {
+  if (idx < numComputers - 1) {
     return <button className='btn btn-primary btn-block' onClick={increaseComputerNumber}>Next Computer</button>
   } else {
     return <button className='btn btn-positive btn-block'>Submit for score</button>
@@ -169,13 +187,16 @@ function SubmitComputerButton (state) {
 // TODO fix these functions
 
 function addOneComputer () {
-  window.appState.numberOfComputers += 1
-  window.appState.computerInputStep = 1
-  increaseComputerNumber()
-  window.appState.computers.push(createEmptyComputer())
+  let computers = mori.get(window.CURRENT_STATE, 'computers')
+  let newComputer = mori.conj(computers, createEmptyComputer())
+  let newState = mori.assoc(window.CURRENT_STATE, 'computers', newComputer)
+  let newState2 = mori.updateIn(newState, ['numComputers'], mori.inc)
+  let newState3 = mori.assoc(newState2, 'computerInputStep', 1)
+  let newState4 = mori.updateIn(newState3, ['activeComputerIdx'], mori.inc)
+  window.NEXT_STATE = newState4
 }
 
-function AddComputer (state) {
+function AddComputer () {
   return <button className='btn btn-block' onClick={addOneComputer}>Add another Computer</button>
 }
 
@@ -183,13 +204,17 @@ class ComputerInputStep6 extends MoriComponent {
   render () {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
-    const isServer = mori.getIn(this.props.imdata, ['comptuers', idx, 'isServer'])
+    const isServer = mori.getIn(this.props.imdata, ['computers', idx, 'isServer'])
+    const doesServerHaveABackUp = mori.getIn(this.props.imdata, ['computers', idx, 'doesServerHaveABackUp'])
+    const isServerBackupWorking = mori.getIn(this.props.imdata, ['computers', idx, 'isServerBackupWorking'])
+    // morilog(isServerBackupWorking)
+    const numComputers = mori.get(this.props.imdata, 'numComputers')
 
     return (
       <div>
-        {CheckServerBackUps(idx, isServer)}
-        {SubmitComputerButton(idx)}
-        {AddComputer()}
+        {CheckServerBackUps(idx, isServer, doesServerHaveABackUp, isServerBackupWorking)}
+        {SubmitComputerButton(idx, numComputers)}
+        {AddComputer(idx)}
       </div>
     )
   }

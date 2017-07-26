@@ -17,8 +17,6 @@ class ComputersInputPage extends MoriComponent {
     const computerInputStep = mori.get(this.props.imdata, 'computerInputStep')
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const activeComputer = mori.getIn(this.props.imdata, ['computers', idx])
-    // const virusUpdates = mori.getIn(this.props.imdata, ['computers', idx, 'checkForVirusUpdates'])
-    // morilog(virusUpdates)
 
     return (
       <div className='computer-input'>
