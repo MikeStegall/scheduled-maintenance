@@ -14,7 +14,7 @@ function ComputerNameInput (idx, name) {
   let onChangeComputerName = changeComputerName.bind(null, idx)
   return (
     <div className='input-group'>
-      <input type='text' placeholder='Computer Name' className='input-row' onChange={onChangeComputerName} value={name} />
+      <input type='text' placeholder={name} className='input-row' onChange={onChangeComputerName} />
     </div>
   )
 }

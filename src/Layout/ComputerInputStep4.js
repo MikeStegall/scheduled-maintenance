@@ -14,7 +14,7 @@ function changeVirusesFoundNotes (idx, evt) {
 
 function VirusesFoundNotes (idx, hasVirusBeenFound) {
   let onChangeVirusesFoundNotes = changeVirusesFoundNotes.bind(null, idx)
-  if (mori.equals(hasVirusBeenFound, true)) {
+  if (hasVirusBeenFound) {
     return (
       <textarea rows='4' onChange={onChangeVirusesFoundNotes} />
     )
@@ -24,11 +24,11 @@ function VirusesFoundNotes (idx, hasVirusBeenFound) {
 function clickViruesFound (idx, hasVirusBeenFound) {
   if (hasVirusBeenFound) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasVirusBeenFound'], false)
-    const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 0)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 100)
     window.NEXT_STATE = newState2
   } else if (!hasVirusBeenFound) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasVirusBeenFound'], true)
-    const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 100)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 0)
     window.NEXT_STATE = newState2
   }
 }
@@ -53,7 +53,7 @@ function VirusesFound (idx, hasVirusBeenFound) {
     <div className='clean-pc check'>
       <h4 className='check-title'>Malware/Viruses Found</h4>
       {ToggleVirusesFound(idx, hasVirusBeenFound)}
-      {VirusesFoundNotes(idx)}
+      {VirusesFoundNotes(idx, hasVirusBeenFound)}
     </div>
   )
 }

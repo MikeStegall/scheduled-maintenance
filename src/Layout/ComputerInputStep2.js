@@ -46,11 +46,11 @@ function TempFileCheck (idx, sizeOfTempFiles) {
           <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clicklessThan1GB} checked={islessThan1GB} />
         </li>
         <li className='table-view-cell'>
-            Needs Updates
+            Between 1Gb and 5GB
             <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickbetween1GBAnd3GB} checked={isbetween1GBAnd3GB} />
         </li>
         <li className='table-view-cell'>
-            None Found
+            More than 5Gb
             <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickgreaterThan5GB} checked={isgreaterThan5GB} />
         </li>
       </ul>

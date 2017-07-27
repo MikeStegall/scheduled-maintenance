@@ -93,11 +93,11 @@ function CheckForUpdatess (idx, numberOfWindowsUpdates) {
           <input className='radio-btn' type='radio' name='WindowsUpdates' checked={isneedsZeroUpdates} onClick={clickNeedsZeroUpdates} />
         </li>
         <li className='table-view-cell'>
-            Needs Updates
+            Needs 5 to 10
             <input className='radio-btn' type='radio' name='WindowsUpdates' checked={isneedsBetweenOneAndFiveUpdates} onClick={clickNeedsBetweenOneAndFiveUpdates} />
         </li>
         <li className='table-view-cell'>
-            None Found
+            Needs 10 or more
             <input className='radio-btn' type='radio' name='WindowsUpdates' checked={isneedsMoreThanFive} onClick={clickNeedsMoreThanFive} />
         </li>
       </ul>

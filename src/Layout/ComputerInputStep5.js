@@ -13,7 +13,7 @@ function changeEventLogsNotes (idx, evt) {
 
 function EventLogNotes (idx, hasCritcalEventLogs) {
   let onChangeEventLogsNotes = changeEventLogsNotes.bind(null, idx)
-  if (!hasCritcalEventLogs) {
+  if (hasCritcalEventLogs) {
     return (
       <textarea rows='4' onChange={onChangeEventLogsNotes} />
     )
@@ -23,11 +23,11 @@ function EventLogNotes (idx, hasCritcalEventLogs) {
 function clickEventLogs (idx, hasCritcalEventLogs) {
   if (!hasCritcalEventLogs) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCritcalEventLogs'], true)
-    const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 100)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 0)
     window.NEXT_STATE = newState2
   } else if (hasCritcalEventLogs) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCritcalEventLogs'], false)
-    const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 0)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 100)
     window.NEXT_STATE = newState2
   }
 }
@@ -73,7 +73,7 @@ function changeSystemFileCheckNotes (idx, evt) {
 
 function SystemFilesCheckNotes (idx, hasCurroptedSystemFiles) {
   let onChangeystemFilesCheckNotes = changeSystemFileCheckNotes.bind(null, idx)
-  if (!hasCurroptedSystemFiles) {
+  if (hasCurroptedSystemFiles) {
     return (
       <textarea rows='4' onChange={onChangeystemFilesCheckNotes} />
     )
@@ -83,11 +83,11 @@ function SystemFilesCheckNotes (idx, hasCurroptedSystemFiles) {
 function clickSystemFilesChecks (idx, hasCurroptedSystemFiles) {
   if (hasCurroptedSystemFiles) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCurroptedSystemFiles'], false)
-    const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 0)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 100)
     window.NEXT_STATE = newState2
   } else if (!hasCurroptedSystemFiles) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCurroptedSystemFiles'], true)
-    const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 100)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 0)
     window.NEXT_STATE = newState2
   }
 }
