@@ -51,6 +51,10 @@ text-align: center;
 .computer-average {
   float: right;
 }
+.error-message div {
+  text-align: center;
+  color: red;
+}
 
 #appContainer {
   flex: 4

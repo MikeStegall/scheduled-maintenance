@@ -4,7 +4,7 @@ import {createEmptyComputer} from '../util.js'
 
 function submitNumberOfComputers () {
   const numComputers = mori.get(window.CURRENT_STATE, 'numComputers')
-  if (numComputers === 0) {
+  if (numComputers === '') {
     // TODO: show an error message here
     return
   }
@@ -24,6 +24,12 @@ function changeNumberOfComputers (evt) {
   window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'numComputers', numComputers)
 }
 
+function onKeyPress (key) {
+  if (key.charCode === 13) {
+    submitNumberOfComputers()
+  }
+}
+
 function NameOfCompany (companyName) {
   return <h3 className='company-name'>{companyName}</h3>
 }
@@ -35,7 +41,7 @@ function NumberOfComputersPage (companyName, number) {
       <div className='input-row computer-number-input'>
         <label>Number of Computers:</label>
         <input className='number-of-computers' type='number' placeholder='Number of Computers' name='numberOfComputes' onChange={changeNumberOfComputers} value={number} />
-        <button className='btn btn-primary btn-block' onClick={submitNumberOfComputers}>Enter</button>
+        <button className='btn btn-primary btn-block' onKeyPress={onKeyPress} onClick={submitNumberOfComputers}>Enter</button>
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
 import SubmitComputerButton from './SubmitComputerButton'
+import ErrorMessages from './ErrorMessage'
 
 // -----------------------------------------------------------------------------
 // Check on Server Backups
@@ -163,6 +164,7 @@ class ComputerInputStep6 extends MoriComponent {
       <div>
         {CheckServerBackUps(idx, isServer, doesServerHaveABackUp, isServerBackupWorking)}
         <SubmitComputerButton imdata={this.props.imdata} />
+        <ErrorMessages imdata={this.props.imdata} />
       </div>
     )
   }
