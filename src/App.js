@@ -6,7 +6,7 @@ import StateExplorer from './StateExplorer'
 import CompanyNameInputPage from './Layout/CompanyName'
 import NumberOfComputersPage from './Layout/NumberOfComputers'
 import ComputersInputPage from './Layout/ComputerInputForm'
-import AverageOfComputers from './Layout/AverageOfComputers'
+import CompanyAverage from './Layout/CompanyAverage'
 
 class App extends MoriComponent {
   render () {
@@ -29,7 +29,7 @@ class App extends MoriComponent {
     } else if (currentStep === 3) {
       pageComponent = <ComputersInputPage imdata={currentState} />
     } else if (currentStep === 4) {
-      pageComponent = <AverageOfComputers imdata={currentState} />
+      pageComponent = <CompanyAverage imdata={currentState} />
     }
 
     return (

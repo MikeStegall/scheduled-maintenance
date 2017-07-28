@@ -48,6 +48,10 @@ text-align: center;
   display: flex;
 }
 
+.computer-average {
+  float: right;
+}
+
 #appContainer {
   flex: 4
 }

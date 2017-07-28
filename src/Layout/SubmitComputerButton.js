@@ -12,11 +12,13 @@ function increaseComputerNumber (idx, computerScore, serverScore, isServer) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], serverScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'computerInputStep', 1)
+    // const newState4 = mori.assocIn(newState3, ['computers', idx, 'computerName'], '')
     window.NEXT_STATE = newState3
   } else if (!isServer) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], computerScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'computerInputStep', 1)
+    // const newState4 = mori.assocIn(newState3, ['computers', idx, 'computerName'], '')
     window.NEXT_STATE = newState3
   }
 }
