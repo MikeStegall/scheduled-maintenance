@@ -23,11 +23,11 @@ function clickPcCleanedFn (idx, hasPcBeenCleaned) {
   }
 }
 
-function PcCleanedNotes (idx, hasPcBeenCleaned) {
+function PcCleanedNotes (idx, hasPcBeenCleaned, pcCleanedNotes) {
   let onChangePcCleanedNotes = changePcCleanNotes.bind(null, idx)
   if (mori.equals(hasPcBeenCleaned, false)) {
     return (
-      <textarea rows='4' onChange={onChangePcCleanedNotes} />
+      <textarea rows='4' onChange={onChangePcCleanedNotes} value={pcCleanedNotes} />
     )
   }
 }
@@ -47,12 +47,12 @@ function TogglePcCleaned (idx, hasPcBeenCleaned) {
   )
 }
 
-function PcCleaned (idx, hasPcBeenCleaned) {
+function PcCleaned (idx, hasPcBeenCleaned, pcCleanedNotes) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Inspect and clean inside of Pc</h4>
       {TogglePcCleaned(idx, hasPcBeenCleaned)}
-      {PcCleanedNotes(idx, hasPcBeenCleaned)}
+      {PcCleanedNotes(idx, hasPcBeenCleaned, pcCleanedNotes)}
     </div>
   )
 }
@@ -110,12 +110,13 @@ class ComputerInputStep3 extends MoriComponent {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
     const hasPcBeenCleaned = mori.getIn(this.props.imdata, ['computers', idx, 'hasPcBeenCleaned'])
+    const pcCleanedNotes = mori.getIn(this.props.imdata, ['computers', idx, 'pcCleanedNotes'])
 
     const numberOfWindowsUpdates = mori.getIn(this.props.imdata, ['computers', idx, 'numberOfWindowsUpdates'])
 
     return (
       <div>
-        {PcCleaned(idx, hasPcBeenCleaned)}
+        {PcCleaned(idx, hasPcBeenCleaned, pcCleanedNotes)}
         {CheckForUpdatess(idx, numberOfWindowsUpdates)}
       </div>
     )

@@ -4,12 +4,10 @@ import mori from 'mori'
 function submitCompanyName () {
   const companyName = mori.get(window.CURRENT_STATE, 'companyName')
   // do nothing if the user has not entered a company name
-  if (companyName === '') {
-    // TODO: show the user a nice warning message
-    return
-  } else {
-    // else go to the next step
+  if (companyName !== '') {
     window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'step', 2)
+  } else {
+    window.alert('Plase enter a company Name')
   }
 }
 
@@ -25,7 +23,7 @@ function onKeyPress (key) {
   }
 }
 
-function CompanyNameInputPage (name) {
+function CompanyNameInputPage (name, feedback) {
   return (
     <div className='input-group company-name-input-group'>
       <div className='input-row company-name-input'>

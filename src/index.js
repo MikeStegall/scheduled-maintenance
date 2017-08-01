@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import mori from 'mori'
-// import {morilog} from './util'
 
 import App from './App'
 
@@ -17,6 +16,7 @@ const initialState = {
   companyAverage: 0,
   step: 1,
   computerInputStep: 1,
+  isEverythingEntered: false,
   showStateExplorer: document.location.search.indexOf('stateexplorer') !== -1
 }
 

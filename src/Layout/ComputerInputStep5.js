@@ -11,11 +11,11 @@ function changeEventLogsNotes (idx, evt) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'eventLogsNotes'], newName)
 }
 
-function EventLogNotes (idx, hasCritcalEventLogs) {
+function EventLogNotes (idx, hasCritcalEventLogs, eventLogsNotes) {
   let onChangeEventLogsNotes = changeEventLogsNotes.bind(null, idx)
   if (hasCritcalEventLogs) {
     return (
-      <textarea rows='4' onChange={onChangeEventLogsNotes} />
+      <textarea rows='4' onChange={onChangeEventLogsNotes} value={eventLogsNotes} />
     )
   }
 }
@@ -47,7 +47,7 @@ function ToggleEventLogs (idx, hasCritcalEventLogs) {
   )
 }
 
-function CheckEventLogs (idx, hasCritcalEventLogs) {
+function CheckEventLogs (idx, hasCritcalEventLogs, eventLogsNotes) {
   return (
     <div className='input-group'>
       <h4 className='check-title'>Events Logs</h4>
@@ -56,7 +56,7 @@ function CheckEventLogs (idx, hasCritcalEventLogs) {
             Were Problems Found
           {ToggleEventLogs(idx, hasCritcalEventLogs)}
         </li>
-        {EventLogNotes(idx, hasCritcalEventLogs)}
+        {EventLogNotes(idx, hasCritcalEventLogs, eventLogsNotes)}
       </ul>
     </div>
   )
@@ -71,11 +71,11 @@ function changeSystemFileCheckNotes (idx, evt) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'systemFileCheckNotes'], newName)
 }
 
-function SystemFilesCheckNotes (idx, hasCurroptedSystemFiles) {
+function SystemFilesCheckNotes (idx, hasCurroptedSystemFiles, systemFileCheckNotes) {
   let onChangeystemFilesCheckNotes = changeSystemFileCheckNotes.bind(null, idx)
   if (hasCurroptedSystemFiles) {
     return (
-      <textarea rows='4' onChange={onChangeystemFilesCheckNotes} />
+      <textarea rows='4' onChange={onChangeystemFilesCheckNotes} value={systemFileCheckNotes} />
     )
   }
 }
@@ -107,7 +107,7 @@ function ToggleSystemFilesChecks (idx, hasCurroptedSystemFiles) {
   )
 }
 
-function CheckingSystemFiles (idx, hasCurroptedSystemFiles) {
+function CheckingSystemFiles (idx, hasCurroptedSystemFiles, systemFileCheckNotes) {
   return (
     <div className='input-group'>
       <h4 className='check-title'>System File Check</h4>
@@ -116,7 +116,7 @@ function CheckingSystemFiles (idx, hasCurroptedSystemFiles) {
             Were Problems Found
           {ToggleSystemFilesChecks(idx, hasCurroptedSystemFiles)}
         </li>
-        {SystemFilesCheckNotes(idx, hasCurroptedSystemFiles)}
+        {SystemFilesCheckNotes(idx, hasCurroptedSystemFiles, systemFileCheckNotes)}
       </ul>
     </div>
   )
@@ -126,13 +126,15 @@ class ComputerInputStep5 extends MoriComponent {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
     const hasCritcalEventLogs = mori.getIn(this.props.imdata, ['computers', idx, 'hasCritcalEventLogs'])
+    const eventLogsNotes = mori.getIn(this.props.imdata, ['computers', idx, 'eventLogsNotes'])
 
     const hasCurroptedSystemFiles = mori.getIn(this.props.imdata, ['computers', idx, 'hasCurroptedSystemFiles'])
+    const systemFileCheckNotes = mori.getIn(this.props.imdata, ['computers', idx, 'systemFileCheckNotes'])
 
     return (
       <div>
-        {CheckEventLogs(idx, hasCritcalEventLogs)}
-        {CheckingSystemFiles(idx, hasCurroptedSystemFiles)}
+        {CheckEventLogs(idx, hasCritcalEventLogs, eventLogsNotes)}
+        {CheckingSystemFiles(idx, hasCurroptedSystemFiles, systemFileCheckNotes)}
       </div>
     )
   }

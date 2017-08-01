@@ -3,6 +3,7 @@ import mori from 'mori'
 import MoriComponent from '../MoriComponent'
 import SubmitComputerButton from './SubmitComputerButton'
 import ErrorMessages from './ErrorMessage'
+// import isEverythingEnteredFn from './EverythingEntered'
 
 // -----------------------------------------------------------------------------
 // Check on Server Backups
@@ -10,8 +11,9 @@ import ErrorMessages from './ErrorMessage'
 
 function isServerFn (idx, isServer) {
   if (!isServer) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], true)
-    window.NEXT_STATE = newState
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], true)
+    const newState2 = mori.assoc(newState1, 'isEverythingEntered', false)
+    window.NEXT_STATE = newState2
   } else if (isServer) {
     const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], false)
     window.NEXT_STATE = newState
@@ -107,22 +109,22 @@ function changeBackupWorkingNotes (idx, evt) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'serverBackupWorkingNotes'], newName)
 }
 
-function BackupWorkingNotes (idx, isServer, doesServerHaveABackUp, isServerBackupWorking) {
+function BackupWorkingNotes (idx, isServer, doesServerHaveABackUp, isServerBackupWorking, serverBackupWorkingNotes) {
   let onChangeBackupWorkingNotes = changeBackupWorkingNotes.bind(null, idx)
   if (isServer && doesServerHaveABackUp && !isServerBackupWorking) {
     return (
       <li>
-        <textarea rows='4' onChange={onChangeBackupWorkingNotes} placeholder='Notes for if the backups arent working' />
+        <textarea rows='4' onChange={onChangeBackupWorkingNotes} placeholder='Notes for if the backups arent working' value={serverBackupWorkingNotes} />
       </li>
     )
   }
 }
 
-function IsBackupWorking (idx, isServer, doesServerHaveABackUp, isServerBackupWorking) {
+function IsBackupWorking (idx, isServer, doesServerHaveABackUp, isServerBackupWorking, serverBackupNotes) {
   let onChangeDoesServerBackupNotes = changeDoesServerBackupNotes.bind(null, idx)
   if (!doesServerHaveABackUp && isServer) {
     return (
-      <textarea rows='4' onChange={onChangeDoesServerBackupNotes} placeholder='Notes for if it doesnt have a server' />
+      <textarea rows='4' onChange={onChangeDoesServerBackupNotes} placeholder='Notes for if it doesnt have a server' value={serverBackupNotes} />
     )
   } else if (mori.equals(doesServerHaveABackUp, true) && mori.equals(isServer, true)) {
     return (
@@ -134,7 +136,7 @@ function IsBackupWorking (idx, isServer, doesServerHaveABackUp, isServerBackupWo
   }
 }
 
-function CheckServerBackUps (idx, isServer, doesServerHaveABackUp, isServerBackupWorking) {
+function CheckServerBackUps (idx, isServer, doesServerHaveABackUp, isServerBackupWorking, serverBackupNotes, serverBackupWorkingNotes) {
   return (
     <div className='input-group'>
       <h4 className='check-title'>Check on Server Backups</h4>
@@ -144,8 +146,8 @@ function CheckServerBackUps (idx, isServer, doesServerHaveABackUp, isServerBacku
           {ServerBackups(idx, isServer)}
         </li>
         {DoesServeHaveBackup(idx, isServer, doesServerHaveABackUp)}
-        {IsBackupWorking(idx, isServer, doesServerHaveABackUp, isServerBackupWorking)}
-        {BackupWorkingNotes(idx, isServer, doesServerHaveABackUp, isServerBackupWorking)}
+        {IsBackupWorking(idx, isServer, doesServerHaveABackUp, isServerBackupWorking, serverBackupNotes)}
+        {BackupWorkingNotes(idx, isServer, doesServerHaveABackUp, isServerBackupWorking, serverBackupWorkingNotes)}
       </ul>
     </div>
   )
@@ -156,13 +158,18 @@ class ComputerInputStep6 extends MoriComponent {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
     const isServer = mori.getIn(this.props.imdata, ['computers', idx, 'isServer'])
+
     const doesServerHaveABackUp = mori.getIn(this.props.imdata, ['computers', idx, 'doesServerHaveABackUp'])
+    const serverBackupNotes = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'serverBackupNotes'])
+
     const isServerBackupWorking = mori.getIn(this.props.imdata, ['computers', idx, 'isServerBackupWorking'])
+    const serverBackupWorkingNotes = mori.getIn(this.props.imdata, ['computers', idx, 'serverBackupWorkingNotes'])
     // const numComputers = mori.get(this.props.imdata, 'numComputers')
 
+    // isEverythingEnteredFn()
     return (
       <div>
-        {CheckServerBackUps(idx, isServer, doesServerHaveABackUp, isServerBackupWorking)}
+        {CheckServerBackUps(idx, isServer, doesServerHaveABackUp, isServerBackupWorking, serverBackupNotes, serverBackupWorkingNotes)}
         <SubmitComputerButton imdata={this.props.imdata} />
         <ErrorMessages imdata={this.props.imdata} />
       </div>

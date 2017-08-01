@@ -8,15 +8,15 @@ import MoriComponent from '../MoriComponent'
 
 function changeVirusesFoundNotes (idx, evt) {
   const newName = evt.target.value
-  const newState = mori.assoc(window.CURRENT_STATE, 'virusesFoundNotes', newName)
+  const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'virusesFoundNotes'], newName)
   window.NEXT_STATE = newState
 }
 
-function VirusesFoundNotes (idx, hasVirusBeenFound) {
+function VirusesFoundNotes (idx, hasVirusBeenFound, virusesFoundNotes) {
   let onChangeVirusesFoundNotes = changeVirusesFoundNotes.bind(null, idx)
   if (hasVirusBeenFound) {
     return (
-      <textarea rows='4' onChange={onChangeVirusesFoundNotes} />
+      <textarea rows='4' onChange={onChangeVirusesFoundNotes} value={virusesFoundNotes} />
     )
   }
 }
@@ -48,12 +48,12 @@ function ToggleVirusesFound (idx, hasVirusBeenFound) {
   )
 }
 
-function VirusesFound (idx, hasVirusBeenFound) {
+function VirusesFound (idx, hasVirusBeenFound, virusesFoundNotes) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Malware/Viruses Found</h4>
       {ToggleVirusesFound(idx, hasVirusBeenFound)}
-      {VirusesFoundNotes(idx, hasVirusBeenFound)}
+      {VirusesFoundNotes(idx, hasVirusBeenFound, virusesFoundNotes)}
     </div>
   )
 }
@@ -67,11 +67,11 @@ function changeHardDriveHealthNotes (idx, evt) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hardDriveHealthNotes'], newName)
 }
 
-function HardDriveHealthNotes (idx, isHardDriveGood) {
+function HardDriveHealthNotes (idx, isHardDriveGood, hardDriveHealthNotes) {
   let onChangeHardDriveHealthNotes = changeHardDriveHealthNotes.bind(null, idx)
   if (!isHardDriveGood) {
     return (
-      <textarea rows='4' onChange={onChangeHardDriveHealthNotes} />
+      <textarea rows='4' onChange={onChangeHardDriveHealthNotes} value={hardDriveHealthNotes} />
     )
   }
 }
@@ -103,12 +103,12 @@ function ToggleHardDriveHealth (idx, isHardDriveGood) {
   )
 }
 
-function HardDriveCheck (idx, isHardDriveGood) {
+function HardDriveCheck (idx, isHardDriveGood, hardDriveHealthNotes) {
   return (
     <div className='clean-pc check'>
       <h4 className='check-title'>Is Hard Drive Good?</h4>
       {ToggleHardDriveHealth(idx, isHardDriveGood)}
-      {HardDriveHealthNotes(idx, isHardDriveGood)}
+      {HardDriveHealthNotes(idx, isHardDriveGood, hardDriveHealthNotes)}
     </div>
   )
 }
@@ -117,13 +117,15 @@ class ComputerInputStep4 extends MoriComponent {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
     const hasVirusBeenFound = mori.getIn(this.props.imdata, ['computers', idx, 'hasVirusBeenFound'])
+    const virusesFoundNotes = mori.getIn(this.props.imdata, ['computers', idx, 'virusesFoundNotes'])
 
     const isHardDriveGood = mori.getIn(this.props.imdata, ['computers', idx, 'isHardDriveGood'])
+    const hardDriveHealthNotes = mori.getIn(this.props.imdata, ['computers', idx, 'hardDriveHealthNotes'])
 
     return (
       <div>
-        {VirusesFound(idx, hasVirusBeenFound)}
-        {HardDriveCheck(idx, isHardDriveGood)}
+        {VirusesFound(idx, hasVirusBeenFound, virusesFoundNotes)}
+        {HardDriveCheck(idx, isHardDriveGood, hardDriveHealthNotes)}
       </div>
     )
   }

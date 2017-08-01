@@ -54,6 +54,7 @@ text-align: center;
 .error-message div {
   text-align: center;
   color: red;
+  border: 1px solid red;
 }
 
 #appContainer {

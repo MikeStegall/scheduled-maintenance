@@ -2,38 +2,43 @@ import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
 import {createEmptyComputer} from '../util'
+import isEverythingEnteredFn from './EverythingEntered'
 
 // -----------------------------------------------------------------------------
 // Average of Comptuer
 // -----------------------------------------------------------------------------
 
 function increaseComputerNumber (idx, computerScore, serverScore, isServer) {
-  if (isServer) {
+  const isEverythingEntered = mori.get(window.CURRENT_STATE, 'isEverythingEntered')
+  if (isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], serverScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'computerInputStep', 1)
-    // const newState4 = mori.assocIn(newState3, ['computers', idx, 'computerName'], '')
     window.NEXT_STATE = newState3
-  } else if (!isServer) {
+  } else if (!isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], computerScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'computerInputStep', 1)
-    // const newState4 = mori.assocIn(newState3, ['computers', idx, 'computerName'], '')
     window.NEXT_STATE = newState3
+  } else if (!isEverythingEntered) {
+    return
   }
 }
 
 function getAverageScore (idx, computerScore, serverScore, isServer) {
-  if (isServer) {
+  const isEverythingEntered = mori.get(window.CURRENT_STATE, 'isEverythingEntered')
+  if (isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], serverScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'step', 4)
     window.NEXT_STATE = newState3
-  } else if (!isServer) {
+  } else if (!isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], computerScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'step', 4)
     window.NEXT_STATE = newState3
+  } else if (!isEverythingEntered) {
+    return
   }
 }
 
@@ -55,7 +60,8 @@ function addOneComputer (idx, computerScore, serverScore, isServer) {
   const computers = mori.get(window.CURRENT_STATE, 'computers')
   const numComputers = mori.count(computers)
   const newComputerName = 'Computer ' + (numComputers + 1)
-  if (isServer) {
+  const isEverythingEntered = mori.get(window.CURRENT_STATE, 'isEverythingEntered')
+  if (isServer && isEverythingEntered) {
     const newComputers = mori.conj(computers, createEmptyComputer(newComputerName))
     const newState = mori.assoc(window.CURRENT_STATE, 'computers', newComputers)
     const newState2 = mori.updateIn(newState, ['numComputers'], mori.inc)
@@ -63,7 +69,7 @@ function addOneComputer (idx, computerScore, serverScore, isServer) {
     const newState4 = mori.updateIn(newState3, ['activeComputerIdx'], mori.inc)
     const newState5 = mori.assocIn(newState4, ['computers', idx, 'averageScore'], serverScore)
     window.NEXT_STATE = newState5
-  } else if (!isServer) {
+  } else if (!isServer && isEverythingEntered) {
     const newComputers = mori.conj(computers, createEmptyComputer(newComputerName))
     const newState = mori.assoc(window.CURRENT_STATE, 'computers', newComputers)
     const newState2 = mori.updateIn(newState, ['numComputers'], mori.inc)
@@ -71,6 +77,8 @@ function addOneComputer (idx, computerScore, serverScore, isServer) {
     const newState4 = mori.updateIn(newState3, ['activeComputerIdx'], mori.inc)
     const newState5 = mori.assocIn(newState4, ['computers', idx, 'averageScore'], computerScore)
     window.NEXT_STATE = newState5
+  } else if (!isEverythingEntered) {
+    return
   }
 }
 
@@ -120,6 +128,8 @@ class SubmitComputerButton extends MoriComponent {
     const serverScoreArrSum = mori.reduce(mori.sum, 0, serverScoreArr)
     const computerScore = computerScoreArrSum / computerScoreArrLength
     const serverScore = serverScoreArrSum / serverScoreArrLenth
+
+    isEverythingEnteredFn()
 
     return (
       <div>
