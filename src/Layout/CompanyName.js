@@ -23,7 +23,7 @@ function onKeyPress (key) {
   }
 }
 
-function CompanyNameInputPage (name, feedback) {
+function CompanyNameInputPage (name) {
   return (
     <div className='input-group company-name-input-group'>
       <div className='input-row company-name-input'>

@@ -1,7 +1,6 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
-import {morilog} from '../util'
 
 function ShowCompanyAverage (idx, numComputers) {
   let companyAverageArr = mori.vector()
@@ -9,7 +8,6 @@ function ShowCompanyAverage (idx, numComputers) {
     let computerAverage = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'])
     companyAverageArr = mori.conj(companyAverageArr, computerAverage)
   }
-  morilog(companyAverageArr)
   const companyAverageArrLenth = mori.count(companyAverageArr)
   const companyAverageArrSum = mori.reduce(mori.sum, 0, companyAverageArr)
   const companyAverage = companyAverageArrSum / companyAverageArrLenth
@@ -23,8 +21,19 @@ class CompanyAverage extends MoriComponent {
   render () {
     const numComputers = mori.get(this.props.imdata, 'numComputers')
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
+    const companyName = mori.get(window.CURRENT_STATE, 'companyName')
+    const companyNameJs = mori.toJs(companyName)
 
-    return ShowCompanyAverage(idx, numComputers)
+    return (
+      <div>
+        <header className='bar bar-nav'>
+          <h1 className='title'>{companyNameJs} Company Average</h1>
+        </header>
+        <div className='company-average-score'>
+          {ShowCompanyAverage(idx, numComputers)}
+        </div>
+      </div>
+    )
   }
 }
 

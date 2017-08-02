@@ -76,9 +76,9 @@ function HardDriveHealthNotes (idx) {
 
 function EventLogsNotes (idx) {
   const hasCritcalEventLogs = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'hasCritcalEventLogs'])
-  const EventLogsNotes = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'EventLogsNotes'])
+  const eventLogsNotes = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'eventLogsNotes'])
   if (hasCritcalEventLogs) {
-    if (EventLogsNotes === '') {
+    if (eventLogsNotes === '') {
       return <div>Please enter Notes about Event Logs on Page 5</div>
     }
   }
