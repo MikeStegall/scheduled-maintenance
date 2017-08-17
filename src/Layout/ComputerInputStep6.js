@@ -160,7 +160,7 @@ class ComputerInputStep6 extends MoriComponent {
     const isServer = mori.getIn(this.props.imdata, ['computers', idx, 'isServer'])
 
     const doesServerHaveABackUp = mori.getIn(this.props.imdata, ['computers', idx, 'doesServerHaveABackUp'])
-    const serverBackupNotes = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'serverBackupNotes'])
+    const serverBackupNotes = mori.getIn(this.props.imdata, ['computers', idx, 'serverBackupNotes'])
 
     const isServerBackupWorking = mori.getIn(this.props.imdata, ['computers', idx, 'isServerBackupWorking'])
     const serverBackupWorkingNotes = mori.getIn(this.props.imdata, ['computers', idx, 'serverBackupWorkingNotes'])

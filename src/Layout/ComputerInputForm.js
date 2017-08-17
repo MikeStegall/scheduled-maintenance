@@ -6,6 +6,7 @@ import mori from 'mori'
 import HeaderBar from './HeaderBar'
 import ComputerNameInput from './ComputerNameInput'
 import ComputerInputSteps from './ComputerInputSteps'
+// import SwitchComputers from './SwitchComputers'
 
 // -----------------------------------------------------------------------------
 // Computer Input Page
@@ -24,9 +25,7 @@ class ComputersInputPage extends MoriComponent {
         {ComputerNameInput(idx, mori.get(activeComputer, 'computerName'))}
         <ComputerInputSteps imdata={this.props.imdata} />
         {/* {ComputerInputSteps(idx, computerInputStep, activeComputer, virusUpdates)} */}
-        <div className='bar bar-standard bar-footer-secondary'>
-          <button className='btn btn-block'>Switch Computers</button>
-        </div>
+        {/* {SwitchComputers(idx)} */}
         <span className='badge step-count'>Page {computerInputStep}/6</span>
       </div>
     )
