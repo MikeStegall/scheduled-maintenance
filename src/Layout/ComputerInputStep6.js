@@ -3,7 +3,7 @@ import mori from 'mori'
 import MoriComponent from '../MoriComponent'
 import SubmitComputerButton from './SubmitComputerButton'
 import ErrorMessages from './ErrorMessage'
-// import isEverythingEnteredFn from './EverythingEntered'
+import {pushFireBase} from '../util'
 
 // -----------------------------------------------------------------------------
 // Check on Server Backups
@@ -14,9 +14,11 @@ function isServerFn (idx, isServer) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], true)
     const newState2 = mori.assoc(newState1, 'isEverythingEntered', false)
     window.NEXT_STATE = newState2
+    pushFireBase()
   } else if (isServer) {
     const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], false)
     window.NEXT_STATE = newState
+    pushFireBase()
   }
 }
 
@@ -40,10 +42,12 @@ function isServerBackedUp (idx, isServer, doesServerHaveABackUp) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'doesServerHaveABackUp'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 100)
     window.NEXT_STATE = newState2
+    pushFireBase()
   } else if (doesServerHaveABackUp) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'doesServerHaveABackUp'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 0)
     window.NEXT_STATE = newState2
+    pushFireBase()
   }
 }
 
@@ -78,9 +82,11 @@ function isServerBackupWorkingFn (idx, isServerBackupWorking) {
   if (isServerBackupWorking) {
     let newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], false)
     window.NEXT_STATE = newState
+    pushFireBase()
   } else if (!isServerBackupWorking) {
     let newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], true)
     window.NEXT_STATE = newState
+    pushFireBase()
   }
 }
 

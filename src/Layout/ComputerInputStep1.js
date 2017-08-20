@@ -1,7 +1,7 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
-// import {morilog} from '../util'
+import {pushFireBase} from '../util'
 // ---------------------------------------------------------
 // Virus Check
 // ---------------------------------------------------------
@@ -10,14 +10,17 @@ import MoriComponent from '../MoriComponent'
 
 function fullUpdate (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 100)
+  pushFireBase()
 }
 
 function needsUpdates (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 50)
+  pushFireBase()
 }
 
 function noneFound (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 0)
+  pushFireBase()
 }
 
 function VirusSoftwareCheck (idx, virusUpdates) {
@@ -25,13 +28,9 @@ function VirusSoftwareCheck (idx, virusUpdates) {
   let clickNeedsUpdates = needsUpdates.bind(null, idx)
   let clickNoneFound = noneFound.bind(null, idx)
 
-  let isFullyUpdatedChecked = (mori.equals(virusUpdates, 100)) // not sure if this is the righ function for this.
-  let isNeedsUpdatedChecked = (mori.equals(virusUpdates, 50)) // not sure if this is the righ function for this.
-  let isNoneFoundChecked = (mori.equals(virusUpdates, 0)) // not sure if this is the righ function for this.
-  // morilog(isNoneFoundChecked)
-  // let isFullyUpdatedChecked = (computer[idx].checkForVirusUpdates === 100)
-  // let isNeedsUpdatedChecked = (computer[idx].checkForVirusUpdates === 50)
-  // let isNoneFoundChecked = (computer[idx].checkForVirusUpdates === 0)
+  let isFullyUpdatedChecked = (mori.equals(virusUpdates, 100))
+  let isNeedsUpdatedChecked = (mori.equals(virusUpdates, 50))
+  let isNoneFoundChecked = (mori.equals(virusUpdates, 0))
 
   return (
     <div className='input-group virus-software check'>
@@ -62,17 +61,17 @@ function VirusSoftwareCheck (idx, virusUpdates) {
 
 function greaterThan25 (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 100)
-  // window.appState.computers[idx].freeDiskSpace = 100
+  pushFireBase()
 }
 
 function between25And5 (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 50)
-  // window.appState.computers[idx].freeDiskSpace = 50
+  pushFireBase()
 }
 
 function lessThan5 (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 0)
-  // window.appState.computers[idx].freeDiskSpace = 0
+  pushFireBase()
 }
 
 function DiskSpaceCheck (idx, freeDiskSpace) {
@@ -80,12 +79,9 @@ function DiskSpaceCheck (idx, freeDiskSpace) {
   let clickbetween25And5 = between25And5.bind(null, idx)
   let clicklessThan5 = lessThan5.bind(null, idx)
 
-  let isgreaterThan25 = (mori.equals(freeDiskSpace, 100)) // not sure if this is the righ function for this.
-  let isbetween25And5 = (mori.equals(freeDiskSpace, 50)) // not sure if this is the righ function for this.
-  let islessThan5 = (mori.equals(freeDiskSpace, 0)) // not sure if this is the righ function for this.
-  // let isgreaterThan25 = (computer[idx].freeDiskSpace === 100)
-  // let isbetween25And5 = (computer[idx].freeDiskSpace === 50)
-  // let islessThan5 = (computer[idx].freeDiskSpace === 0)
+  let isgreaterThan25 = (mori.equals(freeDiskSpace, 100))
+  let isbetween25And5 = (mori.equals(freeDiskSpace, 50))
+  let islessThan5 = (mori.equals(freeDiskSpace, 0))
 
   return (
     <div className='disk-space check'>

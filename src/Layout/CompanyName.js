@@ -1,6 +1,6 @@
 import React from 'react'
 import mori from 'mori'
-import firebase from '../firebase'
+import {pushFireBase} from '../util'
 
 function submitCompanyName () {
   const companyName = mori.get(window.CURRENT_STATE, 'companyName')
@@ -11,12 +11,6 @@ function submitCompanyName () {
   } else {
     window.alert('Plase enter a company Name')
   }
-}
-
-function pushFireBase () {
-  const appStateJS = mori.toJs(window.CURRENT_STATE)
-  const rootRef = firebase.database().ref().child('CompanyID')
-  rootRef.push(appStateJS)
 }
 
 function changeCompanyName (evt) {

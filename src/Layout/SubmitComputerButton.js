@@ -106,7 +106,7 @@ class SubmitComputerButton extends MoriComponent {
     const eventLogs = mori.getIn(this.props.imdata, ['computers', idx, 'eventLogs'])
     const systemFileCheck = mori.getIn(this.props.imdata, ['computers', idx, 'systemFileCheck'])
     const serverBackups = mori.getIn(this.props.imdata, ['computers', idx, 'serverBackups'])
-    // Is the comptuers a server
+    // Is the comptuer a server
     const isServer = mori.getIn(this.props.imdata, ['computers', idx, 'isServer'])
 
     const computerScoreArr = mori.vector(checkForVirusUpdates,

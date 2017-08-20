@@ -1,6 +1,6 @@
 import React from 'react'
 import mori from 'mori'
-// import {morilog} from '../util'
+import {pushFireBase} from '../util'
 import MoriComponent from '../MoriComponent'
 
 // ---------------------------------------------------------
@@ -11,17 +11,17 @@ import MoriComponent from '../MoriComponent'
 
 function lessThan1GB (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 100)
-  // window.appState.computers[idx].sizeOfTempFiles = 100
+  pushFireBase()
 }
 
 function between1GBAnd3GB (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 50)
-  // window.appState.computers[idx].sizeOfTempFiles = 50
+  pushFireBase()
 }
 
 function greaterThan5GB (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 0)
-  // window.appState.computers[idx].sizeOfTempFiles = 0
+  pushFireBase()
 }
 
 function TempFileCheck (idx, sizeOfTempFiles) {
@@ -29,13 +29,9 @@ function TempFileCheck (idx, sizeOfTempFiles) {
   let clickbetween1GBAnd3GB = between1GBAnd3GB.bind(null, idx)
   let clickgreaterThan5GB = greaterThan5GB.bind(null, idx)
 
-  let islessThan1GB = (mori.equals(sizeOfTempFiles, 100)) // not sure if this is the righ function for this.
-  let isbetween1GBAnd3GB = (mori.equals(sizeOfTempFiles, 50)) // not sure if this is the righ function for this.
-  let isgreaterThan5GB = (mori.equals(sizeOfTempFiles, 0)) // not sure if this is the righ function for this.
-
-  // let islessThan1GB = (computer[idx].sizeOfTempFiles === 100)
-  // let isbetween1GBAnd3GB = (computer[idx].sizeOfTempFiles === 50)
-  // let isgreaterThan5GB = (computer[idx].sizeOfTempFiles === 0)
+  let islessThan1GB = (mori.equals(sizeOfTempFiles, 100))
+  let isbetween1GBAnd3GB = (mori.equals(sizeOfTempFiles, 50))
+  let isgreaterThan5GB = (mori.equals(sizeOfTempFiles, 0))
 
   return (
     <div className='temp-files check'>
@@ -66,17 +62,17 @@ function TempFileCheck (idx, sizeOfTempFiles) {
 
 function lessThanTwoPercent (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 100)
-  // window.appState.computers[idx].fragmentation = 100
+  pushFireBase()
 }
 
 function betweenTwoAndFivePercent (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 50)
-  // window.appState.computers[idx].fragmentation = 50
+  pushFireBase()
 }
 
 function greaterThanFivePercent (idx) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 0)
-  // window.appState.computers[idx].fragmentation = 0
+  pushFireBase()
 }
 
 function DiskFragmentationCheck (idx, fragmentation) {
@@ -84,13 +80,9 @@ function DiskFragmentationCheck (idx, fragmentation) {
   let clickbetweenTwoAndFivePercent = betweenTwoAndFivePercent.bind(null, idx)
   let clickgreaterThanFivePercent = greaterThanFivePercent.bind(null, idx)
 
-  let islessThanTwoPercent = (mori.equals(fragmentation, 100)) // not sure if this is the righ function for this.
-  let isbetweenTwoAndFivePercent = (mori.equals(fragmentation, 50)) // not sure if this is the righ function for this.
-  let isgreaterThanFivePercent = (mori.equals(fragmentation, 0)) // not sure if this is the righ function for this.
-
-  // let islessThanTwoPercent = (computer[idx].fragmentation === 100)
-  // let isbetweenTwoAndFivePercent = (computer[idx].fragmentation === 50)
-  // let isgreaterThanFivePercent = (computer[idx].fragmentation === 0)
+  let islessThanTwoPercent = (mori.equals(fragmentation, 100))
+  let isbetweenTwoAndFivePercent = (mori.equals(fragmentation, 50))
+  let isgreaterThanFivePercent = (mori.equals(fragmentation, 0))
 
   return (
     <div className='defrag check'>
@@ -126,14 +118,5 @@ class ComputerInputStep2 extends MoriComponent {
     )
   }
 }
-
-// function ComputerInputStep2 (idx, computer) {
-//   return (
-//     <div>
-//       {TempFileCheck(idx, computer)}
-//       {DiskFragmentationCheck(idx, computer)}
-//     </div>
-//   )
-// }
 
 export default ComputerInputStep2

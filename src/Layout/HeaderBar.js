@@ -1,12 +1,15 @@
 import React from 'react'
 import mori from 'mori'
+import {pushFireBase} from '../util'
 
 function clickPageUp () {
   window.NEXT_STATE = mori.updateIn(window.CURRENT_STATE, ['computerInputStep'], mori.inc)
+  pushFireBase()
 }
 
 function clickPageDown () {
   window.NEXT_STATE = mori.updateIn(window.CURRENT_STATE, ['computerInputStep'], mori.dec)
+  pushFireBase()
 }
 
 function LeftButton () {

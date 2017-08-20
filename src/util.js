@@ -1,4 +1,5 @@
 import mori from 'mori'
+import firebase from './firebase'
 
 function morilog (moriThing) {
   console.log(mori.toJs(moriThing))
@@ -40,4 +41,10 @@ function createEmptyComputer (computerName) {
   return mori.toClj(newComputer)
 }
 
-export {morilog, createEmptyComputer}
+function pushFireBase () {
+  const appStateJS = mori.toJs(window.CURRENT_STATE)
+  const rootRef = firebase.database().ref().child('CompanyID')
+  rootRef.push(appStateJS)
+}
+
+export {morilog, createEmptyComputer, pushFireBase}

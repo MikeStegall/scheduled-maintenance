@@ -1,11 +1,9 @@
 import React from 'react'
 import mori from 'mori'
-import {createEmptyComputer} from '../util.js'
-import firebase from '../firebase'
+import {createEmptyComputer, pushFireBase} from '../util.js'
 
 function submitNumberOfComputers () {
   const numComputers = mori.get(window.CURRENT_STATE, 'numComputers')
-  pushFireBase()
   if (numComputers === 0 && numComputers > 25) {
     // TODO: show an error message here
     window.alert('Please enter a number of computers between 0 and 25')
@@ -19,11 +17,7 @@ function submitNumberOfComputers () {
   const newState = mori.assoc(window.CURRENT_STATE, 'computers', emptyComputers,
                                                     'step', 3)
   window.NEXT_STATE = newState
-}
-function pushFireBase () {
-  const appStateJS = mori.toJs(window.CURRENT_STATE)
-  const rootRef = firebase.database().ref().child('CompanyID')
-  rootRef.push(appStateJS)
+  pushFireBase()
 }
 
 function changeNumberOfComputers (evt) {
