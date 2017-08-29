@@ -18,7 +18,7 @@ const initialState = {
   computerInputStep: 1,
   isEverythingEntered: false,
   isSwitchModalShowing: false,
-  time: new Date(),
+  time: Date(),
   showStateExplorer: document.location.search.indexOf('stateexplorer') !== -1
 }
 

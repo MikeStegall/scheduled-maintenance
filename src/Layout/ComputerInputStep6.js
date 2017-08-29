@@ -13,11 +13,13 @@ function isServerFn (idx, isServer) {
   if (!isServer) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], true)
     const newState2 = mori.assoc(newState1, 'isEverythingEntered', false)
-    window.NEXT_STATE = newState2
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
     pushFireBase()
   } else if (isServer) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], false)
-    window.NEXT_STATE = newState
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], false)
+    const newState2 = mori.assoc(newState1, 'time', Date())
+    window.NEXT_STATE = newState2
     pushFireBase()
   }
 }
@@ -41,12 +43,14 @@ function isServerBackedUp (idx, isServer, doesServerHaveABackUp) {
   if (!doesServerHaveABackUp) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'doesServerHaveABackUp'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 100)
-    window.NEXT_STATE = newState2
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
     pushFireBase()
   } else if (doesServerHaveABackUp) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'doesServerHaveABackUp'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 0)
-    window.NEXT_STATE = newState2
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
     pushFireBase()
   }
 }
@@ -80,12 +84,14 @@ function DoesServeHaveBackup (idx, isServer, doesServerHaveABackUp) {
 
 function isServerBackupWorkingFn (idx, isServerBackupWorking) {
   if (isServerBackupWorking) {
-    let newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], false)
-    window.NEXT_STATE = newState
+    let newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], false)
+    const newState2 = mori.assoc(newState1, 'time', Date())
+    window.NEXT_STATE = newState2
     pushFireBase()
   } else if (!isServerBackupWorking) {
-    let newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], true)
-    window.NEXT_STATE = newState
+    let newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], true)
+    const newState2 = mori.assoc(newState1, 'time', Date())
+    window.NEXT_STATE = newState2
     pushFireBase()
   }
 }

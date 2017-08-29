@@ -16,12 +16,14 @@ function clickPcCleanedFn (idx, hasPcBeenCleaned) {
   if (hasPcBeenCleaned) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasPcBeenCleaned'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'pcCleaned'], 0)
-    window.NEXT_STATE = newState2
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
     pushFireBase()
   } else if (!hasPcBeenCleaned) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasPcBeenCleaned'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'pcCleaned'], 100)
-    window.NEXT_STATE = newState2
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
     pushFireBase()
   }
 }
@@ -67,17 +69,23 @@ function PcCleaned (idx, hasPcBeenCleaned, pcCleanedNotes) {
 // 0 updates = 100, between 1 and 5 updates = 50, 5 or greater = 0
 
 function needsZeroUpdates (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 100)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 100)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function needsBetweenOneAndFiveUpdates (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 50)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 50)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function needsMoreThanFive (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 0)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 0)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 

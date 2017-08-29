@@ -14,9 +14,10 @@ function submitNumberOfComputers () {
     let newComputer = createEmptyComputer('Computer ' + (i + 1))
     emptyComputers = mori.conj(emptyComputers, newComputer)
   }
-  const newState = mori.assoc(window.CURRENT_STATE, 'computers', emptyComputers,
+  const newState1 = mori.assoc(window.CURRENT_STATE, 'computers', emptyComputers,
                                                     'step', 3)
-  window.NEXT_STATE = newState
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 

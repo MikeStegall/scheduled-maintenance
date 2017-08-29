@@ -25,12 +25,14 @@ function clickEventLogs (idx, hasCritcalEventLogs) {
   if (!hasCritcalEventLogs) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCritcalEventLogs'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 0)
-    window.NEXT_STATE = newState2
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
     pushFireBase()
   } else if (hasCritcalEventLogs) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCritcalEventLogs'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 100)
-    window.NEXT_STATE = newState2
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
     pushFireBase()
   }
 }
@@ -87,12 +89,14 @@ function clickSystemFilesChecks (idx, hasCurroptedSystemFiles) {
   if (hasCurroptedSystemFiles) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCurroptedSystemFiles'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 100)
-    window.NEXT_STATE = newState2
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
     pushFireBase()
   } else if (!hasCurroptedSystemFiles) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCurroptedSystemFiles'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 0)
-    window.NEXT_STATE = newState2
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
     pushFireBase()
   }
 }

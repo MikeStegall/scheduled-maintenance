@@ -6,8 +6,11 @@ function submitCompanyName () {
   const companyName = mori.get(window.CURRENT_STATE, 'companyName')
   // do nothing if the user has not entered a company name
   if (companyName !== '') {
-    window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'step', 2)
+    let newState1 = mori.assoc(window.CURRENT_STATE, 'step', 2)
+    let newState2 = mori.assoc(newState1, 'time', Date())
+    window.NEXT_STATE = newState2
     pushFireBase()
+    // changeDate()
   } else {
     window.alert('Plase enter a company Name')
   }

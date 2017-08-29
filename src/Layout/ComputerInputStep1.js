@@ -9,17 +9,23 @@ import {pushFireBase} from '../util'
 // Fully updated = 100, needs updates = 50, None found = 0
 
 function fullUpdate (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 100)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 100)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function needsUpdates (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 50)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 50)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function noneFound (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 0)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 0)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
@@ -60,17 +66,23 @@ function VirusSoftwareCheck (idx, virusUpdates) {
 // Greater than 25% = 100, between 25% and 5% = 50, lower than 5% = 0
 
 function greaterThan25 (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 100)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 100)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function between25And5 (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 50)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 50)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function lessThan5 (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 0)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 0)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 

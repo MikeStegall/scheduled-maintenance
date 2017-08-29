@@ -14,14 +14,16 @@ function increaseComputerNumber (idx, computerScore, serverScore, isServer) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], serverScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'computerInputStep', 1)
-    window.NEXT_STATE = newState3
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   } else if (!isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], computerScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'computerInputStep', 1)
-    window.NEXT_STATE = newState3
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   } else if (!isEverythingEntered) {
-    return
+
   }
 }
 
@@ -31,14 +33,16 @@ function getAverageScore (idx, computerScore, serverScore, isServer) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], serverScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'step', 4)
-    window.NEXT_STATE = newState3
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   } else if (!isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], computerScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
     const newState3 = mori.assoc(newState2, 'step', 4)
-    window.NEXT_STATE = newState3
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   } else if (!isEverythingEntered) {
-    return
+
   }
 }
 
@@ -68,7 +72,8 @@ function addOneComputer (idx, computerScore, serverScore, isServer) {
     const newState3 = mori.assoc(newState2, 'computerInputStep', 1)
     const newState4 = mori.updateIn(newState3, ['activeComputerIdx'], mori.inc)
     const newState5 = mori.assocIn(newState4, ['computers', idx, 'averageScore'], serverScore)
-    window.NEXT_STATE = newState5
+    const newState6 = mori.assoc(newState5, 'time', Date())
+    window.NEXT_STATE = newState6
   } else if (!isServer && isEverythingEntered) {
     const newComputers = mori.conj(computers, createEmptyComputer(newComputerName))
     const newState = mori.assoc(window.CURRENT_STATE, 'computers', newComputers)
@@ -76,9 +81,10 @@ function addOneComputer (idx, computerScore, serverScore, isServer) {
     const newState3 = mori.assoc(newState2, 'computerInputStep', 1)
     const newState4 = mori.updateIn(newState3, ['activeComputerIdx'], mori.inc)
     const newState5 = mori.assocIn(newState4, ['computers', idx, 'averageScore'], computerScore)
-    window.NEXT_STATE = newState5
+    const newState6 = mori.assoc(newState5, 'time', Date())
+    window.NEXT_STATE = newState6
   } else if (!isEverythingEntered) {
-    return
+
   }
 }
 

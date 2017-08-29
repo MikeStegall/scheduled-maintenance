@@ -41,10 +41,16 @@ function createEmptyComputer (computerName) {
   return mori.toClj(newComputer)
 }
 
+function changeDate () {
+  let date = Date()
+  const newState = mori.assoc(window.CURRENT_STATE, 'time', date)
+  window.NEXT_STATE = newState
+}
+
 function pushFireBase () {
   const appStateJS = mori.toJs(window.CURRENT_STATE)
-  const rootRef = firebase.database().ref().child('CompanyID')
+  const rootRef = firebase.database().ref()
   rootRef.push(appStateJS)
 }
 
-export {morilog, createEmptyComputer, pushFireBase}
+export {morilog, createEmptyComputer, pushFireBase, changeDate}

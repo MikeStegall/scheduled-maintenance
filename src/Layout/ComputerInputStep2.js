@@ -10,17 +10,23 @@ import MoriComponent from '../MoriComponent'
 // Less than 1GB = 100 between 1gb and 3gb = 50 greater than 3gb = 0
 
 function lessThan1GB (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 100)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 100)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function between1GBAnd3GB (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 50)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 50)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function greaterThan5GB (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 0)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 0)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
@@ -61,17 +67,23 @@ function TempFileCheck (idx, sizeOfTempFiles) {
 // less than 2% fragmented = 100 between 2% and 5% fragmented = 50 greater than 5% = 0
 
 function lessThanTwoPercent (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 100)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 100)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function betweenTwoAndFivePercent (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 50)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 50)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function greaterThanFivePercent (idx) {
-  window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 0)
+  const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 0)
+  const newState2 = mori.assoc(newState1, 'time', Date())
+  window.NEXT_STATE = newState2
   pushFireBase()
 }
 
