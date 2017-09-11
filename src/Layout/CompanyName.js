@@ -10,7 +10,6 @@ function submitCompanyName () {
     let newState2 = mori.assoc(newState1, 'time', Date())
     window.NEXT_STATE = newState2
     pushFireBase()
-    // changeDate()
   } else {
     window.alert('Plase enter a company Name')
   }
