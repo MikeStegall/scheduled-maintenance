@@ -1,7 +1,6 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
-import {pushFireBase} from '../util'
 
 // -----------------------------------------------------------------------------
 // Check Event Logs
@@ -27,13 +26,11 @@ function clickEventLogs (idx, hasCritcalEventLogs) {
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 0)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   } else if (hasCritcalEventLogs) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCritcalEventLogs'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'eventLogs'], 100)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   }
 }
 
@@ -91,13 +88,11 @@ function clickSystemFilesChecks (idx, hasCurroptedSystemFiles) {
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 100)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   } else if (!hasCurroptedSystemFiles) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasCurroptedSystemFiles'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'systemFileCheck'], 0)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   }
 }
 

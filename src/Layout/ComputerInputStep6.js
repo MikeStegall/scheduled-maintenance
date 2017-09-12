@@ -3,7 +3,6 @@ import mori from 'mori'
 import MoriComponent from '../MoriComponent'
 import SubmitComputerButton from './SubmitComputerButton'
 import ErrorMessages from './ErrorMessage'
-import {pushFireBase} from '../util'
 
 // -----------------------------------------------------------------------------
 // Check on Server Backups
@@ -15,12 +14,10 @@ function isServerFn (idx, isServer) {
     const newState2 = mori.assoc(newState1, 'isEverythingEntered', false)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   } else if (isServer) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], false)
     const newState2 = mori.assoc(newState1, 'time', Date())
     window.NEXT_STATE = newState2
-    pushFireBase()
   }
 }
 
@@ -45,13 +42,11 @@ function isServerBackedUp (idx, isServer, doesServerHaveABackUp) {
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 100)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   } else if (doesServerHaveABackUp) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'doesServerHaveABackUp'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 0)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   }
 }
 
@@ -87,12 +82,10 @@ function isServerBackupWorkingFn (idx, isServerBackupWorking) {
     let newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], false)
     const newState2 = mori.assoc(newState1, 'time', Date())
     window.NEXT_STATE = newState2
-    pushFireBase()
   } else if (!isServerBackupWorking) {
     let newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], true)
     const newState2 = mori.assoc(newState1, 'time', Date())
     window.NEXT_STATE = newState2
-    pushFireBase()
   }
 }
 

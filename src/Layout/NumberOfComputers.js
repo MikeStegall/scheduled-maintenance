@@ -1,6 +1,6 @@
 import React from 'react'
 import mori from 'mori'
-import {createEmptyComputer, pushFireBase} from '../util.js'
+import {createEmptyComputer} from '../util.js'
 
 function submitNumberOfComputers () {
   const numComputers = mori.get(window.CURRENT_STATE, 'numComputers')
@@ -18,7 +18,6 @@ function submitNumberOfComputers () {
                                                     'step', 3)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function changeNumberOfComputers (evt) {

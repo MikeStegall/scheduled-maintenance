@@ -31,16 +31,14 @@ function getAverageScore (idx, computerScore, serverScore, isServer) {
   const isEverythingEntered = mori.get(window.CURRENT_STATE, 'isEverythingEntered')
   if (isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], serverScore)
-    const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
-    const newState3 = mori.assoc(newState2, 'step', 4)
-    const newState4 = mori.assoc(newState3, 'time', Date())
-    window.NEXT_STATE = newState4
+    const newState2 = mori.assoc(newState1, 'step', 4)
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
   } else if (!isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], computerScore)
-    const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
-    const newState3 = mori.assoc(newState2, 'step', 4)
-    const newState4 = mori.assoc(newState3, 'time', Date())
-    window.NEXT_STATE = newState4
+    const newState2 = mori.assoc(newState1, 'step', 4)
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
   } else if (!isEverythingEntered) {
 
   }

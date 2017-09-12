@@ -1,7 +1,6 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
-import {pushFireBase} from '../util'
 
 // -----------------------------------------------------------------------------
 // Clean the PC
@@ -18,13 +17,11 @@ function clickPcCleanedFn (idx, hasPcBeenCleaned) {
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'pcCleaned'], 0)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   } else if (!hasPcBeenCleaned) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasPcBeenCleaned'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'pcCleaned'], 100)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   }
 }
 
@@ -72,21 +69,18 @@ function needsZeroUpdates (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 100)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function needsBetweenOneAndFiveUpdates (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 50)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function needsMoreThanFive (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'], 0)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function CheckForUpdatess (idx, numberOfWindowsUpdates) {

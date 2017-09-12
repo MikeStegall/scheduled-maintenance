@@ -1,7 +1,7 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
-import {pushFireBase} from '../util'
+// import {pushFireBase} from '../util'
 // ---------------------------------------------------------
 // Virus Check
 // ---------------------------------------------------------
@@ -12,21 +12,21 @@ function fullUpdate (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 100)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
+  // pushFireBase()
 }
 
 function needsUpdates (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 50)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
+  // pushFireBase()
 }
 
 function noneFound (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 0)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
+  // pushFireBase()
 }
 
 function VirusSoftwareCheck (idx, virusUpdates) {
@@ -69,21 +69,21 @@ function greaterThan25 (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 100)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
+  // pushFireBase()
 }
 
 function between25And5 (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 50)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
+  // pushFireBase()
 }
 
 function lessThan5 (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 0)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
+  // pushFireBase()
 }
 
 function DiskSpaceCheck (idx, freeDiskSpace) {

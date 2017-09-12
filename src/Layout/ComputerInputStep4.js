@@ -1,7 +1,6 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
-import {pushFireBase} from '../util'
 
 // -----------------------------------------------------------------------------
 // Checking if Viruses were found
@@ -28,13 +27,11 @@ function clickViruesFound (idx, hasVirusBeenFound) {
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 100)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   } else if (!hasVirusBeenFound) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasVirusBeenFound'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 0)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   }
 }
 
@@ -87,13 +84,11 @@ function clickHardDriveHealth (idx, isHardDriveGood) {
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'hardDriveHealth'], 0)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   } else if (!isHardDriveGood) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isHardDriveGood'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'hardDriveHealth'], 100)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
-    pushFireBase()
   }
 }
 

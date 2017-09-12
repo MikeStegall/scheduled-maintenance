@@ -1,6 +1,7 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
+import {pushFireBase} from '../util'
 
 import ComputerInputStep1 from './ComputerInputStep1'
 import ComputerInputStep2 from './ComputerInputStep2'
@@ -18,7 +19,7 @@ class ComputerInputSteps extends MoriComponent {
     // const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const computerInputStep = mori.get(this.props.imdata, 'computerInputStep')
     // const activeComputer = mori.getIn(this.props.imdata, ['computers', idx])
-
+    pushFireBase()
     if (computerInputStep === 1) {
       return <ComputerInputStep1 imdata={this.props.imdata} />
     }

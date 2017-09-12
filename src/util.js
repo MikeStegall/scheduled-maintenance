@@ -44,9 +44,14 @@ function createEmptyComputer (computerName) {
 function pushFireBase () {
   const appStateJS = mori.toJs(window.CURRENT_STATE)
   const companyName = mori.get(window.CURRENT_STATE, 'companyName')
-  const computerNameJs = mori.toJs(companyName)
+  const companyNameJs = mori.toJs(companyName)
+  const month = new Date().getMonth() + 1
+  const day = new Date().getDate()
+  const year = new Date().getFullYear()
+  const date = day + '-' + month + '-' + year
+  const uniqueKey = companyNameJs + ' ' + date
 
-  const rootRef = firebase.database().ref(computerNameJs)
+  const rootRef = firebase.database().ref(uniqueKey)
   rootRef.set(appStateJS)
 }
 

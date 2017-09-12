@@ -1,6 +1,7 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
+import {pushFireBase} from '../util'
 
 function ShowCompanyAverage (idx, numComputers) {
   let companyAverageArr = mori.vector()
@@ -23,6 +24,8 @@ class CompanyAverage extends MoriComponent {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const companyName = mori.get(window.CURRENT_STATE, 'companyName')
     const companyNameJs = mori.toJs(companyName)
+
+    pushFireBase()
 
     return (
       <div>

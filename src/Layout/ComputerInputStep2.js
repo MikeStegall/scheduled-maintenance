@@ -1,6 +1,5 @@
 import React from 'react'
 import mori from 'mori'
-import {pushFireBase} from '../util'
 import MoriComponent from '../MoriComponent'
 
 // ---------------------------------------------------------
@@ -13,21 +12,18 @@ function lessThan1GB (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 100)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function between1GBAnd3GB (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 50)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function greaterThan5GB (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'], 0)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function TempFileCheck (idx, sizeOfTempFiles) {
@@ -70,21 +66,18 @@ function lessThanTwoPercent (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 100)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function betweenTwoAndFivePercent (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 50)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function greaterThanFivePercent (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'], 0)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  pushFireBase()
 }
 
 function DiskFragmentationCheck (idx, fragmentation) {
