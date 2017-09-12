@@ -45,10 +45,24 @@ function pushFireBase () {
   const appStateJS = mori.toJs(window.CURRENT_STATE)
   const companyName = mori.get(window.CURRENT_STATE, 'companyName')
   const companyNameJs = mori.toJs(companyName)
-  const month = new Date().getMonth() + 1
-  const day = new Date().getDate()
+  let month = new Date().getMonth()
+  const dayOfMonth = new Date().getDate()
   const year = new Date().getFullYear()
-  const date = day + '-' + month + '-' + year
+
+  if (month === 0) month = 'Jan'
+  if (month === 1) month = 'Feb'
+  if (month === 2) month = 'Mar'
+  if (month === 3) month = 'Apr'
+  if (month === 4) month = 'May'
+  if (month === 5) month = 'Jun'
+  if (month === 6) month = 'Jul'
+  if (month === 7) month = 'Aug'
+  if (month === 8) month = 'Sep'
+  if (month === 9) month = 'Oct'
+  if (month === 10) month = 'Nov'
+  if (month === 11) month = 'Dec'
+
+  const date = dayOfMonth + '-' + month + '-' + year
   const uniqueKey = companyNameJs + ' ' + date
 
   const rootRef = firebase.database().ref(uniqueKey)
