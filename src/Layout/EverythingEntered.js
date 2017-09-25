@@ -38,14 +38,14 @@ function isEverythingEnteredFn () {
                                                   (isHardDriveGood || hardDriveHealthNotes !== '') &&
                                                   (!hasCritcalEventLogs || eventLogsNotes !== '') &&
                                                   (!hasCurroptedSystemFiles || systemFileCheckNotes !== '')) {
-      const newState = mori.assoc(window.CURRENT_STATE, 'isEverythingEntered', true)
+      const newState = mori.assocIn(window.CURRENT_STATE, ['computer', idx, 'isEverythingEntered'], true)
       window.NEXT_STATE = newState
     }
   } else if (isServer) {
-    const newState = mori.assoc(window.CURRENT_STATE, 'isEverythingEntered', false)
+    const newState = mori.assoc(window.CURRENT_STATE, ['computer', idx, 'isEverythingEntered'], false)
     window.NEXT_STATE = newState
     if (serverBackupNotes !== '' || serverBackupWorkingNotes !== '' || isServerBackupWorking) {
-      const newState = mori.assoc(window.CURRENT_STATE, 'isEverythingEntered', true)
+      const newState = mori.assoc(window.CURRENT_STATE, ['computer', idx, 'isEverythingEntered'], true)
       window.NEXT_STATE = newState
     }
   }

@@ -7,17 +7,14 @@ function computerNameArr (numComputers) {
     let computerName = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'computerName'])
     computerNameVect = mori.conj(computerNameVect, computerName)
   }
-  let computerNameArr = mori.toJs(computerNameVect)
-  console.log(computerNameArr)
+  let newState1 = mori.assoc(window.CURRENT_STATE, 'computerNameArr', computerNameVect)
+  let newState2 = mori.assoc(newState1, 'showComputerNames', true)
+  window.NEXT_STATE = newState2
 }
 
-function SwitchComputers (numComputers) {
+function SwitchComputersBtn (numComputers) {
   let clickComputerNameArr = computerNameArr.bind(null, numComputers)
-  return (
-    <div className='btn btn-primary btn-block btn-outlined'>
-      <button onClick={clickComputerNameArr}>Switch Computers</button>
-    </div>
-  )
+  return <button className='btn btn-positive btn-block' onClick={clickComputerNameArr}>Switch Computers</button>
 }
 
-export default SwitchComputers
+export default SwitchComputersBtn

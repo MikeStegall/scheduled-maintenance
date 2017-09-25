@@ -18,8 +18,8 @@ class ComputerInputSteps extends MoriComponent {
   render () {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const computerInputStep = mori.getIn(this.props.imdata, ['computers', idx, 'computerInputStep'])
-    // const activeComputer = mori.getIn(this.props.imdata, ['computers', idx])
     pushFireBase()
+
     if (computerInputStep === 1) {
       return <ComputerInputStep1 imdata={this.props.imdata} />
     }

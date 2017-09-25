@@ -15,10 +15,10 @@ const initialState = {
   activeComputerIdx: 0,
   companyAverage: 0,
   step: 1,
-  isEverythingEntered: false,
   isSwitchModalShowing: false,
   time: Date(),
   showPreviousJobs: false,
+  showComputerNames: false,
   companyNameArr: [],
   computerNameArr: [],
   showStateExplorer: document.location.search.indexOf('stateexplorer') !== -1

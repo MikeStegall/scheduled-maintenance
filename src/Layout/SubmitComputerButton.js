@@ -9,7 +9,7 @@ import isEverythingEnteredFn from './EverythingEntered'
 // -----------------------------------------------------------------------------
 
 function increaseComputerNumber (idx, computerScore, serverScore, isServer) {
-  const isEverythingEntered = mori.get(window.CURRENT_STATE, 'isEverythingEntered')
+  const isEverythingEntered = mori.getIn(window.CURRENT_STATE, ['computer', idx, 'isEverythingEntered'])
   if (isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], serverScore)
     const newState2 = mori.updateIn(newState1, ['activeComputerIdx'], mori.inc)
@@ -28,7 +28,7 @@ function increaseComputerNumber (idx, computerScore, serverScore, isServer) {
 }
 
 function getAverageScore (idx, computerScore, serverScore, isServer) {
-  const isEverythingEntered = mori.get(window.CURRENT_STATE, 'isEverythingEntered')
+  const isEverythingEntered = mori.getIn(window.CURRENT_STATE, ['computer', idx, 'isEverythingEntered'])
   if (isServer && isEverythingEntered) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'averageScore'], serverScore)
     const newState2 = mori.assoc(newState1, 'step', 4)
@@ -62,7 +62,7 @@ function addOneComputer (idx, computerScore, serverScore, isServer) {
   const computers = mori.get(window.CURRENT_STATE, 'computers')
   const numComputers = mori.count(computers)
   const newComputerName = 'Computer ' + (numComputers + 1)
-  const isEverythingEntered = mori.get(window.CURRENT_STATE, 'isEverythingEntered')
+  const isEverythingEntered = mori.getIn(window.CURRENT_STATE, ['computer', idx, 'isEverythingEntered'])
   if (isServer && isEverythingEntered) {
     const newComputers = mori.conj(computers, createEmptyComputer(newComputerName))
     const newState = mori.assoc(window.CURRENT_STATE, 'computers', newComputers)

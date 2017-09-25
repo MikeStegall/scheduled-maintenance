@@ -25,9 +25,9 @@ function ChoseCompanyName () {
   let companyNameVect = mori.get(window.CURRENT_STATE, 'companyNameArr')
   let companyNameVectJs = mori.toJs(companyNameVect)
   let companyName = companyNameVectJs.map((name, idx) => {
-    return <li key={idx} className='name-of-company'>{name}</li>
+    return <li key={idx} className='table-view-cell'>{name}</li>
   })
-  return <ul className='name-of-company'>{companyName}</ul>
+  return <ul className='table-view'>{companyName}</ul>
 }
 
 function PreviousJobsPage () {

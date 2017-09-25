@@ -11,7 +11,7 @@ import ErrorMessages from './ErrorMessage'
 function isServerFn (idx, isServer) {
   if (!isServer) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], true)
-    const newState2 = mori.assoc(newState1, 'isEverythingEntered', false)
+    const newState2 = mori.assoc(newState1, ['computer', idx, 'isEverythingEntered'], false)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
   } else if (isServer) {
@@ -169,9 +169,7 @@ class ComputerInputStep6 extends MoriComponent {
 
     const isServerBackupWorking = mori.getIn(this.props.imdata, ['computers', idx, 'isServerBackupWorking'])
     const serverBackupWorkingNotes = mori.getIn(this.props.imdata, ['computers', idx, 'serverBackupWorkingNotes'])
-    // const numComputers = mori.get(this.props.imdata, 'numComputers')
 
-    // isEverythingEnteredFn()
     return (
       <div>
         {CheckServerBackUps(idx, isServer, doesServerHaveABackUp, isServerBackupWorking, serverBackupNotes, serverBackupWorkingNotes)}
