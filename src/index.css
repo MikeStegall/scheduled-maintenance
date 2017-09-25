@@ -85,3 +85,13 @@ text-align: center;
   height: 600px;
   font-size: 16px;
 }
+
+.red {
+  background-color: red;
+}
+.yellow {
+  background-color: yellow;
+}
+.green {
+  background-color: #3def3d;
+}

@@ -35,6 +35,7 @@ function createEmptyComputer (computerName) {
     systemFileCheckNotes: '',
     serverBackupNotes: '',
     serverBackupWorkingNotes: '',
+    computerInputStep: 1,
     averageScore: null
   }
 

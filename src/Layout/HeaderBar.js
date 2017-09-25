@@ -3,14 +3,16 @@ import mori from 'mori'
 import {pushFireBase} from '../util'
 
 function clickPageUp () {
-  const newState1 = mori.updateIn(window.CURRENT_STATE, ['computerInputStep'], mori.inc)
+  const idx = mori.get(window.CURRENT_STATE, 'activeComputerIdx')
+  const newState1 = mori.updateIn(window.CURRENT_STATE, ['computers', idx, 'computerInputStep'], mori.inc)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
   pushFireBase()
 }
 
 function clickPageDown () {
-  const newState1 = mori.updateIn(window.CURRENT_STATE, ['computerInputStep'], mori.dec)
+  const idx = mori.get(window.CURRENT_STATE, 'activeComputerIdx')
+  const newState1 = mori.updateIn(window.CURRENT_STATE, ['computers', idx, 'computerInputStep'], mori.dec)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
   pushFireBase()

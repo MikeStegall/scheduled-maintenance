@@ -3,6 +3,8 @@ import mori from 'mori'
 import MoriComponent from '../MoriComponent'
 import {pushFireBase} from '../util'
 
+// TODO Have it say what the score means
+
 function ShowCompanyAverage (idx, numComputers) {
   let companyAverageArr = mori.vector()
   for (idx = 0; idx < numComputers; idx++) {
@@ -22,21 +24,50 @@ class CompanyAverage extends MoriComponent {
   render () {
     const numComputers = mori.get(this.props.imdata, 'numComputers')
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
-    const companyName = mori.get(window.CURRENT_STATE, 'companyName')
+    const companyName = mori.get(this.props.imdata, 'companyName')
     const companyNameJs = mori.toJs(companyName)
+    const companyAverage = mori.get(window.CURRENT_STATE, 'companyAverage')
+    const companyAverageJs = mori.toJs(companyAverage)
 
     pushFireBase()
 
-    return (
-      <div>
-        <header className='bar bar-nav'>
-          <h1 className='title'>{companyNameJs} Company Average</h1>
-        </header>
-        <div className='company-average-score'>
-          {ShowCompanyAverage(idx, numComputers)}
+    if (companyAverageJs >= 75) {
+      let className = 'company-average-score green'
+      return (
+        <div>
+          <header className='bar bar-nav'>
+            <h1 className='title'>{companyNameJs} Company Average</h1>
+          </header>
+          <div className={className}>
+            {ShowCompanyAverage(idx, numComputers)}
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else if (companyAverageJs >= 50) {
+      let className = 'company-average-score yellow'
+      return (
+        <div>
+          <header className='bar bar-nav'>
+            <h1 className='title'>{companyNameJs} Company Average</h1>
+          </header>
+          <div className={className}>
+            {ShowCompanyAverage(idx, numComputers)}
+          </div>
+        </div>
+      )
+    } else if (companyAverageJs <= 25) {
+      let className = 'company-average-score red'
+      return (
+        <div>
+          <header className='bar bar-nav'>
+            <h1 className='title'>{companyNameJs} Company Average</h1>
+          </header>
+          <div className={className}>
+            {ShowCompanyAverage(idx, numComputers)}
+          </div>
+        </div>
+      )
+    }
   }
 }
 
