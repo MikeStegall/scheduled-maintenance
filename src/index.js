@@ -19,8 +19,11 @@ const initialState = {
   time: Date(),
   showPreviousJobs: false,
   showComputerNames: false,
+  showPreviousJobComputerResults: false,
   companyNameArr: [],
   computerNameArr: [],
+  notesOnJob: '',
+  companyId: null,
   showStateExplorer: document.location.search.indexOf('stateexplorer') !== -1
 }
 

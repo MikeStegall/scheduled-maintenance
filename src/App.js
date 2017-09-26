@@ -8,6 +8,7 @@ import NumberOfComputersPage from './Layout/NumberOfComputers'
 import ComputersInputPage from './Layout/ComputerInputForm'
 import CompanyAverage from './Layout/CompanyAverage'
 import PreviousJobsPage from './Layout/ChoseCompany'
+import CompanyResults from './Layout/CompanyComputerScores'
 
 class App extends MoriComponent {
   render () {
@@ -22,9 +23,10 @@ class App extends MoriComponent {
     const companyName = mori.get(currentState, 'companyName')
     const numComputers = mori.get(currentState, 'numComputers')
     const previousJobs = mori.get(currentState, 'showPreviousJobs')
+    const showPreviousJobComputerResults = mori.get(currentState, 'showPreviousJobComputerResults')
 
     let pageComponent = null
-    if (previousJobs === false) {
+    if (!previousJobs) {
       if (currentStep === 1) {
         pageComponent = CompanyNameInputPage(companyName)
       } else if (currentStep === 2) {
@@ -34,8 +36,11 @@ class App extends MoriComponent {
       } else if (currentStep === 4) {
         pageComponent = <CompanyAverage imdata={currentState} />
       }
-    } else if (previousJobs === true) {
+    } else if (previousJobs) {
       pageComponent = PreviousJobsPage()
+      if (showPreviousJobComputerResults) {
+        pageComponent = CompanyResults()
+      }
     }
 
     return (

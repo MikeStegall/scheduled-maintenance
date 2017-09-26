@@ -1,6 +1,6 @@
 import React from 'react'
 import mori from 'mori'
-import {pushFireBase} from '../util'
+import {pushFireBase, fetchCompanyIdFromFirebase} from '../util'
 
 function submitCompanyName () {
   const companyName = mori.get(window.CURRENT_STATE, 'companyName')
@@ -29,6 +29,7 @@ function onKeyPress (key) {
 
 function clickShowPreviousJobs () {
   window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'showPreviousJobs', true)
+  fetchCompanyIdFromFirebase()
 }
 
 function CompanyNameInputPage (name) {
@@ -38,7 +39,7 @@ function CompanyNameInputPage (name) {
         <input className='input-name' type='text' name='companyName' placeholder='Company Name' onKeyPress={onKeyPress} onChange={changeCompanyName} value={name} />
       </div>
       <button className='btn btn-primary btn-block' onClick={submitCompanyName}>Enter</button>
-      <button className='btn btn-primary btn-block' onClick={clickShowPreviousJobs}>Previous Jobs</button>
+      <button className='btn btn-positive btn-block' onClick={clickShowPreviousJobs}>Previous Jobs</button>
     </div>
   )
 }

@@ -12,7 +12,7 @@ function ComputerNames () {
   let computerNameVectJs = mori.toJs(computerNameVect)
   let companyName = computerNameVectJs.map((name, idx) => {
     let computerInputStep = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'computerInputStep'])
-    let isEverythingEntered = mori.getIn(window.CURRENT_STATE, ['computer', idx, 'isEverythingEntered'])
+    let isEverythingEntered = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'])
     let computerInputStepJs = mori.toJs(computerInputStep)
     let clickchangeComputerNumber = changeComputerNumber.bind(null, idx)
     if (isEverythingEntered) {

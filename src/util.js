@@ -71,4 +71,17 @@ function pushFireBase () {
   rootRef.set(appStateJS)
 }
 
-export {morilog, createEmptyComputer, pushFireBase}
+function fetchCompanyIdFromFirebase () {
+  let companyNameArr = []
+  firebase.database().ref().once('value').then(function (snapshot) {
+    let company = snapshot.val()
+    for (let NameOfCompany in company) {
+      companyNameArr.push(NameOfCompany)
+    }
+    let newState = mori.assoc(window.CURRENT_STATE, 'companyNameArr', companyNameArr)
+    window.NEXT_STATE = newState
+    return companyNameArr
+  })
+}
+
+export {morilog, createEmptyComputer, pushFireBase, fetchCompanyIdFromFirebase}
