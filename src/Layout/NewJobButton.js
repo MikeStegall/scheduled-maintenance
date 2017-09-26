@@ -7,7 +7,13 @@ function clickNewJobButton () {
   const newState3 = mori.assoc(newState2, 'companyNameArr', [])
   const newState4 = mori.assoc(newState3, 'computerNameArr', [])
   const newState5 = mori.assoc(newState4, 'computers', [])
-  window.NEXT_STATE = newState5
+  const newState6 = mori.assoc(newState5, 'companyName', '')
+  const newState7 = mori.assoc(newState6, 'numComputers', '')
+  const newState8 = mori.assoc(newState7, 'activeComputerIdx', 0)
+  const newState9 = mori.assoc(newState8, 'companyAverage', 0)
+  const newState10 = mori.assoc(newState9, 'step', 1)
+  const newState11 = mori.assoc(newState10, 'time', new Date())
+  window.NEXT_STATE = newState11
 }
 
 function NewJobButton () {

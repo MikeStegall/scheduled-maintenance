@@ -3,6 +3,8 @@ import mori from 'mori'
 import MoriComponent from '../MoriComponent'
 import {pushFireBase} from '../util'
 
+import NewJobButton from './NewJobButton'
+
 // TODO Have it say what the score means
 
 function ShowCompanyAverage (idx, numComputers) {
@@ -14,9 +16,10 @@ function ShowCompanyAverage (idx, numComputers) {
   const companyAverageArrLenth = mori.count(companyAverageArr)
   const companyAverageArrSum = mori.reduce(mori.sum, 0, companyAverageArr)
   const companyAverage = companyAverageArrSum / companyAverageArrLenth
-  const newState = mori.assoc(window.CURRENT_STATE, 'companyAverage', companyAverage)
+  const companyAverageDecimal = companyAverage.toFixed(2)
+  const newState = mori.assoc(window.CURRENT_STATE, 'companyAverage', companyAverageDecimal)
   window.NEXT_STATE = newState
-  const companyAverageJs = mori.toJs(companyAverage)
+  const companyAverageJs = mori.toJs(companyAverageDecimal)
   return <div>{companyAverageJs}</div>
 }
 
@@ -41,6 +44,7 @@ class CompanyAverage extends MoriComponent {
           <div className={className}>
             {ShowCompanyAverage(idx, numComputers)}
           </div>
+          {NewJobButton()}
         </div>
       )
     } else if (companyAverageJs >= 50) {
@@ -53,6 +57,7 @@ class CompanyAverage extends MoriComponent {
           <div className={className}>
             {ShowCompanyAverage(idx, numComputers)}
           </div>
+          {NewJobButton()}
         </div>
       )
     } else if (companyAverageJs <= 25) {
@@ -65,6 +70,7 @@ class CompanyAverage extends MoriComponent {
           <div className={className}>
             {ShowCompanyAverage(idx, numComputers)}
           </div>
+          {NewJobButton()}
         </div>
       )
     }

@@ -124,3 +124,7 @@ text-align: center;
 .spread-sheet-headers div :nth-last-child(1) {
   margin-bottom: 10%;
 }
+
+.company-name-score-board {
+  text-align: center;
+}

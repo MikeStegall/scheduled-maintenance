@@ -40,7 +40,7 @@ function VirusSoftwareCheck (idx, virusUpdates) {
 
   return (
     <div className='input-group virus-software check'>
-      <h4 className='check-title'>Virus Sofware</h4>
+      <h4 className='check-title'>Virus Software</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
             Fully Updated:

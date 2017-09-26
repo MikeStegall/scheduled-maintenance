@@ -2,12 +2,15 @@ import React from 'react'
 import mori from 'mori'
 
 import NewJobButton from './NewJobButton'
+import ChooseNewCompanyBtn from './ChooseNewCompanyBtn'
 
 function CompanyResults () {
   const computers = mori.get(window.CURRENT_STATE, 'computers')
   const companyAverage = mori.get(window.CURRENT_STATE, 'companyAverage')
   const computersArr = mori.toJs(computers)
   const companyAverageJs = mori.toJs(companyAverage)
+  const companyName = mori.get(window.CURRENT_STATE, 'companyName')
+  const companyNameJs = mori.toJs(companyName)
   let companyComputers = computersArr.map((computer, idx) => {
     return <p key={idx} className='spread-sheet-data'>{computer.computerName}</p>
   })
@@ -62,6 +65,7 @@ function CompanyResults () {
 
   return (
     <div>
+      <h1 className='company-name-score-board'>{companyNameJs}</h1>
       <div className='spread-sheet-headers'>
         <div>
           <h4 className='headers'>Computer Names</h4>
@@ -132,11 +136,12 @@ function CompanyResults () {
           {companyComputerScore}
         </div>
       </div>
-      <div>
-        <h2>Company Average</h2>
+      <div className='company-name-score-board'>
+        <h2>{companyNameJs} Company Average</h2>
         <h4>{companyAverageJs}</h4>
       </div>
       {NewJobButton()}
+      {ChooseNewCompanyBtn()}
     </div>
   )
 }
