@@ -95,3 +95,32 @@ text-align: center;
 .green {
   background-color: #3def3d;
 }
+.spread-sheet-headers {
+  display: flex;
+  flex-direction: row;
+  /*position: fixed;*/
+}
+.spread-sheet-headers h4 {
+  border: 1px solid black;
+  flex: 1;
+  height: 11vh;
+  margin-bottom: 0px;
+  padding: 3px;
+  text-align: center;
+}
+.spread-sheet-data {
+  border: 1px solid black;
+  color: black;
+  height: 10vh;
+  margin: auto 0;
+  overflow: scroll;
+  padding: 2px;
+  /*margin-top: -5px;*/
+  text-align: center;
+}
+.spread-sheet-headers div :nth-child(even) {
+  background-color: #c1c1c1;
+}
+.spread-sheet-headers div :nth-last-child(1) {
+  margin-bottom: 10%;
+}

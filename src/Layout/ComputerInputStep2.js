@@ -98,11 +98,11 @@ function DiskFragmentationCheck (idx, fragmentation) {
           <input className='radio-btn' type='radio' name='Fragmented' checked={islessThanTwoPercent} onClick={clicklessThanTwoPercent} />
         </li>
         <li className='table-view-cell'>
-            Needs Updates
+            between 1% and 5% Fragmented
             <input className='radio-btn' type='radio' name='Fragmented' checked={isbetweenTwoAndFivePercent} onClick={clickbetweenTwoAndFivePercent} />
         </li>
         <li className='table-view-cell'>
-            None Found
+            Greater then 6% Fragmented
             <input className='radio-btn' type='radio' name='Fragmented' checked={isgreaterThanFivePercent} onClick={clickgreaterThanFivePercent} />
         </li>
       </ul>

@@ -15,13 +15,15 @@ function clickPcCleanedFn (idx, hasPcBeenCleaned) {
   if (hasPcBeenCleaned) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasPcBeenCleaned'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'pcCleaned'], 0)
-    const newState3 = mori.assoc(newState2, 'time', Date())
-    window.NEXT_STATE = newState3
+    const newState3 = mori.assocIn(newState2, ['computers', idx, 'pcCleanedNotes'], '')
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   } else if (!hasPcBeenCleaned) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasPcBeenCleaned'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'pcCleaned'], 100)
-    const newState3 = mori.assoc(newState2, 'time', Date())
-    window.NEXT_STATE = newState3
+    const newState3 = mori.assocIn(newState2, ['computers', idx, 'pcCleanedNotes'], 'No Problems Found')
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   }
 }
 

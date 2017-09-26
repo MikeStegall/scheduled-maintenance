@@ -11,7 +11,7 @@ import ErrorMessages from './ErrorMessage'
 function isServerFn (idx, isServer) {
   if (!isServer) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServer'], true)
-    const newState2 = mori.assoc(newState1, ['computer', idx, 'isEverythingEntered'], false)
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'isEverythingEntered'], false)
     const newState3 = mori.assoc(newState2, 'time', Date())
     window.NEXT_STATE = newState3
   } else if (isServer) {
@@ -40,13 +40,15 @@ function isServerBackedUp (idx, isServer, doesServerHaveABackUp) {
   if (!doesServerHaveABackUp) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'doesServerHaveABackUp'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 100)
-    const newState3 = mori.assoc(newState2, 'time', Date())
-    window.NEXT_STATE = newState3
+    const newState3 = mori.assocIn(newState2, ['computers', idx, 'serverBackupsNotes'], 'No Problems Found')
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   } else if (doesServerHaveABackUp) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'doesServerHaveABackUp'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'serverBackups'], 0)
-    const newState3 = mori.assoc(newState2, 'time', Date())
-    window.NEXT_STATE = newState3
+    const newState3 = mori.assocIn(newState2, ['computers', idx, 'serverBackupsNotes'], '')
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   }
 }
 
@@ -80,12 +82,14 @@ function DoesServeHaveBackup (idx, isServer, doesServerHaveABackUp) {
 function isServerBackupWorkingFn (idx, isServerBackupWorking) {
   if (isServerBackupWorking) {
     let newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], false)
-    const newState2 = mori.assoc(newState1, 'time', Date())
-    window.NEXT_STATE = newState2
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'isServerBackupWorkingNotes'], '')
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
   } else if (!isServerBackupWorking) {
     let newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'], true)
-    const newState2 = mori.assoc(newState1, 'time', Date())
-    window.NEXT_STATE = newState2
+    const newState2 = mori.assocIn(newState1, ['computers', idx, 'isServerBackupWorkingNotes'], 'No Problems Found')
+    const newState3 = mori.assoc(newState2, 'time', Date())
+    window.NEXT_STATE = newState3
   }
 }
 

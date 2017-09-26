@@ -18,7 +18,7 @@ function createEmptyComputer (computerName) {
     virusesFound: 0,
     hardDriveHealth: 0,
     eventLogs: 0,
-    systemFileCheck: null,
+    systemFileCheck: 0,
     isServer: false,
     serverBackups: 0,
     doesServerHaveABackUp: false,

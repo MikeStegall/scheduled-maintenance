@@ -25,13 +25,15 @@ function clickViruesFound (idx, hasVirusBeenFound) {
   if (hasVirusBeenFound) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasVirusBeenFound'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 100)
-    const newState3 = mori.assoc(newState2, 'time', Date())
-    window.NEXT_STATE = newState3
+    const newState3 = mori.assocIn(newState2, ['computers', idx, 'virusesFoundNotes'], 'No Problems Found')
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   } else if (!hasVirusBeenFound) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasVirusBeenFound'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'virusesFound'], 0)
-    const newState3 = mori.assoc(newState2, 'time', Date())
-    window.NEXT_STATE = newState3
+    const newState3 = mori.assocIn(newState2, ['computers', idx, 'virusesFoundNotes'], '')
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   }
 }
 
@@ -82,13 +84,15 @@ function clickHardDriveHealth (idx, isHardDriveGood) {
   if (isHardDriveGood) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isHardDriveGood'], false)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'hardDriveHealth'], 0)
-    const newState3 = mori.assoc(newState2, 'time', Date())
-    window.NEXT_STATE = newState3
+    const newState3 = mori.assocIn(newState2, ['computers', idx, 'hardDriveHealthNotes'], '')
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   } else if (!isHardDriveGood) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isHardDriveGood'], true)
     const newState2 = mori.assocIn(newState1, ['computers', idx, 'hardDriveHealth'], 100)
-    const newState3 = mori.assoc(newState2, 'time', Date())
-    window.NEXT_STATE = newState3
+    const newState3 = mori.assocIn(newState2, ['computers', idx, 'hardDriveHealthNotes'], 'No Problems Found')
+    const newState4 = mori.assoc(newState3, 'time', Date())
+    window.NEXT_STATE = newState4
   }
 }
 

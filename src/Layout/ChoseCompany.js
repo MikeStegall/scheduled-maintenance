@@ -10,7 +10,8 @@ function clickCompanyId (e) {
     let company = snapshot.val()
     let computers = company.computers
     const newState1 = mori.assoc(window.CURRENT_STATE, 'computers', computers)
-    window.NEXT_STATE = newState1
+    const newState2 = mori.assoc(newState1, 'companyAverage', company.companyAverage)
+    window.NEXT_STATE = newState2
   })
   const newState1 = mori.assoc(window.CURRENT_STATE, 'companyId', companyId)
   const newState2 = mori.assoc(newState1, 'showPreviousJobComputerResults', true)
