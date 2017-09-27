@@ -1,5 +1,4 @@
 {
-  "author": "Mike Stegall mestegall5@gmail.com",
   "name": "scheduled-maintenance",
   "version": "0.1.0",
   "private": true,
@@ -17,6 +16,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "license": "ISC",
+  }
 }

@@ -4,9 +4,8 @@ import mori from 'mori'
 
 import NewJobButton from './NewJobButton'
 
-function clickCompanyId (e) {
-  let companyId = e.target.innerHTML
-  firebase.database().ref(companyId).once('value').then(function (snapshot) {
+function companyId (company) {
+  firebase.database().ref(company).once('value').then(function (snapshot) {
     let company = snapshot.val()
     let computers = company.computers
     const newState1 = mori.assoc(window.CURRENT_STATE, 'computers', computers)
@@ -22,10 +21,11 @@ function clickCompanyId (e) {
 function ChoseCompanyName () {
   let companyNameVect = mori.get(window.CURRENT_STATE, 'companyNameArr')
   let companyNameVectJs = mori.toJs(companyNameVect)
-  let companyName = companyNameVectJs.map((name, idx) => {
-    return <li key={idx} className='table-view-cell'>{name}</li>
+  let companyName = companyNameVectJs.map((company, idx) => {
+    let clickCompanyId = companyId.bind(null, company)
+    return <li key={idx} onClick={clickCompanyId} className='table-view-cell'>{company}</li>
   })
-  return <ul className='table-view' onClick={clickCompanyId}>{companyName}</ul>
+  return <ul className='table-view'>{companyName}</ul>
 }
 
 function PreviousJobsPage () {

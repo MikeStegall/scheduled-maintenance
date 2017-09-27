@@ -39,7 +39,7 @@ function CompanyNameInputPage (name) {
         <input className='input-name' type='text' name='companyName' placeholder='Company Name' onKeyPress={onKeyPress} onChange={changeCompanyName} value={name} />
       </div>
       <button className='btn btn-primary btn-block' onClick={submitCompanyName}>Enter</button>
-      <button className='btn btn-positive btn-block' onClick={clickShowPreviousJobs}>Previous Jobs</button>
+      <button className='btn btn-positive btn-block previous-jobs' onClick={clickShowPreviousJobs}>Previous Jobs</button>
     </div>
   )
 }

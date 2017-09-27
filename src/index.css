@@ -126,3 +126,9 @@ text-align: center;
 .company-name-score-board {
   text-align: center;
 }
+
+@media only screen and (max-width: 750px) {
+    .previous-jobs {
+        visibility: hidden;
+    }
+}

@@ -22,7 +22,6 @@ const initialState = {
   showPreviousJobComputerResults: false,
   companyNameArr: [],
   computerNameArr: [],
-  notesOnJob: '',
   companyId: null,
   showStateExplorer: document.location.search.indexOf('stateexplorer') !== -1
 }
