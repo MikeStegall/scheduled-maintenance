@@ -29,6 +29,12 @@ function isEverythingEnteredFn () {
   const serverBackupWorkingNotes = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'serverBackupWorkingNotes'])
   const isServerBackupWorking = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'])
 
+  // const allComputersFinished = mori.get(window.CURRENT_STATE, 'allComputersFinished')
+  // const allComputersFinishedJs = mori.toJs(allComputersFinished)
+  const computers = mori.get(window.CURRENT_STATE, 'computers')
+  // const comptuersjs = mori.toJs(computers)
+  // console.log(comptuersjs)
+
   if (!isServer) {
     if (computerName !== ('Computer ' + (idx + 1)) && checkForVirusUpdates !== null && freeDiskSpace !== null &&
                                                   sizeOfTempFiles !== null && fragmentation !== null &&
@@ -47,6 +53,15 @@ function isEverythingEnteredFn () {
     if (serverBackupNotes !== '' || serverBackupWorkingNotes !== '' || isServerBackupWorking) {
       const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], true)
       window.NEXT_STATE = newState
+    }
+  }
+
+  for (let i = 0; i < computers.length; i++) {
+    console.log(computers[i].isEverythingEntered)
+    if (computers[i].isEverythingEntered) {
+      window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'allComputersFinished', true)
+    } else if (!computers[i].isEverythingEntered) {
+      window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'allComputersFinished', false)
     }
   }
 }

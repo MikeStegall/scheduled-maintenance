@@ -42,7 +42,7 @@ function NullFreeDiskSpace (idx) {
   let clickForPage1 = forPage1.bind(null, idx)
   const freeDiskSpace = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'])
   if (freeDiskSpace === null) {
-    return <div onclick={clickForPage1}>Click here and check Free Disk Space</div>
+    return <div onClick={clickForPage1}>Click here and check Free Disk Space</div>
   }
 }
 
@@ -98,7 +98,7 @@ function HardDriveHealthNotes (idx) {
   const hardDriveHealthNotes = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'hardDriveHealthNotes'])
   if (!isHardDriveGood) {
     if (hardDriveHealthNotes === '') {
-      return <div onClick={clickForPage4}>Click here and enter notes about the hard drives health</div>
+      return <div onClick={clickForPage4}>Click here and enter hard drives health notes</div>
     }
   }
 }

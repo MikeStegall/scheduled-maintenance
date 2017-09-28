@@ -17,7 +17,8 @@ function submitNumberOfComputers () {
   const newState1 = mori.assoc(window.CURRENT_STATE, 'computers', emptyComputers,
                                                     'step', 3)
   const newState2 = mori.assoc(newState1, 'time', Date())
-  window.NEXT_STATE = newState2
+  const newState3 = mori.assoc(newState2, 'companyNameArr', [])
+  window.NEXT_STATE = newState3
 }
 
 function changeNumberOfComputers (evt) {

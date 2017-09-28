@@ -13,7 +13,8 @@ function clickNewJobButton () {
   const newState9 = mori.assoc(newState8, 'companyAverage', 0)
   const newState10 = mori.assoc(newState9, 'step', 1)
   const newState11 = mori.assoc(newState10, 'time', new Date())
-  window.NEXT_STATE = newState11
+  const newState12 = mori.assoc(newState11, 'showIncompleteJobs', false)
+  window.NEXT_STATE = newState12
 }
 
 function NewJobButton () {

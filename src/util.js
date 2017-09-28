@@ -71,6 +71,22 @@ function pushFireBase () {
   rootRef.set(appStateJS)
 }
 
+function fetchIncompleteJobsFromFirebase () {
+  let incompleteJobArr = []
+  const companyNameArr = mori.get(window.CURRENT_STATE, 'companyNameArr')
+  let companyNameArrJs = mori.toJs(companyNameArr)
+  // console.log(companyNameArrJs)
+  companyNameArrJs.forEach((name) => {
+    firebase.database().ref(name).once('value').then(function (snapshot) {
+      let company = snapshot.val()
+      if (!company.allComputersFinished) {
+        incompleteJobArr.push(company.companyId)
+      }
+      return incompleteJobArr
+    })
+  })
+}
+
 function fetchCompanyIdFromFirebase () {
   let companyNameArr = []
   firebase.database().ref().once('value').then(function (snapshot) {
@@ -84,4 +100,23 @@ function fetchCompanyIdFromFirebase () {
   })
 }
 
-export {morilog, createEmptyComputer, pushFireBase, fetchCompanyIdFromFirebase}
+function companyId (company) {
+  firebase.database().ref(company).once('value').then(function (snapshot) {
+    let company = snapshot.val()
+    let computers = company.computers
+    const newState1 = mori.assoc(window.CURRENT_STATE, 'computers', computers)
+    const newState2 = mori.assoc(newState1, 'companyAverage', company.companyAverage)
+    const newState3 = mori.assoc(newState2, 'companyName', company.companyName)
+    window.NEXT_STATE = newState3
+  })
+  const newState1 = mori.assoc(window.CURRENT_STATE, 'companyId', companyId)
+  const newState2 = mori.assoc(newState1, 'showPreviousJobComputerResults', true)
+  window.NEXT_STATE = newState2
+}
+
+export {morilog,
+        createEmptyComputer,
+        pushFireBase,
+        fetchCompanyIdFromFirebase,
+        fetchIncompleteJobsFromFirebase,
+        companyId}

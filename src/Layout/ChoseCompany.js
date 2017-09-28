@@ -1,22 +1,9 @@
 import React from 'react'
-import firebase from '../firebase'
+// import firebase from '../firebase'
 import mori from 'mori'
 
 import NewJobButton from './NewJobButton'
-
-function companyId (company) {
-  firebase.database().ref(company).once('value').then(function (snapshot) {
-    let company = snapshot.val()
-    let computers = company.computers
-    const newState1 = mori.assoc(window.CURRENT_STATE, 'computers', computers)
-    const newState2 = mori.assoc(newState1, 'companyAverage', company.companyAverage)
-    const newState3 = mori.assoc(newState2, 'companyName', company.companyName)
-    window.NEXT_STATE = newState3
-  })
-  const newState1 = mori.assoc(window.CURRENT_STATE, 'companyId', companyId)
-  const newState2 = mori.assoc(newState1, 'showPreviousJobComputerResults', true)
-  window.NEXT_STATE = newState2
-}
+import {companyId} from '../util'
 
 function ChoseCompanyName () {
   let companyNameVect = mori.get(window.CURRENT_STATE, 'companyNameArr')
