@@ -38,16 +38,16 @@ const rootEl = document.getElementById('root')
 window.NEXT_STATE = mori.toClj(initialState)
 window.CURRENT_STATE = null
 
-let renderCount = 0
+// let renderCount = 0
 
 function renderNow () {
   if (!mori.equals(window.CURRENT_STATE, window.NEXT_STATE)) {
     window.CURRENT_STATE = window.NEXT_STATE
 
     ReactDOM.render(<App imdata={window.CURRENT_STATE} />, rootEl)
-    renderCount++
+    // renderCount++
 
-    console.log('Render #' + renderCount)
+    // console.log('Render #' + renderCount)
   }
 
   window.requestAnimationFrame(renderNow)
