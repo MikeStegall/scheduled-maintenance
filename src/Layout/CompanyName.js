@@ -22,7 +22,7 @@ function submitCompanyName () {
   if (month === 11) month = 'Dec'
 
   const date = dayOfMonth + '-' + month + '-' + year
-  const companyId = companyName + ' ' + date
+  const companyId = date + ' ' + companyName
   // do nothing if the user has not entered a company name
   if (companyName !== '') {
     let newState1 = mori.assoc(window.CURRENT_STATE, 'step', 2)

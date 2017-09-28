@@ -41,15 +41,15 @@ function TempFileCheck (idx, sizeOfTempFiles) {
       <ul className='table-view'>
         <li className='table-view-cell'>
             Less than 1Gb
-          <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clicklessThan1GB} checked={islessThan1GB} />
+          <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clicklessThan1GB} defaultChecked={islessThan1GB} />
         </li>
         <li className='table-view-cell'>
             Between 1Gb and 5GB
-            <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickbetween1GBAnd3GB} checked={isbetween1GBAnd3GB} />
+            <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickbetween1GBAnd3GB} defaultChecked={isbetween1GBAnd3GB} />
         </li>
         <li className='table-view-cell'>
             More than 5Gb
-            <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickgreaterThan5GB} checked={isgreaterThan5GB} />
+            <input className='radio-btn' type='radio' name='TempFileCheck' onClick={clickgreaterThan5GB} defaultChecked={isgreaterThan5GB} />
         </li>
       </ul>
     </div>
@@ -95,15 +95,15 @@ function DiskFragmentationCheck (idx, fragmentation) {
       <ul className='table-view'>
         <li className='table-view-cell'>
             0% Fragmented
-          <input className='radio-btn' type='radio' name='Fragmented' checked={islessThanTwoPercent} onClick={clicklessThanTwoPercent} />
+          <input className='radio-btn' type='radio' name='Fragmented' defaultChecked={islessThanTwoPercent} onClick={clicklessThanTwoPercent} />
         </li>
         <li className='table-view-cell'>
             between 1% and 5% Fragmented
-            <input className='radio-btn' type='radio' name='Fragmented' checked={isbetweenTwoAndFivePercent} onClick={clickbetweenTwoAndFivePercent} />
+            <input className='radio-btn' type='radio' name='Fragmented' defaultChecked={isbetweenTwoAndFivePercent} onClick={clickbetweenTwoAndFivePercent} />
         </li>
         <li className='table-view-cell'>
             Greater then 6% Fragmented
-            <input className='radio-btn' type='radio' name='Fragmented' checked={isgreaterThanFivePercent} onClick={clickgreaterThanFivePercent} />
+            <input className='radio-btn' type='radio' name='Fragmented' defaultChecked={isgreaterThanFivePercent} onClick={clickgreaterThanFivePercent} />
         </li>
       </ul>
     </div>

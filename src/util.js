@@ -9,12 +9,12 @@ function morilog (moriThing) {
 function createEmptyComputer (computerName) {
   const newComputer = {
     computerName: computerName,
-    checkForVirusUpdates: null,
-    freeDiskSpace: null,
-    sizeOfTempFiles: null,
-    fragmentation: null,
+    checkForVirusUpdates: '',
+    freeDiskSpace: '',
+    sizeOfTempFiles: '',
+    fragmentation: '',
     pcCleaned: 0,
-    numberOfWindowsUpdates: null,
+    numberOfWindowsUpdates: '',
     virusesFound: 0,
     hardDriveHealth: 0,
     eventLogs: 0,
@@ -37,7 +37,7 @@ function createEmptyComputer (computerName) {
     serverBackupWorkingNotes: '',
     computerInputStep: 1,
     isEverythingEntered: false,
-    averageScore: null
+    averageScore: ''
   }
 
   return mori.toClj(newComputer)
@@ -92,9 +92,21 @@ function companyId (company) {
   window.NEXT_STATE = newState2
 }
 
+function computerNameArr (numComputers) {
+  let computerNameVect = mori.vector()
+  for (let idx = 0; idx < numComputers; idx++) {
+    let computerName = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'computerName'])
+    computerNameVect = mori.conj(computerNameVect, computerName)
+  }
+  let newState1 = mori.assoc(window.CURRENT_STATE, 'computerNameArr', computerNameVect)
+  let newState2 = mori.assoc(newState1, 'showComputerNames', true)
+  window.NEXT_STATE = newState2
+}
+
 export {morilog,
         createEmptyComputer,
         pushFireBase,
         fetchCompanyIdFromFirebase,
         fetchIncompleteJobsFromFirebase,
-        companyId}
+        companyId,
+        computerNameArr}

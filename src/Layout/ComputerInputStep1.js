@@ -43,16 +43,16 @@ function VirusSoftwareCheck (idx, virusUpdates) {
       <h4 className='check-title'>Virus Software</h4>
       <ul className='table-view'>
         <li className='table-view-cell'>
-            Fully Updated:
-          <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickFullyUpdated} checked={isFullyUpdatedChecked} />
+          Fully Updated:
+          <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickFullyUpdated} defaultChecked={isFullyUpdatedChecked} />
         </li>
         <li className='table-view-cell'>
-            Needs Updates:
-          <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickNeedsUpdates} checked={isNeedsUpdatedChecked} />
+          Needs Updates:
+          <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickNeedsUpdates} defaultChecked={isNeedsUpdatedChecked} />
         </li>
         <li className='table-view-cell'>
             None Found:
-              <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickNoneFound} checked={isNoneFoundChecked} />
+            <input className='radio-btn' type='radio' name='virusSoftwareCheck' onClick={clickNoneFound} defaultChecked={isNoneFoundChecked} />
         </li>
       </ul>
     </div>
@@ -101,15 +101,15 @@ function DiskSpaceCheck (idx, freeDiskSpace) {
       <ul className='table-view'>
         <li className='table-view-cell'>
             Free space greater than 25%
-          <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clickgreaterThan25} checked={isgreaterThan25} />
+          <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clickgreaterThan25} defaultChecked={isgreaterThan25} />
         </li>
         <li className='table-view-cell'>
             between 25% and 5%
-            <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clickbetween25And5} checked={isbetween25And5} />
+            <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clickbetween25And5} defaultChecked={isbetween25And5} />
         </li>
         <li className='table-view-cell'>
             Less than 5%
-            <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clicklessThan5} checked={islessThan5} />
+            <input className='radio-btn' type='radio' name='diskSpaceCheck' onClick={clicklessThan5} defaultChecked={islessThan5} />
         </li>
       </ul>
     </div>
