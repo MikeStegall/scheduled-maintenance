@@ -45,45 +45,22 @@ function createEmptyComputer (computerName) {
 
 function pushFireBase () {
   const appStateJS = mori.toJs(window.CURRENT_STATE)
-  const companyName = mori.get(window.CURRENT_STATE, 'companyName')
-  const companyNameJs = mori.toJs(companyName)
-  let month = new Date().getMonth()
-  const dayOfMonth = new Date().getDate()
-  const year = new Date().getFullYear()
+  const uniqueKey = mori.get(window.CURRENT_STATE, 'companyId')
+  const uniqueKeyJs = mori.toJs(uniqueKey)
 
-  if (month === 0) month = 'Jan'
-  if (month === 1) month = 'Feb'
-  if (month === 2) month = 'Mar'
-  if (month === 3) month = 'Apr'
-  if (month === 4) month = 'May'
-  if (month === 5) month = 'Jun'
-  if (month === 6) month = 'Jul'
-  if (month === 7) month = 'Aug'
-  if (month === 8) month = 'Sep'
-  if (month === 9) month = 'Oct'
-  if (month === 10) month = 'Nov'
-  if (month === 11) month = 'Dec'
-
-  const date = dayOfMonth + '-' + month + '-' + year
-  const uniqueKey = companyNameJs + ' ' + date
-
-  const rootRef = firebase.database().ref(uniqueKey)
+  const rootRef = firebase.database().ref(uniqueKeyJs)
   rootRef.set(appStateJS)
 }
+let incompleteJobVec = mori.get(window.CURRENT_STATE, 'incompleteJobArr')
 
-function fetchIncompleteJobsFromFirebase () {
-  let incompleteJobArr = []
-  const companyNameArr = mori.get(window.CURRENT_STATE, 'companyNameArr')
-  let companyNameArrJs = mori.toJs(companyNameArr)
-  // console.log(companyNameArrJs)
-  companyNameArrJs.forEach((name) => {
-    firebase.database().ref(name).once('value').then(function (snapshot) {
-      let company = snapshot.val()
-      if (!company.allComputersFinished) {
-        incompleteJobArr.push(company.companyId)
-      }
-      return incompleteJobArr
-    })
+function fetchIncompleteJobsFromFirebase (NameOfCompany) {
+  firebase.database().ref(NameOfCompany).once('value').then(function (snapshot) {
+    let company = snapshot.val()
+    if (!company.allComputersFinished) {
+      incompleteJobVec = mori.conj(incompleteJobVec, company.companyId)
+      window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'incompleteJobArr', incompleteJobVec)
+    }
+    return incompleteJobVec
   })
 }
 
@@ -92,6 +69,7 @@ function fetchCompanyIdFromFirebase () {
   firebase.database().ref().once('value').then(function (snapshot) {
     let company = snapshot.val()
     for (let NameOfCompany in company) {
+      fetchIncompleteJobsFromFirebase(NameOfCompany)
       companyNameArr.push(NameOfCompany)
     }
     let newState = mori.assoc(window.CURRENT_STATE, 'companyNameArr', companyNameArr)

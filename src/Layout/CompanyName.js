@@ -1,6 +1,6 @@
 import React from 'react'
 import mori from 'mori'
-import {pushFireBase, fetchCompanyIdFromFirebase, fetchIncompleteJobsFromFirebase} from '../util'
+import {fetchCompanyIdFromFirebase} from '../util'
 
 function submitCompanyName () {
   const companyName = mori.get(window.CURRENT_STATE, 'companyName')
@@ -29,10 +29,10 @@ function submitCompanyName () {
     let newState2 = mori.assoc(newState1, 'time', Date())
     const newState3 = mori.assoc(newState2, 'companyId', companyId)
     window.NEXT_STATE = newState3
-    pushFireBase()
   } else {
     window.alert('Plase enter a company Name')
   }
+  // pushFireBase()
 }
 
 function changeCompanyName (evt) {
@@ -48,16 +48,16 @@ function onKeyPress (key) {
 }
 
 function clickShowIncompleteJobs () {
-  window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'showIncompleteJobs', true)
-  fetchIncompleteJobsFromFirebase()
+  window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'showPreviousJobs', true)
+  fetchCompanyIdFromFirebase()
 }
 
 function clickShowPreviousJobs () {
   window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'showPreviousJobs', true)
+  fetchCompanyIdFromFirebase()
 }
 
 function CompanyNameInputPage (name) {
-  fetchCompanyIdFromFirebase()
   return (
     <div className='input-group company-name-input-group'>
       <div className='input-row company-name-input'>

@@ -1,6 +1,6 @@
 import React from 'react'
 import mori from 'mori'
-import {createEmptyComputer} from '../util.js'
+import {createEmptyComputer, pushFireBase} from '../util.js'
 
 function submitNumberOfComputers () {
   const numComputers = mori.get(window.CURRENT_STATE, 'numComputers')
@@ -37,6 +37,7 @@ function NameOfCompany (companyName) {
 }
 
 function NumberOfComputersPage (companyName, number) {
+  pushFireBase()
   return (
     <div className='input-group'>
       {NameOfCompany(companyName)}
