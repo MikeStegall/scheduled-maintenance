@@ -1,9 +1,5 @@
 import mori from 'mori'
 
-// -----------------------------------------------------------------------------
-// Average of Comptuer
-// -----------------------------------------------------------------------------
-
 function isEverythingEnteredFn () {
   const idx = mori.get(window.CURRENT_STATE, 'activeComputerIdx')
 
@@ -29,11 +25,7 @@ function isEverythingEnteredFn () {
   const serverBackupWorkingNotes = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'serverBackupWorkingNotes'])
   const isServerBackupWorking = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'])
 
-  // const allComputersFinished = mori.get(window.CURRENT_STATE, 'allComputersFinished')
-  // const allComputersFinishedJs = mori.toJs(allComputersFinished)
   const computers = mori.get(window.CURRENT_STATE, 'computers')
-  // const comptuersjs = mori.toJs(computers)
-  // console.log(comptuersjs)
 
   if (!isServer) {
     if (computerName !== ('Computer ' + (idx + 1)) && checkForVirusUpdates !== null && freeDiskSpace !== null &&
@@ -44,15 +36,18 @@ function isEverythingEnteredFn () {
                                                   (isHardDriveGood || hardDriveHealthNotes !== '') &&
                                                   (!hasCritcalEventLogs || eventLogsNotes !== '') &&
                                                   (!hasCurroptedSystemFiles || systemFileCheckNotes !== '')) {
-      const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], true)
-      window.NEXT_STATE = newState
+      const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], true)
+      const newState2 = mori.assoc(newState1, 'allComputersFinished', true)
+      window.NEXT_STATE = newState2
     }
   } else if (isServer) {
-    const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], false)
-    window.NEXT_STATE = newState
+    const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], false)
+    const newState2 = mori.assoc(newState1, 'allComputersFinished', false)
+    window.NEXT_STATE = newState2
     if (serverBackupNotes !== '' || serverBackupWorkingNotes !== '' || isServerBackupWorking) {
-      const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], true)
-      window.NEXT_STATE = newState
+      const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], true)
+      const newState2 = mori.assoc(newState1, 'allComputersFinished', true)
+      window.NEXT_STATE = newState2
     }
   }
 

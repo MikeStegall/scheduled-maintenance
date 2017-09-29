@@ -46,7 +46,6 @@ function getAverageScore (idx, computerScore, serverScore, isServer) {
 
 function SubmitButton (idx, computerScore, serverScore, isServer, numComputers) {
   let isEverythingEntered = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'])
-  // let allComputersFinished = mori.get(window.CURRENT_STATE, 'allComputersFinished')
   let className = 'btn btn-primary btn-block'
   let className2 = 'btn btn-positive btn-block'
   if (!isEverythingEntered) {
