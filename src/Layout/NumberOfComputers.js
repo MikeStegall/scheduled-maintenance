@@ -5,7 +5,6 @@ import {createEmptyComputer, pushFireBase} from '../util.js'
 function submitNumberOfComputers () {
   const numComputers = mori.get(window.CURRENT_STATE, 'numComputers')
   if (numComputers === 0 && numComputers > 100000) {
-    // TODO: show an error message here
     window.alert('Please enter a number of computers between 0 and 25')
   }
 

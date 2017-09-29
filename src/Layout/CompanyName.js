@@ -32,7 +32,6 @@ function submitCompanyName () {
   } else {
     window.alert('Plase enter a company Name')
   }
-  // pushFireBase()
 }
 
 function changeCompanyName (evt) {

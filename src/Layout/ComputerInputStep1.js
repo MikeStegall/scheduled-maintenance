@@ -12,21 +12,18 @@ function fullUpdate (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 100)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  // pushFireBase()
 }
 
 function needsUpdates (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 50)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  // pushFireBase()
 }
 
 function noneFound (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'], 0)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  // pushFireBase()
 }
 
 function VirusSoftwareCheck (idx, virusUpdates) {
@@ -69,21 +66,18 @@ function greaterThan25 (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 100)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  // pushFireBase()
 }
 
 function between25And5 (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 50)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  // pushFireBase()
 }
 
 function lessThan5 (idx) {
   const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'], 0)
   const newState2 = mori.assoc(newState1, 'time', Date())
   window.NEXT_STATE = newState2
-  // pushFireBase()
 }
 
 function DiskSpaceCheck (idx, freeDiskSpace) {

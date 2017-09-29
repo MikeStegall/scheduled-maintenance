@@ -5,8 +5,6 @@ import {pushFireBase} from '../util'
 
 import NewJobButton from './NewJobButton'
 
-// TODO Have it say what the score means
-
 function ShowCompanyAverage (idx, numComputers) {
   let companyAverageArr = mori.vector()
   for (idx = 0; idx < numComputers; idx++) {
@@ -17,9 +15,16 @@ function ShowCompanyAverage (idx, numComputers) {
   const companyAverageArrSum = mori.reduce(mori.sum, 0, companyAverageArr)
   const companyAverage = companyAverageArrSum / companyAverageArrLenth
   const companyAverageDecimal = companyAverage.toFixed(2)
+  if (companyAverageDecimal !== null) {
+    console.log('hiihihi')
+    window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'allComputersFinished', true)
+  }
   const newState = mori.assoc(window.CURRENT_STATE, 'companyAverage', companyAverageDecimal)
   window.NEXT_STATE = newState
   const companyAverageJs = mori.toJs(companyAverageDecimal)
+  if (companyAverageDecimal !== 0) {
+    window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'allComputersFinished', true)
+  }
   return <div>{companyAverageJs}</div>
 }
 
@@ -29,51 +34,20 @@ class CompanyAverage extends MoriComponent {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const companyName = mori.get(this.props.imdata, 'companyName')
     const companyNameJs = mori.toJs(companyName)
-    const companyAverage = mori.get(window.CURRENT_STATE, 'companyAverage')
-    const companyAverageJs = mori.toJs(companyAverage)
 
     pushFireBase()
 
-    if (companyAverageJs >= 75) {
-      let className = 'company-average-score green'
-      return (
-        <div>
-          <header className='bar bar-nav'>
-            <h1 className='title'>{companyNameJs} Company Average</h1>
-          </header>
-          <div className={className}>
-            {ShowCompanyAverage(idx, numComputers)}
-          </div>
-          {NewJobButton()}
+    return (
+      <div>
+        <header className='bar bar-nav'>
+          <h1 className='title'>{companyNameJs} Company Average</h1>
+        </header>
+        <div className='company-average-score'>
+          {ShowCompanyAverage(idx, numComputers)}
         </div>
-      )
-    } else if (companyAverageJs >= 50) {
-      let className = 'company-average-score yellow'
-      return (
-        <div>
-          <header className='bar bar-nav'>
-            <h1 className='title'>{companyNameJs} Company Average</h1>
-          </header>
-          <div className={className}>
-            {ShowCompanyAverage(idx, numComputers)}
-          </div>
-          {NewJobButton()}
-        </div>
-      )
-    } else if (companyAverageJs <= 25) {
-      let className = 'company-average-score red'
-      return (
-        <div>
-          <header className='bar bar-nav'>
-            <h1 className='title'>{companyNameJs} Company Average</h1>
-          </header>
-          <div className={className}>
-            {ShowCompanyAverage(idx, numComputers)}
-          </div>
-          {NewJobButton()}
-        </div>
-      )
-    }
+        {NewJobButton()}
+      </div>
+    )
   }
 }
 

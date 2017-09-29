@@ -22,7 +22,7 @@ function LeftButton () {
   return (
     <button className='btn btn-link btn-nav pull-left' onClick={clickPageDown}>
       <span className='icon icon-left-nav' />
-      Left
+      Back
     </button>
   )
 }
@@ -30,7 +30,7 @@ function LeftButton () {
 function RightButton () {
   return (
     <button className='btn btn-link btn-nav pull-right' onClick={clickPageUp}>
-      Right
+      Next
       <span className='icon icon-right-nav' />
     </button>
   )
