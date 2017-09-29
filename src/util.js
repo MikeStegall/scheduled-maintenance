@@ -52,13 +52,19 @@ function pushFireBase () {
   rootRef.set(appStateJS)
 }
 let incompleteJobVec = mori.get(window.CURRENT_STATE, 'incompleteJobArr')
+let companyNameVec = mori.get(window.CURRENT_STATE, 'companyNameArr')
 
 function fetchIncompleteJobsFromFirebase (NameOfCompany) {
   firebase.database().ref(NameOfCompany).once('value').then(function (snapshot) {
     let company = snapshot.val()
     if (!company.allComputersFinished) {
+      console.log('hi')
       incompleteJobVec = mori.conj(incompleteJobVec, company.companyId)
       window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'incompleteJobArr', incompleteJobVec)
+    }
+    if (company.allComputersFinished) {
+      companyNameVec = mori.conj(companyNameVec, company.companyId)
+      window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'companyNameArr', companyNameVec)
     }
     return incompleteJobVec
   })
@@ -70,7 +76,7 @@ function fetchCompanyIdFromFirebase () {
     let company = snapshot.val()
     for (let NameOfCompany in company) {
       fetchIncompleteJobsFromFirebase(NameOfCompany)
-      companyNameArr.push(NameOfCompany)
+      // companyNameArr.push(NameOfCompany)
     }
     let newState = mori.assoc(window.CURRENT_STATE, 'companyNameArr', companyNameArr)
     window.NEXT_STATE = newState
