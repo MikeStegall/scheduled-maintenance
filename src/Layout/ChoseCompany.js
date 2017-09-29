@@ -12,6 +12,7 @@ function ChoseCompanyName () {
     let clickCompanyId = companyId.bind(null, company)
     return <li key={idx} onClick={clickCompanyId} className='table-view-cell'>{company}</li>
   })
+  console.log(companyNameVectJs)
   return <ul className='table-view previous-jobs'>{companyName}</ul>
 }
 
