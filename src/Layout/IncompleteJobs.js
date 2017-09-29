@@ -26,6 +26,9 @@ function ChoseCompanyName () {
 function IncompleteJobs () {
   return (
     <div>
+      <header className='bar bar-nav'>
+        <h1 className='title'>Incomplete Jobs</h1>
+      </header>
       {ChoseCompanyName()}
     </div>
   )

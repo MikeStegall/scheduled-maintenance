@@ -18,6 +18,9 @@ function ChoseCompanyName () {
 function PreviousJobsPage () {
   return (
     <div>
+      <header className='bar bar-nav previous-jobs'>
+        <h1 className='title'>Completed Jobs</h1>
+      </header>
       {ChoseCompanyName()}
       {IncompleteJobs()}
       {NewJobButton()}
