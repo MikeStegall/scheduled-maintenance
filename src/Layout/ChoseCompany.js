@@ -20,7 +20,7 @@ function PreviousJobsPage () {
   return (
     <div>
       <header className='bar bar-nav previous-jobs'>
-        <h1 className='title'>Completed Jobs</h1>
+        <h1 className='title'>All Jobs</h1>
       </header>
       {ChoseCompanyName()}
       {IncompleteJobs()}
