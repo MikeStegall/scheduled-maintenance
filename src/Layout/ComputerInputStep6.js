@@ -53,7 +53,6 @@ function isServerBackedUp (idx, isServer, doesServerHaveABackUp) {
 }
 
 function ToggleDoesServerHaveABackup (idx, isServer, doesServerHaveABackUp) {
-  // console.log('doesServerHaveABackUp')
   let clickIsServerBackedUp = isServerBackedUp.bind(null, idx, isServer, doesServerHaveABackUp)
   let className = 'toggle'
   if (!doesServerHaveABackUp) {

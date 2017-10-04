@@ -9,7 +9,6 @@ import './index.css'
 
 const initialState = {
   companyName: '',
-  // TODO: remove this property, it should be a count of computers[]
   numComputers: '',
   computers: [],
   activeComputerIdx: 0,
@@ -19,7 +18,6 @@ const initialState = {
   time: Date(),
   showPreviousJobs: false,
   showComputerNames: false,
-  // showIncompleteJobs: false,
   showPreviousJobComputerResults: false,
   companyNameArr: [],
   computerNameArr: [],

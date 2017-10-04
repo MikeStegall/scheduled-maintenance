@@ -16,7 +16,6 @@ function ShowCompanyAverage (idx, numComputers) {
   const companyAverage = companyAverageArrSum / companyAverageArrLenth
   const companyAverageDecimal = companyAverage.toFixed(2)
   if (companyAverageDecimal !== null) {
-    console.log('hiihihi')
     window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'allComputersFinished', true)
   }
   const newState = mori.assoc(window.CURRENT_STATE, 'companyAverage', companyAverageDecimal)

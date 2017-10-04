@@ -2,10 +2,6 @@ import React from 'react'
 import firebase from '../firebase'
 import mori from 'mori'
 
-// import {morilog} from '../util'
-
-// import NewJobButton from './NewJobButton'
-
 function companyId (company) {
   firebase.database().ref(company).once('value').then(function (snapshot) {
     let company = snapshot.val()
