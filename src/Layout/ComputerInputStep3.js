@@ -6,11 +6,13 @@ import MoriComponent from '../MoriComponent'
 // Clean the PC
 // -----------------------------------------------------------------------------
 
+// function to add to pc notes.
 function changePcCleanNotes (idx, evt) {
   const newName = evt.target.value
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'pcCleanedNotes'], newName)
 }
 
+// function to update the state
 function clickPcCleanedFn (idx, hasPcBeenCleaned) {
   if (hasPcBeenCleaned) {
     const newState1 = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'hasPcBeenCleaned'], false)
@@ -27,9 +29,10 @@ function clickPcCleanedFn (idx, hasPcBeenCleaned) {
   }
 }
 
+// textbox to add notes to if the pc was not cleaned
 function PcCleanedNotes (idx, hasPcBeenCleaned, pcCleanedNotes) {
   let onChangePcCleanedNotes = changePcCleanNotes.bind(null, idx)
-  if (mori.equals(hasPcBeenCleaned, false)) {
+  if (!hasPcBeenCleaned) { // Shows a text box to enter notes
     return (
       <textarea rows='4' onChange={onChangePcCleanedNotes} value={pcCleanedNotes} />
     )
@@ -40,7 +43,7 @@ function TogglePcCleaned (idx, hasPcBeenCleaned) {
   let clickTogglePcCleaned = clickPcCleanedFn.bind(null, idx, hasPcBeenCleaned)
   let className = 'toggle'
   if (!hasPcBeenCleaned) {
-    className = 'toggle'
+    className = 'toggle' // To make the toggle say no
   } else if (hasPcBeenCleaned) {
     className = 'toggle active' // To make the toggle say yes
   }
@@ -86,10 +89,12 @@ function needsMoreThanFive (idx) {
 }
 
 function CheckForUpdatess (idx, numberOfWindowsUpdates) {
+  // binding functions to variables
   let clickNeedsZeroUpdates = needsZeroUpdates.bind(null, idx)
   let clickNeedsBetweenOneAndFiveUpdates = needsBetweenOneAndFiveUpdates.bind(null, idx)
   let clickNeedsMoreThanFive = needsMoreThanFive.bind(null, idx)
 
+  // if the following equals the number then it is true
   let isneedsZeroUpdates = (mori.equals(numberOfWindowsUpdates, 100))
   let isneedsBetweenOneAndFiveUpdates = (mori.equals(numberOfWindowsUpdates, 50))
   let isneedsMoreThanFive = (mori.equals(numberOfWindowsUpdates, 0))
@@ -117,6 +122,7 @@ function CheckForUpdatess (idx, numberOfWindowsUpdates) {
 
 class ComputerInputStep3 extends MoriComponent {
   render () {
+    // assigning variables from mori
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
 
     const hasPcBeenCleaned = mori.getIn(this.props.imdata, ['computers', idx, 'hasPcBeenCleaned'])

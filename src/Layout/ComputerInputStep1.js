@@ -1,7 +1,6 @@
 import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
-// import {pushFireBase} from '../util'
 // ---------------------------------------------------------
 // Virus Check
 // ---------------------------------------------------------
@@ -27,10 +26,12 @@ function noneFound (idx) {
 }
 
 function VirusSoftwareCheck (idx, virusUpdates) {
+  // binding functions to variables
   let clickFullyUpdated = fullUpdate.bind(null, idx)
   let clickNeedsUpdates = needsUpdates.bind(null, idx)
   let clickNoneFound = noneFound.bind(null, idx)
 
+  // if the following equals the number then it is true
   let isFullyUpdatedChecked = (mori.equals(virusUpdates, 100))
   let isNeedsUpdatedChecked = (mori.equals(virusUpdates, 50))
   let isNoneFoundChecked = (mori.equals(virusUpdates, 0))
@@ -81,10 +82,12 @@ function lessThan5 (idx) {
 }
 
 function DiskSpaceCheck (idx, freeDiskSpace) {
+  // binding functions to variables
   let clickgreaterThan25 = greaterThan25.bind(null, idx)
   let clickbetween25And5 = between25And5.bind(null, idx)
   let clicklessThan5 = lessThan5.bind(null, idx)
 
+  // if the following equals the number then it is true
   let isgreaterThan25 = (mori.equals(freeDiskSpace, 100))
   let isbetween25And5 = (mori.equals(freeDiskSpace, 50))
   let islessThan5 = (mori.equals(freeDiskSpace, 0))
@@ -112,6 +115,7 @@ function DiskSpaceCheck (idx, freeDiskSpace) {
 
 class ComputerInputStep1 extends MoriComponent {
   render () {
+    // assigning variables from mori
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const virusUpdates = mori.getIn(this.props.imdata, ['computers', idx, 'checkForVirusUpdates'])
     const freeDiskSpace = mori.getIn(this.props.imdata, ['computers', idx, 'freeDiskSpace'])

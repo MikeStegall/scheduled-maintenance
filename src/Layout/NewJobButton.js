@@ -1,7 +1,7 @@
 import React from 'react'
 import mori from 'mori'
 
-function clickNewJobButton () {
+function clickNewJobButton () { // basically resets the state
   const newState1 = mori.assoc(window.CURRENT_STATE, 'showPreviousJobs', false)
   const newState2 = mori.assoc(newState1, 'showPreviousJobComputerResults', false)
   const newState3 = mori.assoc(newState2, 'companyNameArr', [])

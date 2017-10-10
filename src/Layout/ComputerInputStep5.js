@@ -13,7 +13,7 @@ function changeEventLogsNotes (idx, evt) {
 
 function EventLogNotes (idx, hasCritcalEventLogs, eventLogsNotes) {
   let onChangeEventLogsNotes = changeEventLogsNotes.bind(null, idx)
-  if (hasCritcalEventLogs) {
+  if (hasCritcalEventLogs) { // Shows a text box to enter notes
     return (
       <textarea rows='4' onChange={onChangeEventLogsNotes} value={eventLogsNotes} />
     )
@@ -40,9 +40,9 @@ function ToggleEventLogs (idx, hasCritcalEventLogs) {
   let clickToggleEventLogs = clickEventLogs.bind(null, idx, hasCritcalEventLogs)
   let className = 'toggle'
   if (mori.equals(hasCritcalEventLogs, true)) {
-    className = 'toggle active'
+    className = 'toggle active' // To make the toggle say yes
   } else {
-    className = 'toggle'
+    className = 'toggle' // To make the toggle say no
   }
   return (
     <div id='pcCleanToggle' className={className} onClick={clickToggleEventLogs}>
@@ -77,7 +77,7 @@ function changeSystemFileCheckNotes (idx, evt) {
 
 function SystemFilesCheckNotes (idx, hasCurroptedSystemFiles, systemFileCheckNotes) {
   let onChangeystemFilesCheckNotes = changeSystemFileCheckNotes.bind(null, idx)
-  if (hasCurroptedSystemFiles) {
+  if (hasCurroptedSystemFiles) { // Shows a text box to enter notes
     return (
       <textarea rows='4' onChange={onChangeystemFilesCheckNotes} value={systemFileCheckNotes} />
     )
@@ -104,9 +104,9 @@ function ToggleSystemFilesChecks (idx, hasCurroptedSystemFiles) {
   let clickToggleSystemFilesChecks = clickSystemFilesChecks.bind(null, idx, hasCurroptedSystemFiles)
   let className = 'toggle'
   if (!hasCurroptedSystemFiles) {
-    className = 'toggle'
+    className = 'toggle' // To make the toggle say no
   } else if (hasCurroptedSystemFiles) {
-    className = 'toggle active'
+    className = 'toggle active' // To make the toggle say yes
   }
   return (
     <div id='pcCleanToggle' className={className} onClick={clickToggleSystemFilesChecks}>

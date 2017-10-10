@@ -10,7 +10,7 @@ function changeComputerName (idx, evt) {
   window.NEXT_STATE = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'computerName'], newName)
 }
 
-function ComputerNameInput (idx, name) {
+function ComputerNameInput (idx, name) { // name = computerName
   let onChangeComputerName = changeComputerName.bind(null, idx)
   return (
     <div className='input-group'>

@@ -14,7 +14,7 @@ function changeVirusesFoundNotes (idx, evt) {
 
 function VirusesFoundNotes (idx, hasVirusBeenFound, virusesFoundNotes) {
   let onChangeVirusesFoundNotes = changeVirusesFoundNotes.bind(null, idx)
-  if (hasVirusBeenFound) {
+  if (hasVirusBeenFound) { // Shows a text box to enter notes
     return (
       <textarea rows='4' onChange={onChangeVirusesFoundNotes} value={virusesFoundNotes} />
     )
@@ -73,7 +73,7 @@ function changeHardDriveHealthNotes (idx, evt) {
 
 function HardDriveHealthNotes (idx, isHardDriveGood, hardDriveHealthNotes) {
   let onChangeHardDriveHealthNotes = changeHardDriveHealthNotes.bind(null, idx)
-  if (!isHardDriveGood) {
+  if (!isHardDriveGood) { // Shows a text box to enter notes
     return (
       <textarea rows='4' onChange={onChangeHardDriveHealthNotes} value={hardDriveHealthNotes} />
     )
@@ -100,9 +100,9 @@ function ToggleHardDriveHealth (idx, isHardDriveGood) {
   let clickToggleHardDriveHealth = clickHardDriveHealth.bind(null, idx, isHardDriveGood)
   let className = 'toggle'
   if (!isHardDriveGood) {
-    className = 'toggle'
+    className = 'toggle' // To make the toggle say no
   } else if (isHardDriveGood) {
-    className = 'toggle active'
+    className = 'toggle active' // To make the toggle say yes
   }
   return (
     <div id='pcCleanToggle' className={className} onClick={clickToggleHardDriveHealth}>

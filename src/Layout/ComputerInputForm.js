@@ -14,6 +14,7 @@ import ComputerNames from './SwithComputersModal'
 
 class ComputersInputPage extends MoriComponent {
   render () {
+    // assigning variables from mori
     const companyName = mori.get(this.props.imdata, 'companyName')
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const computerInputStep = mori.getIn(this.props.imdata, ['computers', idx, 'computerInputStep'])
@@ -21,7 +22,7 @@ class ComputersInputPage extends MoriComponent {
     const numComputers = mori.get(this.props.imdata, 'numComputers')
     const showModal = mori.get(this.props.imdata, 'showComputerNames')
     if (showModal) {
-      return <ComputerNames imdata={this.props.imdata} />
+      return <ComputerNames imdata={this.props.imdata} /> // show the computer names to switch computers.
     } else if (!showModal) {
       return (
         <div className='computer-input'>

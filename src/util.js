@@ -43,7 +43,7 @@ function createEmptyComputer (computerName) {
   return mori.toClj(newComputer)
 }
 
-function pushFireBase () {
+function pushFireBase () { // pushes the appState to firebase
   const appStateJS = mori.toJs(window.CURRENT_STATE)
   const uniqueKey = mori.get(window.CURRENT_STATE, 'companyId')
   const uniqueKeyJs = mori.toJs(uniqueKey)
@@ -53,7 +53,7 @@ function pushFireBase () {
 }
 let incompleteJobVec = mori.get(window.CURRENT_STATE, 'incompleteJobArr')
 
-function fetchIncompleteJobsFromFirebase (NameOfCompany) {
+function fetchIncompleteJobsFromFirebase (NameOfCompany) { // Puts the incomplete jobs into an array to display on the screen
   firebase.database().ref(NameOfCompany).once('value').then(function (snapshot) {
     let company = snapshot.val()
     if (!company.allComputersFinished) {

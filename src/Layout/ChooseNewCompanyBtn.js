@@ -1,6 +1,8 @@
 import React from 'react'
 import mori from 'mori'
 
+// Clcik to view a list of previous jobs that have been complete to view different company data
+
 function clickChooseNewCompanyBtn () {
   const newState1 = mori.assoc(window.CURRENT_STATE, 'computers', [])
   const newState2 = mori.assoc(newState1, 'companyAverage', 0)

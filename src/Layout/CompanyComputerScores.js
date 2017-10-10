@@ -1,6 +1,7 @@
 import React from 'react'
 import mori from 'mori'
 
+// import different components and functions from different files.
 import NewJobButton from './NewJobButton'
 import ChooseNewCompanyBtn from './ChooseNewCompanyBtn'
 
@@ -11,6 +12,8 @@ function CompanyResults () {
   const companyAverageJs = mori.toJs(companyAverage)
   const companyName = mori.get(window.CURRENT_STATE, 'companyName')
   const companyNameJs = mori.toJs(companyName)
+
+  // mapping through the whole computer object from the company name that was selected
   let companyComputers = computersArr.map((computer, idx) => {
     return <p key={idx} className='spread-sheet-data'>{computer.computerName}</p>
   })

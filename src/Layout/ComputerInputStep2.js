@@ -27,10 +27,12 @@ function greaterThan5GB (idx) {
 }
 
 function TempFileCheck (idx, sizeOfTempFiles) {
+  // binding functions to variables
   let clicklessThan1GB = lessThan1GB.bind(null, idx)
   let clickbetween1GBAnd3GB = between1GBAnd3GB.bind(null, idx)
   let clickgreaterThan5GB = greaterThan5GB.bind(null, idx)
 
+  // if the following equals the number then it is true
   let islessThan1GB = (mori.equals(sizeOfTempFiles, 100))
   let isbetween1GBAnd3GB = (mori.equals(sizeOfTempFiles, 50))
   let isgreaterThan5GB = (mori.equals(sizeOfTempFiles, 0))
@@ -81,10 +83,12 @@ function greaterThanFivePercent (idx) {
 }
 
 function DiskFragmentationCheck (idx, fragmentation) {
+  // binding functions to variables
   let clicklessThanTwoPercent = lessThanTwoPercent.bind(null, idx)
   let clickbetweenTwoAndFivePercent = betweenTwoAndFivePercent.bind(null, idx)
   let clickgreaterThanFivePercent = greaterThanFivePercent.bind(null, idx)
 
+  // if the following equals the number then it is true
   let islessThanTwoPercent = (mori.equals(fragmentation, 100))
   let isbetweenTwoAndFivePercent = (mori.equals(fragmentation, 50))
   let isgreaterThanFivePercent = (mori.equals(fragmentation, 0))
@@ -112,6 +116,7 @@ function DiskFragmentationCheck (idx, fragmentation) {
 
 class ComputerInputStep2 extends MoriComponent {
   render () {
+    // assigning variables from mori
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const sizeOfTempFiles = mori.getIn(this.props.imdata, ['computers', idx, 'sizeOfTempFiles'])
     const fragmentation = mori.getIn(this.props.imdata, ['computers', idx, 'fragmentation'])

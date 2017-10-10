@@ -41,8 +41,8 @@ function NumberOfComputersPage (companyName, number) {
       {NameOfCompany(companyName)}
       <div className='input-row computer-number-input'>
         <label>Number of Computers:</label>
-        <input className='number-of-computers' type='number' placeholder='Number of Computers' name='numberOfComputes' onChange={changeNumberOfComputers} value={number} />
-        <button className='btn btn-primary btn-block' onKeyPress={onKeyPress} onClick={submitNumberOfComputers}>Enter</button>
+        <input className='number-of-computers' type='number' placeholder='Number of Computers' name='numberOfComputes' onKeyPress={onKeyPress} onChange={changeNumberOfComputers} value={number} />
+        <button className='btn btn-primary btn-block' onClick={submitNumberOfComputers}>Enter</button>
       </div>
     </div>
   )

@@ -22,8 +22,7 @@ function submitCompanyName () {
   if (month === 11) month = 'Dec'
 
   const date = dayOfMonth + '-' + month + '-' + year
-  const companyId = date + ' ' + companyName
-  // do nothing if the user has not entered a company name
+  const companyId = date + ' ' + companyName // the company id is formated like dd-mm-yyyy NameOfCompany
   if (companyName !== '') {
     let newState1 = mori.assoc(window.CURRENT_STATE, 'step', 2)
     let newState2 = mori.assoc(newState1, 'time', Date())
@@ -34,6 +33,7 @@ function submitCompanyName () {
   }
 }
 
+// changes the name when you type anything in the field
 function changeCompanyName (evt) {
   const newName = evt.target.value
   const newState = mori.assoc(window.CURRENT_STATE, 'companyName', newName)
@@ -41,7 +41,7 @@ function changeCompanyName (evt) {
 }
 
 function onKeyPress (key) {
-  if (key.charCode === 13) {
+  if (key.charCode === 13) { // if enter is pushed then submit the compnay name
     submitCompanyName()
   }
 }

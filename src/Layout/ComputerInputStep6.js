@@ -25,9 +25,9 @@ function ServerBackups (idx, isServer) {
   let clickIsServer = isServerFn.bind(null, idx, isServer)
   let className = 'toggle'
   if (!isServer) {
-    className = 'toggle'
+    className = 'toggle' // To make the toggle say no
   } else if (isServer) {
-    className = 'toggle active'
+    className = 'toggle active' // To make the toggle say yes
   }
   return (
     <div className={className} onClick={clickIsServer}>
@@ -56,9 +56,9 @@ function ToggleDoesServerHaveABackup (idx, isServer, doesServerHaveABackUp) {
   let clickIsServerBackedUp = isServerBackedUp.bind(null, idx, isServer, doesServerHaveABackUp)
   let className = 'toggle'
   if (!doesServerHaveABackUp) {
-    className = 'toggle'
+    className = 'toggle' // To make the toggle say no
   } else if (doesServerHaveABackUp) {
-    className = 'toggle active'
+    className = 'toggle active' // To make the toggle say yes
   }
   return (
     <div className={className} onClick={clickIsServerBackedUp}>
@@ -96,9 +96,9 @@ function ToggleIsBackupWorking (idx, isServer, doesServerHaveABackUp, isServerBa
   let clickIsServerBackupWorking = isServerBackupWorkingFn.bind(null, idx, isServerBackupWorking)
   let className = 'toggle'
   if (!isServerBackupWorking) {
-    className = 'toggle'
+    className = 'toggle' // To make the toggle say no
   } else if (isServerBackupWorking) {
-    className = 'toggle active'
+    className = 'toggle active' // To make the toggle say yes
   }
   return (
     <div className={className} onClick={clickIsServerBackupWorking}>
