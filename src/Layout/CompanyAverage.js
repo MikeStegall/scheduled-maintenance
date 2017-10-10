@@ -27,25 +27,55 @@ function ShowCompanyAverage (idx, numComputers) {
 
 class CompanyAverage extends MoriComponent {
   render () {
-    // all the props that are being used in this component
     const numComputers = mori.get(this.props.imdata, 'numComputers')
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
     const companyName = mori.get(this.props.imdata, 'companyName')
     const companyNameJs = mori.toJs(companyName)
+    const companyAverage = mori.get(window.CURRENT_STATE, 'companyAverage')
+    const companyAverageJs = mori.toJs(companyAverage)
 
     pushFireBase()
 
-    return (
-      <div>
-        <header className='bar bar-nav'>
-          <h1 className='title'>{companyNameJs} Company Average</h1>
-        </header>
-        <div className='company-average-score'>
-          {ShowCompanyAverage(idx, numComputers)}
+    if (companyAverageJs >= 75) {
+      let className = 'company-average-score green'
+      return (
+        <div>
+          <header className='bar bar-nav'>
+            <h1 className='title'>{companyNameJs} Company Average</h1>
+          </header>
+          <div className={className}>
+            {ShowCompanyAverage(idx, numComputers)}
+          </div>
+          {NewJobButton()}
         </div>
-        {NewJobButton()}
-      </div>
-    )
+      )
+    } else if (companyAverageJs >= 50) {
+      let className = 'company-average-score yellow'
+      return (
+        <div>
+          <header className='bar bar-nav'>
+            <h1 className='title'>{companyNameJs} Company Average</h1>
+          </header>
+          <div className={className}>
+            {ShowCompanyAverage(idx, numComputers)}
+          </div>
+          {NewJobButton()}
+        </div>
+      )
+    } else if (companyAverageJs <= 25) {
+      let className = 'company-average-score red'
+      return (
+        <div>
+          <header className='bar bar-nav'>
+            <h1 className='title'>{companyNameJs} Company Average</h1>
+          </header>
+          <div className={className}>
+            {ShowCompanyAverage(idx, numComputers)}
+          </div>
+          {NewJobButton()}
+        </div>
+      )
+    }
   }
 }
 
