@@ -36,6 +36,9 @@ function isEverythingEnteredFn () {
                                                   (!hasCurroptedSystemFiles || systemFileCheckNotes !== '')) {
       const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], true)
       window.NEXT_STATE = newState
+    } else {
+      const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], false)
+      window.NEXT_STATE = newState
     }
   } else if (isServer) {
     const newState = mori.assocIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'], false)
