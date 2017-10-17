@@ -2,7 +2,6 @@ import React from 'react'
 import mori from 'mori'
 import MoriComponent from '../MoriComponent'
 import {createEmptyComputer} from '../util'
-import isEverythingEnteredFn from './EverythingEntered'
 
 // -----------------------------------------------------------------------------
 // Average of Comptuer
@@ -57,7 +56,7 @@ function SubmitButton (idx, computerScore, serverScore, isServer, numComputers) 
   let clickIncreaseComputerNumber = increaseComputerNumber.bind(null, idx, computerScore, serverScore, isServer)
   let clickGetAverageScore = getAverageScore.bind(null, idx, computerScore, serverScore, isServer)
   if (idx < numComputers - 1) {
-    return <button className={className} onClick={clickIncreaseComputerNumber}>Next Computer</button>
+    return <button className={className} onClick={clickIncreaseComputerNumber}>Submit Computer Score/Next Computer</button>
   } else {
     return <button className={className2} onClick={clickGetAverageScore}>Submit for score</button>
   }
@@ -141,8 +140,6 @@ class SubmitComputerButton extends MoriComponent {
     const serverScoreArrSum = mori.reduce(mori.sum, 0, serverScoreArr)
     const computerScore = computerScoreArrSum / computerScoreArrLength
     const serverScore = serverScoreArrSum / serverScoreArrLenth
-
-    isEverythingEnteredFn()
 
     return (
       <div>

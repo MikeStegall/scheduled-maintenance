@@ -16,9 +16,6 @@ function ShowCompanyAverage (idx, numComputers) {
   const companyAverageArrSum = mori.reduce(mori.sum, 0, companyAverageArr)
   const companyAverage = companyAverageArrSum / companyAverageArrLenth
   const companyAverageDecimal = companyAverage.toFixed(2) // displays the average to 2 decimal points
-  // if (companyAverageDecimal >= 0) {
-  //   window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'allComputersFinished', true)
-  // }
   const newState1 = mori.assoc(window.CURRENT_STATE, 'companyAverage', companyAverageDecimal)
   const newState2 = mori.assoc(newState1, 'allComputersFinished', true)
   window.NEXT_STATE = newState2

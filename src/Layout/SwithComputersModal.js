@@ -10,15 +10,18 @@ function changeComputerNumber (idx) {
 function ComputerNames () {
   let computerNameVect = mori.get(window.CURRENT_STATE, 'computerNameArr')
   let computerNameVectJs = mori.toJs(computerNameVect)
+  let pageComponent = ''
   let companyName = computerNameVectJs.map((name, idx) => {
     let computerInputStep = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'computerInputStep'])
     let isEverythingEntered = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'])
     let computerInputStepJs = mori.toJs(computerInputStep)
     let clickchangeComputerNumber = changeComputerNumber.bind(null, idx)
     if (isEverythingEntered) {
-      return <li key={idx} className='table-view-cell' onClick={clickchangeComputerNumber}><span className='badge icon icon-check' />{name}</li>
+      pageComponent = <li key={idx} className='table-view-cell' onClick={clickchangeComputerNumber}><span className='badge icon icon-check' />{name}</li>
+    } else if (!isEverythingEntered) {
+      pageComponent = <li key={idx} className='table-view-cell' onClick={clickchangeComputerNumber}><span className='badge'>{computerInputStepJs}/6</span>{name}</li>
     }
-    return <li key={idx} className='table-view-cell' onClick={clickchangeComputerNumber}><span className='badge'>{computerInputStepJs}</span>{name}</li>
+    return pageComponent
   })
   return (
     <div className='computer-name-modal'>
