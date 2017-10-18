@@ -29,7 +29,7 @@ class ComputersInputPage extends MoriComponent {
           {HeaderBar(companyName, computerInputStep)}
           {ComputerNameInput(idx, mori.get(activeComputer, 'computerName'))}
           <ComputerInputSteps imdata={this.props.imdata} />
-          {SwitchComputersBtn(numComputers)}
+          {SwitchComputersBtn(numComputers, idx)}
           <span className='badge step-count'>Page {computerInputStep}/6</span>
         </div>
       )

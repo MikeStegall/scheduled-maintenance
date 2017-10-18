@@ -26,10 +26,10 @@ function isEverythingEnteredFn () {
   const isServerBackupWorking = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'isServerBackupWorking'])
 
   if (!isServer) {
-    if (computerName !== ('Computer ' + (idx + 1)) && checkForVirusUpdates !== null && freeDiskSpace !== null &&
-                                                  sizeOfTempFiles !== null && fragmentation !== null &&
+    if (computerName !== ('Computer ' + (idx + 1)) && checkForVirusUpdates !== '' && freeDiskSpace !== '' &&
+                                                  sizeOfTempFiles !== '' && fragmentation !== '' &&
                                                   (hasPcBeenCleaned || pcCleanedNotes !== '') &&
-                                                  numberOfWindowsUpdates !== null &&
+                                                  numberOfWindowsUpdates !== '' &&
                                                   (!hasVirusBeenFound || virusesFoundNotes !== '') &&
                                                   (isHardDriveGood || hardDriveHealthNotes !== '') &&
                                                   (!hasCritcalEventLogs || eventLogsNotes !== '') &&

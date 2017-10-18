@@ -33,7 +33,7 @@ function ComputerName (idx) {
 function NullVirusUpdates (idx) {
   let clickForPage1 = forPage1.bind(null, idx)
   const checkForVirusUpdates = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'checkForVirusUpdates'])
-  if (checkForVirusUpdates === null) {
+  if (checkForVirusUpdates === '') {
     return <div onClick={clickForPage1}>Click here and check the Virus Software Updates</div>
   }
 }
@@ -41,7 +41,7 @@ function NullVirusUpdates (idx) {
 function NullFreeDiskSpace (idx) {
   let clickForPage1 = forPage1.bind(null, idx)
   const freeDiskSpace = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'freeDiskSpace'])
-  if (freeDiskSpace === null) {
+  if (freeDiskSpace === '') {
     return <div onClick={clickForPage1}>Click here and check Free Disk Space</div>
   }
 }
@@ -49,7 +49,7 @@ function NullFreeDiskSpace (idx) {
 function NullFileSize (idx) {
   let clickForPage2 = forPage2.bind(null, idx)
   const sizeOfTempFiles = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'sizeOfTempFiles'])
-  if (sizeOfTempFiles === null) {
+  if (sizeOfTempFiles === '') {
     return <div onClick={clickForPage2}>Click here and check size of temp files.</div>
   }
 }
@@ -57,7 +57,7 @@ function NullFileSize (idx) {
 function NullFragmentation (idx) {
   let clickForPage2 = forPage2.bind(null, idx)
   const fragmentation = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'fragmentation'])
-  if (fragmentation === null) {
+  if (fragmentation === '') {
     return <div onClick={clickForPage2}>Click here and check Fragmentations</div>
   }
 }
@@ -76,7 +76,7 @@ function PcCleanedNotes (idx) {
 function NullWindowsUpdates (idx) {
   let clickForPage3 = forPage3.bind(null, idx)
   const numberOfWindowsUpdates = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'numberOfWindowsUpdates'])
-  if (numberOfWindowsUpdates === null) {
+  if (numberOfWindowsUpdates === '') {
     return <div onClick={clickForPage3}>Click here and check number of Windows Updates</div>
   }
 }
