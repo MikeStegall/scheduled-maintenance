@@ -56,7 +56,7 @@ let incompleteJobVec = mori.get(window.CURRENT_STATE, 'incompleteJobArr')
 function fetchIncompleteJobsFromFirebase (NameOfCompany) { // Puts the incomplete jobs into an array to display on the screen
   firebase.database().ref(NameOfCompany).once('value').then(function (snapshot) {
     let company = snapshot.val()
-    if (!company.allComputersFinished) {
+    if (company.companyAverage === '') {
       incompleteJobVec = mori.conj(incompleteJobVec, company.companyId)
       window.NEXT_STATE = mori.assoc(window.CURRENT_STATE, 'incompleteJobArr', incompleteJobVec)
     }

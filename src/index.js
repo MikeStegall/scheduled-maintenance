@@ -12,7 +12,7 @@ const initialState = {
   numComputers: '',
   computers: [],
   activeComputerIdx: 0,
-  companyAverage: null,
+  companyAverage: '',
   step: 1,
   isSwitchModalShowing: false,
   time: Date(),

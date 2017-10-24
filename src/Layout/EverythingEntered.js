@@ -1,5 +1,4 @@
 import mori from 'mori'
-// import {morilog} from '../util'
 
 function allFinished () {
   let finishedComputers = 0
@@ -10,18 +9,19 @@ function allFinished () {
   computersJs.forEach((computers) => {
     if (computers.isEverythingEntered) {
       finishedComputers++
-      console.log(finishedComputers)
+    } else if (!computers.isEverythingEntered) {
+      if (finishedComputers > 0) {
+        finishedComputers--
+      }
     }
   })
   if (numComputersJs === finishedComputers) {
     let newState = mori.assoc(window.CURRENT_STATE, 'allComputersFinished', true)
     window.NEXT_STATE = newState
-    console.log(`Everything has been entered ${computers.isEverythingEntered}`)
   }
 }
 
 function isEverythingEnteredFn () {
-  allFinished()
   const idx = mori.get(window.CURRENT_STATE, 'activeComputerIdx')
 
   const computerName = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'computerName'])
@@ -69,6 +69,7 @@ function isEverythingEnteredFn () {
       window.NEXT_STATE = newState
     }
   }
+  allFinished()
 }
 
 export default isEverythingEnteredFn

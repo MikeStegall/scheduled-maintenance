@@ -71,28 +71,14 @@ function addOneComputer (idx, computerScore, serverScore, isServer) {
   const computers = mori.get(window.CURRENT_STATE, 'computers')
   const numComputers = mori.count(computers)
   const newComputerName = 'Computer ' + (numComputers + 1)
-  const isEverythingEntered = mori.getIn(window.CURRENT_STATE, ['computers', idx, 'isEverythingEntered'])
-  if (isServer && isEverythingEntered) {
-    const newComputers = mori.conj(computers, createEmptyComputer(newComputerName))
-    const newState = mori.assoc(window.CURRENT_STATE, 'computers', newComputers)
-    const newState2 = mori.updateIn(newState, ['numComputers'], mori.inc)
-    const newState3 = mori.assocIn(newState2, ['computers', idx, 'computerInputStep'], 1)
-    const newState4 = mori.updateIn(newState3, ['activeComputerIdx'], mori.inc)
-    const newState5 = mori.assocIn(newState4, ['computers', idx, 'averageScore'], serverScore)
-    const newState6 = mori.assoc(newState5, 'time', Date())
-    window.NEXT_STATE = newState6
-  } else if (!isServer && isEverythingEntered) {
-    const newComputers = mori.conj(computers, createEmptyComputer(newComputerName))
-    const newState = mori.assoc(window.CURRENT_STATE, 'computers', newComputers)
-    const newState2 = mori.updateIn(newState, ['numComputers'], mori.inc)
-    const newState3 = mori.assocIn(newState2, ['computers', idx, 'computerInputStep'], 1)
-    const newState4 = mori.updateIn(newState3, ['activeComputerIdx'], mori.inc)
-    const newState5 = mori.assocIn(newState4, ['computers', idx, 'averageScore'], computerScore)
-    const newState6 = mori.assoc(newState5, 'time', Date())
-    window.NEXT_STATE = newState6
-  } else if (!isEverythingEntered) {
-
-  }
+  const newComputers = mori.conj(computers, createEmptyComputer(newComputerName))
+  const newState = mori.assoc(window.CURRENT_STATE, 'computers', newComputers)
+  const newState2 = mori.updateIn(newState, ['numComputers'], mori.inc)
+  const newState3 = mori.assocIn(newState2, ['computers', idx, 'computerInputStep'], 1)
+  const newState4 = mori.updateIn(newState3, ['activeComputerIdx'], mori.inc)
+  const newState5 = mori.assocIn(newState4, ['computers', idx, 'averageScore'], serverScore)
+  const newState6 = mori.assoc(newState5, 'time', Date())
+  window.NEXT_STATE = newState6
 }
 
 function AddComputer (idx, computerScore, serverScore, isServer, numComputers) {
