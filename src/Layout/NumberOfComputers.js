@@ -4,8 +4,8 @@ import {createEmptyComputer} from '../util.js'
 
 function submitNumberOfComputers () {
   const numComputers = mori.get(window.CURRENT_STATE, 'numComputers')
-  if (numComputers === '' && numComputers > 100000) {
-    window.alert('Please enter a number of computers between 0 and 25')
+  if ((numComputers === '' || numComputers === 0) && numComputers > 100000) {
+    window.alert('Please enter a number of computers between 0 and 100000')
   }
 
   let emptyComputers = mori.vector()
