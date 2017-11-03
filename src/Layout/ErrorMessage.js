@@ -145,6 +145,15 @@ function ServerBackupNotes (idx) {
     }
   }
 }
+
+function AllComptuersFinished (idx) {
+  const numComputers = mori.get(window.CURRENT_STATE, 'numComputers')
+  const allComputersFinished = mori.get(window.CURRENT_STATE, 'allComputersFinished')
+  if (!allComputersFinished && idx === numComputers - 1) {
+    return <div>Please Finish all Computers</div>
+  }
+}
+
 class ErrorMessages extends MoriComponent {
   render () {
     const idx = mori.get(this.props.imdata, 'activeComputerIdx')
@@ -163,6 +172,7 @@ class ErrorMessages extends MoriComponent {
         {EventLogsNotes(idx)}
         {SystemFileCheckNotes(idx)}
         {ServerBackupNotes(idx)}
+        {AllComptuersFinished(idx)}
       </div>
     )
   }
